@@ -24,7 +24,7 @@ export default function ContactFooter() {
 
       <div className="container-main">
         {/* ── CONTACT SECTION ── */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 100, marginBottom: 160 }}>
+        <div className="contact-wrapper">
           
           {/* Left Column: Info */}
           <div>
@@ -205,6 +205,18 @@ export default function ContactFooter() {
       </div>
 
       <style jsx>{`
+        .contact-wrapper {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 100px;
+          margin-bottom: 160px;
+        }
+        @media (max-width: 1080px) {
+          .contact-wrapper {
+            grid-template-columns: 1fr;
+            gap: 60px;
+          }
+        }
         @media (max-width: 768px) {
           .form-row-mobile { grid-template-columns: 1fr !important; }
         }

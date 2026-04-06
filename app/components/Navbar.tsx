@@ -207,7 +207,7 @@ export default function Navbar({ onBookDemo }: NavbarProps) {
       </AnimatePresence>
 
       <style jsx>{`
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
           .hidden-mobile { display: none !important; }
           .show-mobile { display: block !important; }
         }

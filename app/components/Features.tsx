@@ -194,7 +194,7 @@ export default function Features() {
 
   const closeLightbox = () => {
     setActiveImage(null);
-    document.body.style.overflow = "auto";
+    document.body.style.overflow = "";
   };
 
   const handleZoom = (delta: number) => {
@@ -203,8 +203,6 @@ export default function Features() {
 
   return (
     <section id="features" style={{ position: "relative", paddingTop: 100, paddingBottom: 100 }}>
-      <div className="bg-radial-glow" style={{ position: "absolute", top: "20%", left: "-10%", width: "40%", height: "40%", zIndex: -1 }} />
-
       <div className="container-main">
         {/* Section Header */}
         <div style={{ textAlign: "center", marginBottom: 100 }}>
