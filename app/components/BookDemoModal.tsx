@@ -31,24 +31,24 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
             alignItems: "center",
             justifyContent: "center",
             padding: "20px",
-            background: "rgba(2, 6, 23, 0.9)",
-            backdropFilter: "blur(20px)",
+            background: "rgba(15, 23, 42, 0.6)",
+            backdropFilter: "blur(10px)",
           }}
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             onClick={(e: React.MouseEvent) => e.stopPropagation()}
             style={{
               position: "relative",
               width: "100%",
               maxWidth: "920px",
-              background: "rgba(10, 16, 32, 0.98)",
+              background: "#FFFFFF",
               borderRadius: "40px",
-              border: "1px solid rgba(255, 255, 255, 0.12)",
-              boxShadow: "0 60px 180px rgba(0,0,0,0.9)",
+              border: "1px solid rgba(0, 0, 0, 0.05)",
+              boxShadow: "0 60px 150px -20px rgba(0,0,0,0.15)",
               display: "grid",
               gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))",
               overflow: "hidden",
@@ -56,10 +56,10 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
             className="modal-container"
           >
             {/* Left Side: Info */}
-            <div className="modal-left" style={{ padding: "60px", background: "linear-gradient(135deg, rgba(79, 140, 255, 0.08) 0%, transparent 100%)", position: "relative" }}>
-               <div className="section-badge" style={{ marginBottom: 24, fontSize: "0.75rem" }}>PRIVATE ACCESS</div>
-               <h2 style={{ fontSize: "2.8rem", fontWeight: 800, color: "#fff", marginBottom: 20, letterSpacing: "-0.04em", lineHeight: 1.1 }}>Step into the <br /> <span className="gradient-text-vivid">Future of Healthcare</span></h2>
-               <p style={{ color: "var(--text-dim)", fontSize: "1.05rem", marginBottom: 48, maxWidth: 360, lineHeight: 1.6 }}>
+            <div className="modal-left" style={{ padding: "60px", background: "linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, transparent 100%)", position: "relative" }}>
+               <div className="section-badge" style={{ marginBottom: 24, fontSize: "0.7rem", backgroundColor: 'rgba(37, 99, 235, 0.08)' }}>PRIVATE ACCESS</div>
+               <h2 style={{ fontSize: "2.8rem", fontWeight: 800, color: "var(--text-main)", marginBottom: 20, letterSpacing: "-0.04em", lineHeight: 1.1 }}>Step into the <br /> <span className="gradient-text-teal">Future of Healthcare</span></h2>
+               <p style={{ color: "var(--text-dim)", fontSize: "1.05rem", marginBottom: 48, maxWidth: 360, lineHeight: 1.6, fontWeight: 500 }}>
                  Discover how INFIPLUS can automate your hospital, eliminate paperwork, and improve your patient outcomes in one visit.
                </p>
 
@@ -68,8 +68,8 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
                    <div key={stat.label} style={{ display: "flex", alignItems: "center", gap: 16 }}>
                       <div style={{ width: 10, height: 10, borderRadius: "50%", background: "var(--color-primary)" }} />
                       <div>
-                        <div style={{ color: "#fff", fontSize: "1.1rem", fontWeight: 700 }}>{stat.value}</div>
-                        <div style={{ color: "var(--text-muted)", fontSize: "0.8rem", fontWeight: 600, letterSpacing: "0.05em", textTransform: "uppercase" }}>{stat.label}</div>
+                        <div style={{ color: "var(--text-main)", fontSize: "1.1rem", fontWeight: 700 }}>{stat.value}</div>
+                        <div style={{ color: "var(--text-dim)", fontSize: "0.8rem", fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase" }}>{stat.label}</div>
                       </div>
                    </div>
                  ))}
@@ -77,12 +77,12 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
             </div>
 
             {/* Right Side: Form */}
-            <div className="modal-right" style={{ padding: "60px", borderLeft: "1px solid rgba(255, 255, 255, 0.05)", position: "relative" }}>
+            <div className="modal-right" style={{ padding: "60px", borderLeft: "1px solid rgba(0, 0, 0, 0.03)", position: "relative" }}>
                <button 
                  onClick={onClose}
-                 style={{ position: "absolute", top: 24, right: 30, color: "rgba(255,255,255,0.3)", background: "transparent", border: "none", cursor: "pointer", transition: "color 0.3s" }}
-                 onMouseEnter={(e) => e.currentTarget.style.color = "#fff"}
-                 onMouseLeave={(e) => e.currentTarget.style.color = "rgba(255,255,255,0.3)"}
+                 style={{ position: "absolute", top: 24, right: 30, color: "var(--text-muted)", background: "transparent", border: "none", cursor: "pointer", transition: "color 0.3s" }}
+                 onMouseEnter={(e) => e.currentTarget.style.color = "var(--color-primary)"}
+                 onMouseLeave={(e) => e.currentTarget.style.color = "var(--text-muted)"}
                >
                  <X size={28} />
                </button>
@@ -110,7 +110,7 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
                    }}
                  >
                    Get My Private Tour
-                   <ArrowRight size={20} />
+                   <ArrowRight size={20} strokeWidth={2.5} />
                  </button>
                </form>
             </div>
@@ -128,24 +128,12 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
           }
           .modal-left {
              padding: 40px !important;
-             display: none !important; /* Hide left side on smaller portrait mobiles if too cramped, or keep it */
+             display: none !important;
           }
           .modal-right {
              padding: 40px !important;
              border-left: none !important;
           }
-        }
-        input[type="date"]::-webkit-calendar-picker-indicator {
-          background: transparent;
-          bottom: 0;
-          color: transparent;
-          cursor: pointer;
-          height: auto;
-          left: 0;
-          position: absolute;
-          right: 0;
-          top: 0;
-          width: auto;
         }
       `}</style>
     </AnimatePresence>
@@ -155,7 +143,7 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
 function ModalInput({ label, icon, type, id, placeholder, focused, onFocus, onBlur }: any) {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-      <label htmlFor={id} style={{ fontSize: "0.85rem", fontWeight: 600, color: focused ? "var(--color-primary)" : "var(--text-muted)", transition: "all 0.3s ease" }}>{label}</label>
+      <label htmlFor={id} style={{ fontSize: "0.85rem", fontWeight: 700, color: focused ? "var(--color-primary)" : "var(--text-dim)", transition: "all 0.3s ease" }}>{label}</label>
       <div style={{ position: "relative" }}>
         <div style={{ position: "absolute", left: 24, top: "50%", transform: "translateY(-50%)", color: focused ? "var(--color-primary)" : "var(--text-muted)", transition: "all 0.3s ease" }}>{icon}</div>
         <input 
@@ -169,13 +157,13 @@ function ModalInput({ label, icon, type, id, placeholder, focused, onFocus, onBl
             padding: "0 24px 0 60px", 
             height: "64px", 
             borderRadius: "20px", 
-            background: "rgba(255,255,255,0.03)", 
-            border: `1px solid ${focused ? "var(--color-primary)" : "rgba(255,255,255,0.08)"}`, 
-            color: "#fff", 
+            background: "#F8FAFC", 
+            border: `1px solid ${focused ? "var(--color-primary)" : "rgba(0,0,0,0.05)"}`, 
+            color: "var(--text-main)", 
             fontSize: "1.05rem", 
             outline: "none", 
             transition: "all 0.3s ease",
-            boxShadow: focused ? "0 0 24px rgba(79, 140, 255, 0.12)" : "none"
+            boxShadow: focused ? "0 10px 20px rgba(37, 99, 235, 0.05)" : "none"
           }} 
         />
       </div>

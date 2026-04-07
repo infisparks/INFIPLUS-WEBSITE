@@ -43,17 +43,16 @@ export default function GoToTop() {
             right: "40px",
             width: "56px",
             height: "56px",
-            borderRadius: "16px",
-            background: "rgba(79, 140, 255, 0.15)",
-            backdropFilter: "blur(20px)",
-            border: "1px solid rgba(79, 140, 255, 0.3)",
+            borderRadius: "18px",
+            background: "#FFFFFF",
+            border: "1px solid rgba(37, 99, 235, 0.15)",
             color: "var(--color-primary)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             cursor: "pointer",
             zIndex: 1000,
-            boxShadow: "0 20px 40px rgba(0,0,0,0.5), 0 0 20px rgba(79, 140, 255, 0.2)",
+            boxShadow: "0 10px 30px rgba(0,0,0,0.1)",
           }}
           aria-label="Go to top"
         >

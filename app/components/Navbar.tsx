@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ArrowUpRight } from "lucide-react";
 
 interface NavbarProps {
@@ -12,12 +12,10 @@ interface NavbarProps {
 export default function Navbar({ onBookDemo }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { scrollY } = useScroll();
 
-  // Scroll visibility effect
   useEffect(() => {
     const updateScroll = () => {
-      setScrolled(window.scrollY > 50);
+      setScrolled(window.scrollY > 20);
     };
     window.addEventListener("scroll", updateScroll);
     return () => window.removeEventListener("scroll", updateScroll);
@@ -31,104 +29,83 @@ export default function Navbar({ onBookDemo }: NavbarProps) {
 
   return (
     <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      initial={{ y: -20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
       style={{
         position: "fixed",
         top: 0,
         left: 0,
         right: 0,
         zIndex: 1000,
-        padding: scrolled ? "12px 0" : "24px 0",
-        background: scrolled ? "rgba(2, 6, 23, 0.8)" : "transparent",
-        backdropFilter: scrolled ? "blur(15px)" : "none",
-        borderBottom: `1px solid ${scrolled ? "rgba(255, 255, 255, 0.08)" : "transparent"}`,
+        padding: scrolled ? "12px 0" : "20px 0",
+        background: scrolled ? "rgba(255, 255, 255, 0.9)" : "transparent",
+        backdropFilter: scrolled ? "blur(8px)" : "none",
+        borderBottom: scrolled ? "1px solid rgba(226, 232, 240, 0.8)" : "1px solid transparent",
+        boxShadow: scrolled ? "0 1px 3px rgba(0, 0, 0, 0.05)" : "none",
         transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
       }}
     >
       <div className="container-main" style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        {/* Logo Section */}
-        <motion.div 
+        {/* Logo */}
+        <motion.div
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          style={{ cursor: "pointer", position: "relative", width: 140, height: 48 }}
+          style={{ cursor: "pointer", position: "relative", width: 154, height: 50 }}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
-          <Image 
-            src="/logo.png" 
-            alt="INFIPLUS Logo" 
-            fill 
-            style={{ objectFit: "contain", objectPosition: "left" }} 
-            priority 
+          <Image
+            src="/logo.png"
+            alt="INFIPLUS Logo"
+            fill
+            style={{ objectFit: "contain", objectPosition: "left" }}
+            priority
           />
         </motion.div>
 
-        {/* Desktop Links */}
-        <div style={{ display: "flex", alignItems: "center", gap: 32 }} className="hidden-mobile">
+        {/* Links */}
+        <div style={{ display: "flex", alignItems: "center", gap: 32 }} className="desktop-nav">
           <div style={{ display: "flex", alignItems: "center", gap: 28 }}>
             {navLinks.map((link) => (
-              <motion.a
+              <a
                 key={link.title}
                 href={link.href}
-                className="navigation-link"
+                className="nav-link"
                 style={{
-                  fontSize: "0.95rem",
-                  fontWeight: 500,
-                  color: scrolled ? "rgba(255,255,255,0.8)" : "rgba(255,255,255,0.7)",
+                  fontSize: "0.925rem",
+                  fontWeight: 600,
+                  color: "#475569",
                   textDecoration: "none",
                   position: "relative",
-                }}
-                initial="initial"
-                whileHover="hover"
-                variants={{
-                  initial: { color: scrolled ? "rgba(255,255,255,0.8)" : "rgba(255,255,255,0.7)" },
-                  hover: { color: "#fff" }
+                  transition: "color 0.3s ease",
+                  padding: "4px 0"
                 }}
               >
                 {link.title}
-                <motion.div
-                  className="nav-hover-line"
-                  variants={{
-                    initial: { scaleX: 0 },
-                    hover: { scaleX: 1 }
-                  }}
-                  transition={{ duration: 0.3 }}
-                  style={{
-                    position: "absolute",
-                    bottom: -4,
-                    left: 0,
-                    right: 0,
-                    height: 1,
-                    background: "var(--color-primary)",
-                    originX: 0,
-                  }}
-                />
-              </motion.a>
+                <div className="nav-link-underline" />
+              </a>
             ))}
           </div>
 
-          <motion.button
+          <button
             onClick={onBookDemo}
             className="glow-btn-primary"
             style={{
               padding: "10px 24px",
-              borderRadius: "40px",
+              borderRadius: "50px",
               border: "none",
               color: "#fff",
-              fontWeight: 600,
+              fontWeight: 700,
               fontSize: "0.9rem",
               display: "flex",
               alignItems: "center",
               gap: 8,
               cursor: "pointer",
             }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
           >
             Book a Demo
-            <ArrowUpRight size={16} />
-          </motion.button>
+            <ArrowUpRight size={16} strokeWidth={2.5} />
+          </button>
         </div>
 
         {/* Mobile Toggle */}
@@ -137,13 +114,13 @@ export default function Navbar({ onBookDemo }: NavbarProps) {
           style={{
             background: "transparent",
             border: "none",
-            color: "#fff",
+            color: "#0F172A",
             cursor: "pointer",
             display: "none",
           }}
-          className="show-mobile"
+          className="mobile-nav-toggle"
         >
-          {isOpen ? <X size={28} /> : <Menu size={28} />}
+          {isOpen ? <X size={26} /> : <Menu size={26} />}
         </button>
       </div>
 
@@ -155,51 +132,45 @@ export default function Navbar({ onBookDemo }: NavbarProps) {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             style={{
+              position: "absolute",
+              top: "100%",
+              left: 0,
+              right: 0,
+              background: "#FFFFFF",
+              borderBottom: "1px solid #E2E8F0",
               overflow: "hidden",
-              background: "rgba(2, 6, 23, 0.95)",
-              backdropFilter: "blur(20px)",
-              borderTop: "1px solid rgba(255, 255, 255, 0.08)",
             }}
           >
-            <div className="container-main" style={{ padding: "40px 0", display: "flex", flexDirection: "column", gap: 24 }}>
+            <div className="container-main" style={{ padding: "24px 0", display: "flex", flexDirection: "column", gap: 20 }}>
               {navLinks.map((link) => (
-                <motion.a
+                <a
                   key={link.title}
                   href={link.href}
                   onClick={() => setIsOpen(false)}
-                  initial={{ x: -20, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
                   style={{
-                    fontSize: "1.3rem",
-                    fontWeight: 600,
-                    color: "#fff",
+                    fontSize: "1.05rem",
+                    fontWeight: 700,
+                    color: "#0F172A",
                     textDecoration: "none",
-                    padding: "12px 0",
-                    borderBottom: "1px solid rgba(255,255,255,0.05)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between"
+                    padding: "8px 0"
                   }}
                 >
                   {link.title}
-                  <ArrowUpRight size={18} opacity={0.5} />
-                </motion.a>
+                </a>
               ))}
               <button
                 onClick={() => { onBookDemo(); setIsOpen(false); }}
                 className="glow-btn-primary"
                 style={{
-                  padding: "15px",
-                  borderRadius: "14px",
+                  padding: "16px",
+                  borderRadius: "12px",
                   border: "none",
                   color: "#fff",
-                  fontWeight: 600,
-                  fontSize: "1rem",
-                  marginTop: 10,
+                  fontWeight: 700,
                   cursor: "pointer",
                 }}
               >
-                Book a Demo
+                Get Started
               </button>
             </div>
           </motion.div>
@@ -207,9 +178,16 @@ export default function Navbar({ onBookDemo }: NavbarProps) {
       </AnimatePresence>
 
       <style jsx>{`
-        @media (max-width: 1024px) {
-          .hidden-mobile { display: none !important; }
-          .show-mobile { display: block !important; }
+        .desktop-nav { display: flex !important; }
+        .mobile-nav-toggle { display: none !important; }
+        
+        @media (max-width: 900px) {
+          .desktop-nav { display: none !important; }
+          .mobile-nav-toggle { display: block !important; }
+        }
+        
+        .nav-link:hover {
+           color: #2563EB !important;
         }
       `}</style>
     </motion.nav>
