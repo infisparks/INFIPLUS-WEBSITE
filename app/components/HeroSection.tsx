@@ -1,8 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, Star, Clock, Fingerprint, CheckCircle, TrendingUp, Users, Activity } from "lucide-react";
+import { ArrowRight, Star, Clock, Fingerprint, CheckCircle, TrendingUp, Users, Activity, Download } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 interface HeroSectionProps {
   onBookDemo: () => void;
@@ -162,6 +163,32 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
               Start Going Paperless
               <ArrowRight size={16} strokeWidth={2.5} />
             </motion.button>
+
+            <Link href="/view-brochure" style={{ textDecoration: "none" }}>
+              <motion.button
+                whileHover={{ background: "rgba(255,255,255,1)", borderColor: "rgba(37,99,235,0.7)", scale: 1.04, y: -2 }}
+                whileTap={{ scale: 0.97 }}
+                style={{
+                  padding: "clamp(11px, 1.8vw, 16px) clamp(22px, 3.5vw, 44px)",
+                  borderRadius: "9999px",
+                  border: "1.5px solid rgba(124, 58, 237, 0.22)",
+                  color: "#7C3AED",
+                  fontSize: "clamp(0.78rem, 1.8vw, 0.95rem)",
+                  fontWeight: 700,
+                  background: "rgba(255,255,255,0.65)",
+                  backdropFilter: "blur(16px)",
+                  cursor: "pointer",
+                  transition: "all 0.3s ease",
+                  letterSpacing: "0.01em",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 8,
+                }}
+              >
+                <Download size={18} />
+                Download Brochure
+              </motion.button>
+            </Link>
 
             <motion.button
               onClick={() => {
