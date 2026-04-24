@@ -6,14 +6,12 @@ import { motion, AnimatePresence, useScroll, useTransform, useInView } from "fra
 import { Maximize2, Zap, Layout, Mic, UserPlus, Database, PieChart, Activity, DollarSign, Stethoscope, FileText, Calendar, Plus, Minus, X } from "lucide-react";
 
 /* ═══════════════════════════════════════════════════════
-   Feature Data — Paperless first, then Digital
-   Each entry maps to its original image file number.
+   Feature Data — Updated with custom IPD images
    ═══════════════════════════════════════════════════════ */
 
 interface Feature {
   id: number;
-  imageNum: number;
-  imageExt: string;
+  image: string;
   title: string;
   description: string;
   tag: string;
@@ -21,157 +19,77 @@ interface Feature {
 }
 
 const features: Feature[] = [
-  /* ── PAPERLESS ── */
   {
-    id: 1, imageNum: 18, imageExt: "jpeg", tag: "Paperless",
-    title: "Paperless Digital File",
-    description: "Most doctors and nurses prefer writing by hand, making the switch to digital feel slow and frustrating. Our Paperless Digital File solves this by letting your team use a Smart Pen to write directly on the screen, just like they do on actual paper. You get the speed of a digital system and the organized storage of the cloud without forcing your staff to learn how to type.",
-    icon: <FileText size={18} />
-  },
-  {
-    id: 3, imageNum: 19, imageExt: "jpeg", tag: "Paperless",
-    title: "Digital Patient Progress Notes",
-    description: "Here's an example of a patient progress note as it appears in our software. Every note is digitally stored, timestamped, and instantly accessible — eliminating the need for paper files and ensuring a complete, searchable medical record for every patient.",
-    icon: <Activity size={18} />
-  },
-  {
-    id: 4, imageNum: 20, imageExt: "jpeg", tag: "Paperless",
-    title: "Digital Daily Chart",
-    description: "Here's a look at the daily chart image from our software. It gives clinicians a real-time, paperless view of the patient's medication schedule, vitals, and nursing observations — all on one clean, organized digital screen.",
-    icon: <Layout size={18} />
-  },
-  {
-    id: 5, imageNum: 21, imageExt: "jpeg", tag: "Paperless",
-    title: "Floating Paper Feature",
-    description: "In a traditional hospital, doctors and nurses constantly waste time flipping through a thick patient file just to copy information from one page to another. This Floating Paper Feature lets you open any previous record as a small, movable window that stays on top while you write.",
-    icon: <Zap size={18} />
-  },
-  {
-    id: 6, imageNum: 22, imageExt: "jpeg", tag: "Paperless",
-    title: "Quick View Patient Info",
-    description: "In a traditional paper-heavy ward, a nurse or doctor often has to search through different files for basic info. This Quick View feature puts all the critical patient details on a single, clean screen that you can open while you work. Instant access to demographics in one tap.",
-    icon: <Layout size={18} />
-  },
-  {
-    id: 7, imageNum: 23, imageExt: "jpeg", tag: "Paperless",
-    title: "View Previous Records Digitally",
-    description: "Nurses can view previous papers like nursing notes without needing hard copies. A fully searchable digital archive replaces the chaos of tracking down physical files, saving hours of staff time.",
-    icon: <FileText size={18} />
-  },
-  /* ── DIGITAL ── */
-  {
-    id: 2, imageNum: 1, imageExt: "png", tag: "Digital",
-    title: "Effortless Digital Data Entry",
-    description: "Carrying paper files is a headache. With this, you just type like you're sending a message on your phone. If you run out of space, just add a row. It's that simple. Experience the speed of modern mobile messaging applied to complex medical data workflows.",
-    icon: <Database size={18} />
-  },
-  {
-    id: 8, imageNum: 24, imageExt: "jpeg", tag: "Digital",
-    title: "Digital Document Folder",
-    description: "Eliminate the wait for physical lab reports or X-ray films. Every investigation, from blood tests like CBC to X-ray images, is stored in a single, organized tab. View live results the moment they are uploaded by diagnostics.",
-    icon: <Database size={18} />
-  },
-  {
-    id: 9, imageNum: 25, imageExt: "jpeg", tag: "Digital",
-    title: "Test Comparison Dashboard",
-    description: "Clinicians can place multiple days of lab data side-by-side on a single screen. It's a powerful diagnostic tool that turns a pile of lab papers into a clear, visual patient history.",
-    icon: <PieChart size={18} />
-  },
-  {
-    id: 10, imageNum: 2, imageExt: "png", tag: "Digital",
-    title: "Digital Daily Drug Chart",
-    description: "Handwriting on paper drug charts leads to dangerous mistakes. Our digital chart makes every medicine, dose, and timing crystal clear for the entire nursing staff. No more deciphering messy scribbles.",
-    icon: <Activity size={18} />
-  },
-  {
-    id: 11, imageNum: 3, imageExt: "png", tag: "Digital",
-    title: "Voice-Powered Data Entry",
-    description: "Recording glucose levels manually is a slow task. Our \"Fill via Voice\" feature lets you speak the blood sugar levels, medication, and dosage directly into the system while your hands stay busy with the patient.",
-    icon: <Mic size={18} />
-  },
-  {
-    id: 12, imageNum: 4, imageExt: "png", tag: "Digital",
-    title: "Real-Time Bed Selection",
-    description: "Finding an empty bed usually means dozens of phone calls. Our system gives your staff a live, color-coded map of every bed in the hospital, showing vacancies and occupancy in one glance.",
-    icon: <Layout size={18} />
-  },
-  {
-    id: 13, imageNum: 5, imageExt: "png", tag: "Digital",
-    title: "IPD Admission & WhatsApp",
-    description: "Register a patient in seconds through a clean digital form that auto-generates a UHID. Best of all, once the form is filled, the details are instantly sent to the patient via WhatsApp automatically.",
-    icon: <UserPlus size={18} />
-  },
-  {
-    id: 14, imageNum: 6, imageExt: "png", tag: "AI-Powered",
-    title: "AI-Powered OPD Prescription",
-    description: "Doctors simply speak to record symptoms, history, and medicines. Our AI turns a 5-minute typing task into a few seconds of voice input, building a permanent digital history for every clinic visit.",
+    id: 9, image: "/ipd_images/opd ai prescription.webp", tag: "AI-Powered",
+    title: "AI Medical Voice Scribe & Smart EMR Prescriptions",
+    description: "Maximize clinical productivity with India's most advanced AI-powered medical voice scribe. Scale your hospital's output by automating high-fidelity documentation—instantly transcribing symptoms, histories, and clinical treatments directly into structured digital presets.",
     icon: <Stethoscope size={18} />
   },
   {
-    id: 15, imageNum: 7, imageExt: "png", tag: "Analytics",
-    title: "OPD Admin Dashboard",
-    description: "Manage a busy OPD with a real-time view of every appointment. Track total patient counts and specific doctor performance in one click, eliminating the dependence on manual registers.",
-    icon: <PieChart size={18} />
-  },
-  {
-    id: 16, imageNum: 8, imageExt: "png", tag: "Digital",
-    title: "On-Call Booking Dashboard",
-    description: "Ditch the sticky notes. This On-Call Dashboard gives your team a digital waiting list where every caller's details are safely stored. When the patient arrives, simply click \"Book OPD Visit\" to confirm.",
-    icon: <Calendar size={18} />
-  },
-  {
-    id: 17, imageNum: 9, imageExt: "png", tag: "Digital",
-    title: "Smart OPD Patient Lookup",
-    description: "Find any returning patient in seconds just by typing their phone number or UHID. The software auto-fills all details, letting you book the appointment without re-entering registration data.",
-    icon: <Database size={18} />
-  },
-  {
-    id: 18, imageNum: 10, imageExt: "png", tag: "Analytics",
-    title: "OT Analytics & Breakdown",
-    description: "Track Operation Theater (OT) usage automatically. Categorize every surgery into Major or Minor cases and track baby births in real-time with clear visual graphs showing daily output.",
-    icon: <PieChart size={18} />
-  },
-  {
-    id: 19, imageNum: 11, imageExt: "png", tag: "Analytics",
-    title: "Daily Performance Report (DPR)",
-    description: "DPR pulls every department's data into a single, real-time dashboard. With one click, see the entire hospital's health—from OPD counts to lab tests—without calling a single manager.",
-    icon: <Activity size={18} />
-  },
-  {
-    id: 20, imageNum: 12, imageExt: "png", tag: "Analytics",
-    title: "Patient Growth Analytics",
-    description: "Turn messy registration books into a live, visual map of your growth over the last 30 days. Instantly see how many patients visited today versus last week and identify your peak hours.",
-    icon: <PieChart size={18} />
-  },
-  {
-    id: 21, imageNum: 13, imageExt: "png", tag: "Analytics",
-    title: "IPD Admin Dashboard",
-    description: "A live summary of everything from today's admissions to current occupancy and discharge statuses. Track long-term trends and identify ward-wise performance at a glance.",
-    icon: <Layout size={18} />
-  },
-  {
-    id: 22, imageNum: 14, imageExt: "png", tag: "Analytics",
-    title: "Service Type Analysis",
-    description: "Identify how well your hospital is attracting new people versus returning care. Breaks down traffic into \"First Visits\" and \"Follow-ups\" to guide your patient acquisition strategy.",
-    icon: <Database size={18} />
-  },
-  {
-    id: 23, imageNum: 15, imageExt: "png", tag: "Analytics",
-    title: "Specialist Performance Analysis",
-    description: "Data-driven decisions for department staffing and marketing budgets. See exactly which departments are bringing in the most patients in a clear rank-ordered graph.",
-    icon: <Stethoscope size={18} />
-  },
-  {
-    id: 24, imageNum: 16, imageExt: "png", tag: "Analytics",
-    title: "Revenue & Collection Dashboard",
-    description: "Real-time breakdown of your total revenue, distinguishing between cash and digital collections. Map out appointment trends and categorize income by service seamlessly.",
+    id: 8, image: "/ipd_images/opd admin.webp", tag: "Analytics",
+    title: "Executive Revenue Analytics & OPD Admin Dashboard",
+    description: "Master your hospital's Revenue Cycle Management (RCM) with a high-density executive dashboard. Track cash vs. digital collections in real-time, monitor department-wise growth, and gain actionable financial insights to drive practice profitability.",
     icon: <DollarSign size={18} />
   },
   {
-    id: 25, imageNum: 17, imageExt: "png", tag: "Analytics",
-    title: "Doctor Performance Analysis",
-    description: "A live leaderboard that ranks your consultants based on actual patient volume. Identify your most productive doctors and optimize their schedule based on demand data.",
+    id: 11, image: "/ipd_images/opd appoinment.webp", tag: "Digital",
+    title: "Smart Appointment Booking & OPD Patient Registration",
+    description: "Streamline your front-desk operations with a high-speed patient onboarding system. Eliminate manual entry errors with smart UHID search, automated demographic collection, and a structured specialist scheduling engine for 10x faster clinical registration.",
+    icon: <Layout size={18} />
+  },
+  {
+    id: 10, image: "/ipd_images/opd appoinment list.webp", tag: "Digital",
+    title: "Intelligent Patient Queue & Clinic Management System",
+    description: "Optimize patient throughput and eliminate hospital congestion with a real-time queuing module. Seamlessly coordinate appointments across specialized departments with automated status triggers and doctor-wise traffic filtering for a superior patient experience.",
+    icon: <Calendar size={18} />
+  },
+  {
+    id: 12, image: "/ipd_images/specialist graph.webp", tag: "Analytics",
+    title: "Specialist Performance Analytics & Clinical Productivity",
+    description: "Identify top-performing consultants and departments with granular specialist tracking. Use high-fidelity visual charts to analyze consultation volume, case-load trends, and department-wise revenue to optimize hospital staffing and resource allocation efficiently.",
+    icon: <Activity size={18} />
+  },
+  {
+    id: 6, image: "/ipd_images/lab comparision report.webp", tag: "Digital",
+    title: "Universal Lab Integration & Trend Analysis",
+    description: "Connect your diagnostic lab system for instant, cloud-synced reporting. Our smart comparison engine highlights health trends and detects abnormal values (Red/Green), enabling faster clinical decisions and better patient outcomes.",
+    icon: <PieChart size={18} />
+  },
+  {
+    id: 1, image: "/ipd_images/manage patinet ipd paper.webp", tag: "Paperless",
+    title: "Unified Digital Patient Life-Cycle",
+    description: "A centralized ecosystem for the entire patient journey. From paperless admission assessment to digital progress notes, our system ensures structured medical data is available at every touchpoint of care.",
+    icon: <FileText size={18} />
+  },
+  {
+    id: 2, image: "/ipd_images/ipd document.webp", tag: "Digital",
+    title: "Secure Medical Document Vault",
+    description: "Digitize and protect sensitive patient records. Our structured Document Folder system provides secure, HIPAA-compliant storage for X-Rays, Scans, and external medical history reports in one central location.",
+    icon: <Database size={18} />
+  },
+  {
+    id: 3, image: "/ipd_images/ipd paper switch paper.webp", tag: "Paperless",
+    title: "Intelligent Nursing Navigation",
+    description: "Empower your nursing staff with one-tap access to patient records. Our floating navigation system allows for quick switching between clinical notes, ensuring continuity of care without the friction of paper browsing.",
+    icon: <Zap size={18} />
+  },
+  {
+    id: 4, image: "/ipd_images/ipd paper view.webp", tag: "Paperless",
+    title: "Clinical Observation Digitization",
+    description: "Capture clinical observations with the speed of handwriting and the efficiency of digital storage. Mirror traditional medical charts with dynamic digital interfaces that track patient history, complaints, and drug allergies.",
+    icon: <Activity size={18} />
+  },
+  {
+    id: 5, image: "/ipd_images/ipd patient details.webp", tag: "Digital",
+    title: "High-Density Patient Intelligence",
+    description: "Comprehensive 360° patient profiles that sync core registration, bed assignments, and emergency contact details. Designed for maximum information density to help medical staff make informed decisions faster.",
     icon: <UserPlus size={18} />
+  },
+  {
+    id: 7, image: "/ipd_images/daily performance report.webp", tag: "Analytics",
+    title: "Daily Performance Report (DPR)",
+    description: "Gain complete hospital performance tracking with our DPR system. Get a real-time operations summary including OPD appointments, IPD admissions, discharges, and births. Make data-driven decisions with a comprehensive service breakdown summary.",
+    icon: <Activity size={18} />
   },
 ];
 
@@ -209,10 +127,10 @@ export default function Features() {
   };
 
   return (
-    <section id="features" style={{ position: "relative", paddingTop: 100, paddingBottom: 100, backgroundColor: 'var(--bg-main)' }}>
+    <section id="features" style={{ position: "relative", paddingTop: 72, paddingBottom: 80, backgroundColor: 'var(--bg-main)' }}>
       <div className="container-main">
         {/* Section Header */}
-        <div style={{ textAlign: "center", marginBottom: 100 }}>
+        <div style={{ textAlign: "center", marginBottom: "clamp(44px, 7vw, 68px)" }}>
           <motion.span 
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -227,7 +145,7 @@ export default function Features() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={ANIMATION_CONFIG.viewport}
             transition={{ duration: 0.5, delay: 0.1, ease: ANIMATION_CONFIG.ease }}
-            style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 800, letterSpacing: "-0.03em", marginTop: 16, marginBottom: 20, color: 'var(--text-main)' }}
+            style={{ fontSize: "clamp(1.3rem, 4vw, 2.6rem)", fontWeight: 800, letterSpacing: "-0.035em", marginTop: "clamp(8px, 1.2vw, 12px)", marginBottom: "clamp(8px, 1.5vw, 14px)", color: 'var(--text-main)', lineHeight: 1.1 }}
           >
             Powerful Features for <br /><span className="gradient-text-teal">Modern Healthcare</span>
           </motion.h2>
@@ -236,14 +154,14 @@ export default function Features() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={ANIMATION_CONFIG.viewport}
             transition={{ duration: 0.5, delay: 0.2, ease: ANIMATION_CONFIG.ease }}
-            style={{ color: "var(--text-dim)", fontSize: "clamp(1rem, 2vw, 1.2rem)", maxWidth: 650, margin: "0 auto", lineHeight: 1.7 }}
+            style={{ color: "var(--text-dim)", fontSize: "clamp(0.76rem, 1.5vw, 0.9rem)", maxWidth: 580, margin: "0 auto", lineHeight: 1.65, fontWeight: 500 }}
           >
-          Discover 25 specialized modules built to empower your medical team, digitize messy operations, and drive growth with real-time analytics.
+          Discover our specialized modules built to empower your medical team, digitize messy operations, and drive growth with real-time analytics.
           </motion.p>
         </div>
 
         {/* Feature Items */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 140 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "clamp(56px, 9vw, 96px)" }}>
           {features.map((feature, index) => (
             <FeatureSection 
                 key={feature.id} 
@@ -397,7 +315,7 @@ export default function Features() {
 function FeatureSection({ feature, index, onImageClick }: { feature: Feature; index: number; onImageClick: (url: string) => void }) {
   const displayNum = index + 1;
   const isOdd = displayNum % 2 !== 0;
-  const imagePath = `/feature-image-${feature.imageNum}.${feature.imageExt}`;
+  const imagePath = feature.image;
   const tagColor = tagColors[feature.tag] || "var(--color-primary)";
   const [isMobile, setIsMobile] = useState(false);
 
@@ -448,7 +366,7 @@ function FeatureSection({ feature, index, onImageClick }: { feature: Feature; in
 
   return (
     <div
-      className={`feature-section flex flex-col gap-12 md:gap-24 items-center py-12 md:py-24 ${
+      className={`feature-section flex flex-col gap-8 md:gap-16 items-center py-8 md:py-16 ${
         isOdd ? 'md:flex-row' : 'md:flex-row-reverse'
       }`}
     >
@@ -526,10 +444,10 @@ function FeatureSection({ feature, index, onImageClick }: { feature: Feature; in
         </div>
 
         <div className="flex flex-col gap-4">
-          <h3 style={{ fontSize: "clamp(1.8rem, 4vw, 2.8rem)", fontWeight: 800, color: '#0F172A', letterSpacing: "-0.03em", lineHeight: 1.15 }}>
+          <h3 style={{ fontSize: "clamp(1.1rem, 3vw, 2rem)", fontWeight: 800, color: '#0F172A', letterSpacing: "-0.03em", lineHeight: 1.15 }}>
             {feature.title}
           </h3>
-          <p style={{ fontSize: "1.1rem", color: '#475569', lineHeight: 1.7, fontWeight: 500 }}>
+          <p style={{ fontSize: "clamp(0.76rem, 1.5vw, 0.88rem)", color: '#475569', lineHeight: 1.65, fontWeight: 500 }}>
             {feature.description}
           </p>
         </div>
@@ -537,9 +455,9 @@ function FeatureSection({ feature, index, onImageClick }: { feature: Feature; in
         <div className="flex items-center gap-3 mt-2 group">
             <div 
               className="w-10 h-[2px] transition-all duration-500 group-hover:w-14" 
-              style={{ background: tagColor, opacity: 0.3 }} 
+              style={{ background: tagColor, opacity: 0.3, borderRadius: 999 }} 
             />
-            <span className="text-[0.7rem] font-black text-slate-400 tracking-[0.2em] uppercase">
+            <span style={{ fontSize: "clamp(0.6rem, 1.2vw, 0.7rem)", fontWeight: 900, color: "#94A3B8", letterSpacing: "0.18em", textTransform: "uppercase" }}>
               MODULE {String(displayNum).padStart(2, "0")}
             </span>
         </div>

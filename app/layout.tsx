@@ -1,28 +1,42 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Outfit } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const outfit = Outfit({
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
+  variable: "--font-outfit",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "INFIPLUS — Hospital Management Software | Go Paperless, Go Digital",
+  title: "INFIPLUS | AI-Powered Paperless Hospital Management System & EMR",
   description:
-    "INFIPLUS is a next-generation hospital management software that replaces paper files with a seamless digital experience. Manage OPD, IPD, beds, prescriptions, analytics and more — all from one platform.",
+    "Transform your facility with INFIPLUS, the #1 AI-powered hospital management software. Replace paper files with secure digital records, manage OPD/IPD, and scale hospital revenue with real-time analytics.",
   keywords:
-    "hospital management software, healthcare software, paperless hospital, digital hospital, OPD management, IPD management, INFIPLUS",
+    "hospital management system, EMR software India, healthcare automation, paperless hospital software, AI medical scribe, OPD management, IPD management, medical analytics, INFIPLUS healthcare",
+  authors: [{ name: "Infisparks Healthcare" }],
   openGraph: {
-    title: "INFIPLUS — Hospital Management Software",
-    description:
-      "Transform your hospital with INFIPLUS. Go paperless, go digital.",
+    title: "INFIPLUS | AI-Powered Hospital Management System",
+    description: "The next generation of paperless healthcare. Streamline operations and improve patient care with INFIPLUS.",
+    url: "https://infiplus.com",
+    siteName: "INFIPLUS Healthcare",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "INFIPLUS Hospital Management Dashboard",
+      },
+    ],
+    locale: "en_IN",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "INFIPLUS | AI-Powered Hospital Management",
+    description: "Go paperless and automate your clinical workflows with INFIPLUS.",
+    images: ["/og-image.png"],
   },
   icons: {
     icon: "/meta-logo.png",
@@ -37,10 +51,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-    >
+    <html lang="en" className={`${outfit.variable} antialiased`}>
       <body>{children}</body>
     </html>
   );

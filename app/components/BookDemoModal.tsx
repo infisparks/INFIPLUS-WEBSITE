@@ -56,10 +56,10 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
             className="modal-container"
           >
             {/* Left Side: Info */}
-            <div className="modal-left" style={{ padding: "60px", background: "linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, transparent 100%)", position: "relative" }}>
+            <div className="modal-left" style={{ padding: "clamp(32px, 5vw, 52px)", background: "linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, transparent 100%)", position: "relative" }}>
                <div className="section-badge" style={{ marginBottom: 24, fontSize: "0.7rem", backgroundColor: 'rgba(37, 99, 235, 0.08)' }}>PRIVATE ACCESS</div>
-               <h2 style={{ fontSize: "2.8rem", fontWeight: 800, color: "var(--text-main)", marginBottom: 20, letterSpacing: "-0.04em", lineHeight: 1.1 }}>Step into the <br /> <span className="gradient-text-teal">Future of Healthcare</span></h2>
-               <p style={{ color: "var(--text-dim)", fontSize: "1.05rem", marginBottom: 48, maxWidth: 360, lineHeight: 1.6, fontWeight: 500 }}>
+               <h2 style={{ fontSize: "clamp(1.5rem, 4vw, 2.2rem)", fontWeight: 800, color: "var(--text-main)", marginBottom: 14, letterSpacing: "-0.04em", lineHeight: 1.1 }}>Step into the <br /> <span className="gradient-text-teal">Future of Healthcare</span></h2>
+               <p style={{ color: "var(--text-dim)", fontSize: "clamp(0.78rem, 1.5vw, 0.9rem)", marginBottom: 36, maxWidth: 340, lineHeight: 1.6, fontWeight: 500 }}>
                  Discover how INFIPLUS can automate your hospital, eliminate paperwork, and improve your patient outcomes in one visit.
                </p>
 
@@ -77,7 +77,7 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
             </div>
 
             {/* Right Side: Form */}
-            <div className="modal-right" style={{ padding: "60px", borderLeft: "1px solid rgba(0, 0, 0, 0.03)", position: "relative" }}>
+            <div className="modal-right" style={{ padding: "clamp(28px, 4.5vw, 52px)", borderLeft: "1px solid rgba(0, 0, 0, 0.03)", position: "relative" }}>
                <button 
                  onClick={onClose}
                  style={{ position: "absolute", top: 24, right: 30, color: "var(--text-muted)", background: "transparent", border: "none", cursor: "pointer", transition: "color 0.3s" }}
@@ -95,17 +95,17 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
                  <button
                    className="glow-btn-primary"
                    style={{ 
-                     padding: "18px", 
+                     padding: "clamp(12px, 2vw, 16px)", 
                      borderRadius: "50px", 
                      border: "none", 
                      color: "#fff", 
-                     fontSize: "1rem", 
+                     fontSize: "clamp(0.8rem, 1.5vw, 0.9rem)", 
                      fontWeight: 700, 
                      display: "flex", 
                      alignItems: "center", 
                      justifyContent: "center", 
-                     gap: 12,
-                     marginTop: 15,
+                     gap: 10,
+                     marginTop: 12,
                      cursor: "pointer"
                    }}
                  >
