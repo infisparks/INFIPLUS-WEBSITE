@@ -35,8 +35,8 @@ export default function ViewBrochurePage() {
         <motion.a 
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          href="/broucher/broucher.pdf" 
-          download="Infiplus-Brochure.pdf"
+          href="/brochure/brochure.png" 
+          download="Infiplus-Brochure.png"
           style={{ 
             background: "#2563EB", 
             color: "#FFFFFF", 
@@ -52,7 +52,7 @@ export default function ViewBrochurePage() {
           }}
         >
           <Download size={18} />
-          Download PDF
+          Download Brochure
         </motion.a>
       </motion.nav>
 
@@ -152,7 +152,7 @@ export default function ViewBrochurePage() {
             boxShadow: "0 10px 30px rgba(0,0,0,0.05)"
           }}>
             <Image 
-              src="/broucher/broucher.webp" 
+              src="/brochure/brochure.png" 
               alt="Infiplus Hospital Management Software Brochure - Comprehensive Features OPD IPD Lab Pharmacy" 
               width={1000}
               height={1400}
