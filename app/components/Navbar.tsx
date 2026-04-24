@@ -12,11 +12,18 @@ interface NavbarProps {
 export default function Navbar({ onBookDemo }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const updateScroll = () => setScrolled(window.scrollY > 20);
+    const updateMobile = () => setIsMobile(window.innerWidth <= 960);
+    updateMobile();
     window.addEventListener("scroll", updateScroll);
-    return () => window.removeEventListener("scroll", updateScroll);
+    window.addEventListener("resize", updateMobile);
+    return () => {
+      window.removeEventListener("scroll", updateScroll);
+      window.removeEventListener("resize", updateMobile);
+    };
   }, []);
 
   const navLinks = [
@@ -26,7 +33,16 @@ export default function Navbar({ onBookDemo }: NavbarProps) {
   ];
 
   return (
-    <>
+    <header
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 1000,
+        transition: "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+      }}
+    >
       {/* ─── Announcement Bar ─── */}
       <div
         style={{
@@ -34,81 +50,73 @@ export default function Navbar({ onBookDemo }: NavbarProps) {
           color: "#fff",
           textAlign: "center",
           padding: "7px 16px",
-          fontSize: "0.7rem",
+          fontSize: "clamp(0.6rem, 2vw, 0.7rem)",
           fontWeight: 600,
           letterSpacing: "0.03em",
-          position: "fixed",
-          top: 0,
-          left: 0,
-          right: 0,
-          zIndex: 1001,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           gap: 10,
+          position: "relative",
+          zIndex: 1001,
         }}
       >
         <span
           style={{
-            background: "rgba(255,255,255,0.18)",
+            background: "rgba(255,255,255,0.22)",
             borderRadius: "4px",
             padding: "1px 6px",
-            fontSize: "0.6rem",
+            fontSize: "0.58rem",
             fontWeight: 800,
             letterSpacing: "0.08em",
+            flexShrink: 0,
           }}
         >
           NEW
         </span>
-        AI-powered OPD Prescriptions now live — 10x faster documentation
+        <span style={{ lineHeight: 1.3 }}>AI Prescription Assistant now live </span>
         <a
           href="#features"
           style={{
             color: "#ffffff",
-            opacity: 0.85,
             textDecoration: "underline",
             fontSize: "0.68rem",
             fontWeight: 700,
+            flexShrink: 0,
           }}
         >
           See it →
         </a>
       </div>
 
-      <motion.nav
-        initial={{ y: -24, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+      <nav
         style={{
-          position: "fixed",
-          top: 30, // Below announcement bar
-          left: 0,
-          right: 0,
-          zIndex: 1000,
           padding: scrolled ? "8px 0" : "12px 0",
           background: scrolled
-            ? "rgba(255, 255, 255, 0.95)"
-            : "transparent",
-          backdropFilter: scrolled ? "blur(20px) saturate(180%)" : "none",
+            ? "rgba(255, 255, 255, 0.98)"
+            : "rgba(255, 255, 255, 0.94)",
+          backdropFilter: "blur(20px) saturate(180%)",
           borderBottom: scrolled
-            ? "1px solid rgba(226, 232, 240, 0.7)"
-            : "1px solid transparent",
+            ? "1px solid rgba(226, 232, 240, 0.8)"
+            : "1px solid rgba(255, 255, 255, 0.4)",
           boxShadow: scrolled
-            ? "0 4px 24px -4px rgba(37, 99, 235, 0.08)"
+            ? "0 4px 20px -4px rgba(37, 99, 235, 0.12)"
             : "none",
-          transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+          transition: "all 0.3s ease",
         }}
+        className="navbar-content"
       >
         <div
           className="container-main"
-          style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}
+          style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: "100%" }}
         >
           {/* Logo */}
           <motion.div
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            style={{ cursor: "pointer", position: "relative", width: 120, height: 38 }}
+            style={{ cursor: "pointer", position: "relative", width: 110, height: 32 }}
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
+            className="navbar-logo"
           >
             <Image
               src="/logo.png"
@@ -197,18 +205,19 @@ export default function Navbar({ onBookDemo }: NavbarProps) {
             onClick={() => setIsOpen(!isOpen)}
             whileTap={{ scale: 0.9 }}
             style={{
-              background: isOpen ? "rgba(37, 99, 235, 0.06)" : "transparent",
-              border: isOpen ? "1px solid rgba(37, 99, 235, 0.15)" : "1px solid rgba(226,232,240,0.7)",
+              background: isOpen ? "rgba(37, 99, 235, 0.1)" : "white",
+              border: "1px solid rgba(37, 99, 235, 0.22)",
               borderRadius: "10px",
-              color: "#0F172A",
+              color: "#1D4ED8", 
               cursor: "pointer",
-              display: "none",
+              alignItems: "center",
+              justifyContent: "center",
               padding: "7px",
-              transition: "all 0.3s ease",
+              boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
             }}
             className="mobile-nav-toggle"
           >
-            {isOpen ? <X size={20} /> : <Menu size={20} />}
+            {isOpen ? <X size={20} strokeWidth={2.5} /> : <Menu size={20} strokeWidth={2.5} />}
           </motion.button>
         </div>
 
@@ -314,6 +323,8 @@ export default function Navbar({ onBookDemo }: NavbarProps) {
           @media (max-width: 960px) {
             .desktop-nav { display: none !important; }
             .mobile-nav-toggle { display: flex !important; }
+            .navbar-content { padding: 5px 0 !important; }
+            .navbar-logo { width: 100px !important; height: 28px !important; }
           }
 
           @media (max-width: 1100px) {
@@ -327,7 +338,7 @@ export default function Navbar({ onBookDemo }: NavbarProps) {
             color: #2563EB !important;
           }
         `}</style>
-      </motion.nav>
-    </>
+      </nav>
+    </header>
   );
 }

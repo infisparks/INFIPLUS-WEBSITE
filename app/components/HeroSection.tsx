@@ -23,8 +23,8 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
         id="hero"
         style={{
           position: "relative",
-          paddingTop: "clamp(110px, 16vw, 160px)",
-          paddingBottom: "clamp(50px, 7vw, 80px)",
+          paddingTop: "clamp(76px, 10vw, 160px)",
+          paddingBottom: "clamp(40px, 6vw, 80px)",
           minHeight: "100vh",
           display: "flex",
           flexDirection: "column",
@@ -386,7 +386,7 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
           >
             {[
               { icon: <TrendingUp size={14} />, label: "Avg. 3× faster OPD", color: "#2563EB" },
-              { icon: <Users size={14} />, label: "50+ hospitals trust us", color: "#7C3AED" },
+              { icon: <Users size={14} />, label: "20+ hospitals trust us", color: "#7C3AED" },
               { icon: <Activity size={14} />, label: "Zero downtime SLA", color: "#10B981" },
               { icon: <Star size={14} />, label: "5.0 rating, 100% satisfaction", color: "#F59E0B" },
             ].map((kpi) => (

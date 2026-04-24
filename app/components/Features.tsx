@@ -57,8 +57,8 @@ const features: Feature[] = [
   },
   {
     id: 1, image: "/ipd_images/manage patinet ipd paper.webp", tag: "Paperless",
-    title: "Unified Digital Patient Life-Cycle",
-    description: "A centralized ecosystem for the entire patient journey. From paperless admission assessment to digital progress notes, our system ensures structured medical data is available at every touchpoint of care.",
+    title: "Paperless Indoor Patient File (IPD) & EMR Management",
+    description: "Eliminate physical medical charts with a 100% paperless indoor patient file system. Digitally track patient progress, nursing notes, and treatment charts in one secure EMR ecosystem. Streamline clinical workflows and ensure documentation continuity across the entire hospitalization cycle.",
     icon: <FileText size={18} />
   },
   {
@@ -81,8 +81,8 @@ const features: Feature[] = [
   },
   {
     id: 5, image: "/ipd_images/ipd patient details.webp", tag: "Digital",
-    title: "High-Density Patient Intelligence",
-    description: "Comprehensive 360° patient profiles that sync core registration, bed assignments, and emergency contact details. Designed for maximum information density to help medical staff make informed decisions faster.",
+    title: "Centralized Patient Intelligence & Demographics System",
+    description: "Achieve 360° clinical visibility with a centralized patient health record. Sync core registration, admission details, and real-time bed assignments. Empower your medical team with instant access to patient history and demographics for evidence-based care delivery.",
     icon: <UserPlus size={18} />
   },
   {
@@ -127,7 +127,7 @@ export default function Features() {
   };
 
   return (
-    <section id="features" style={{ position: "relative", paddingTop: 72, paddingBottom: 80, backgroundColor: 'var(--bg-main)' }}>
+    <section id="features" style={{ position: "relative", paddingTop: 72, paddingBottom: 80, backgroundColor: 'var(--bg-main)', overflowX: 'hidden' }}>
       <div className="container-main">
         {/* Section Header */}
         <div style={{ textAlign: "center", marginBottom: "clamp(44px, 7vw, 68px)" }}>
@@ -248,7 +248,7 @@ export default function Features() {
               }}
              >
                 <motion.div 
-                  layoutId={activeImage}
+                  layoutId={activeImage || undefined}
                   style={{
                     position: 'relative',
                     width: '100%',
@@ -261,7 +261,7 @@ export default function Features() {
                     justifyContent: 'center'
                   }}>
                   <Image 
-                    src={activeImage}
+                    src={activeImage || ""}
                     alt="Feature Preview"
                     fill
                     style={{ objectFit: 'contain' }}
@@ -330,13 +330,11 @@ function FeatureSection({ feature, index, onImageClick }: { feature: Feature; in
   const imageVariants = {
     hidden: { 
       opacity: 0, 
-      x: isMobile ? 0 : (isOdd ? -20 : 20), 
-      y: isMobile ? 20 : 0,                 
+      y: 20,                 
       scale: 0.98                           
     },
     visible: { 
       opacity: 1, 
-      x: 0, 
       y: 0, 
       scale: 1, 
       transition: { 
@@ -366,7 +364,7 @@ function FeatureSection({ feature, index, onImageClick }: { feature: Feature; in
 
   return (
     <div
-      className={`feature-section flex flex-col gap-8 md:gap-16 items-center py-8 md:py-16 ${
+      className={`feature-section flex flex-col gap-8 md:gap-16 items-center py-8 md:py-16 overflow-hidden ${
         isOdd ? 'md:flex-row' : 'md:flex-row-reverse'
       }`}
     >
@@ -379,19 +377,22 @@ function FeatureSection({ feature, index, onImageClick }: { feature: Feature; in
         style={{ willChange: "transform, opacity" }}
         className="w-full md:w-[55%] relative flex justify-center"
       >
-        {/* Optimized Glow - Subtle Blue/Tag Glow */}
-        <div 
-          className="absolute inset-[-40px] opacity-[0.08] pointer-events-none blur-[60px] rounded-full"
-          style={{ background: `radial-gradient(circle, ${tagColor} 0%, transparent 70%)` }}
-        />
+        {/* Optimized Glow - Hidden on mobile to prevent side gaps */}
+        {!isMobile && (
+          <div 
+            className="absolute inset-[-40px] opacity-[0.08] pointer-events-none blur-[60px] rounded-full"
+            style={{ background: `radial-gradient(circle, ${tagColor} 0%, transparent 70%)` }}
+          />
+        )}
         
         <div 
           onClick={() => onImageClick(imagePath)}
-          className="feature-img-box group relative p-[5px] rounded-[24px] cursor-pointer transition-all duration-400 hover:scale-[1.03]"
+          className="feature-img-box group relative p-[4px] md:p-[5px] rounded-[24px] cursor-pointer transition-all duration-400 hover:scale-[1.02] overflow-hidden"
           style={{ 
             background: `linear-gradient(135deg, #1D4ED8 0%, #0891B2 100%)`,
-            boxShadow: `0 20px 50px -10px rgba(37, 99, 235, 0.35), 0 10px 20px -5px rgba(0, 0, 0, 0.1)`,
-            border: `1.5px solid rgba(29, 78, 216, 0.3)` // Outer definition stroke
+            boxShadow: `0 20px 50px -10px rgba(37, 99, 235, 0.2), 0 10px 20px -5px rgba(0, 0, 0, 0.1)`,
+            border: `1.5px solid rgba(29, 78, 216, 0.25)`,
+            maxWidth: '100%'
           }}
         >
           <div className="relative rounded-[20px] overflow-hidden bg-white shadow-inner">
@@ -400,7 +401,7 @@ function FeatureSection({ feature, index, onImageClick }: { feature: Feature; in
                 alt={feature.title}
                 width={1200}
                 height={800}
-                className="w-auto h-auto max-w-full max-h-[500px] block object-contain"
+                className="w-full h-auto max-h-[500px] block object-contain"
                 loading={displayNum <= 2 ? "eager" : "lazy"}
                 priority={displayNum <= 2}
               />
