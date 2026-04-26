@@ -156,9 +156,9 @@ export default function ViewBrochurePage() {
               alt="Infiplus Hospital Management Software Brochure - Comprehensive Features OPD IPD Lab Pharmacy" 
               width={1000}
               height={1400}
-              layout="responsive"
               priority
-              style={{ objectFit: "contain", display: "block" }}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1000px"
+              style={{ width: "100%", height: "auto", objectFit: "contain", display: "block" }}
             />
           </div>
         </motion.div>
