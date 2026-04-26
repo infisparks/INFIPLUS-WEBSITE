@@ -397,13 +397,13 @@ function FeatureSection({ feature, index, onImageClick }: { feature: Feature; in
             aspectRatio: '16/10'
           }}
         >
-          <div className="relative rounded-[20px] overflow-hidden bg-white shadow-inner w-full h-full">
+          <div className="relative rounded-[20px] overflow-hidden bg-white shadow-inner">
              <Image
                 src={imagePath}
                 alt={feature.title}
-                fill
-                className="block object-contain p-2"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 800px"
+                width={1200}
+                height={800}
+                className="w-full h-auto block object-contain"
                 priority={displayNum <= 4}
               />
               
