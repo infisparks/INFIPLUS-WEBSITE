@@ -20,73 +20,73 @@ interface Feature {
 
 const features: Feature[] = [
   {
-    id: 9, image: "/ipd_images/opd ai prescription.webp", tag: "AI-Powered",
+    id: 9, image: "/ipd_images/opd-ai-prescription.webp", tag: "AI-Powered",
     title: "AI Medical Voice Scribe & Smart EMR Prescriptions",
     description: "Maximize clinical productivity with India's most advanced AI-powered medical voice scribe. Scale your hospital's output by automating high-fidelity documentation—instantly transcribing symptoms, histories, and clinical treatments directly into structured digital presets.",
     icon: <Stethoscope size={18} />
   },
   {
-    id: 8, image: "/ipd_images/opd admin.webp", tag: "Analytics",
+    id: 8, image: "/ipd_images/opd-admin.webp", tag: "Analytics",
     title: "Executive Revenue Analytics & OPD Admin Dashboard",
     description: "Master your hospital's Revenue Cycle Management (RCM) with a high-density executive dashboard. Track cash vs. digital collections in real-time, monitor department-wise growth, and gain actionable financial insights to drive practice profitability.",
     icon: <DollarSign size={18} />
   },
   {
-    id: 11, image: "/ipd_images/opd appoinment.webp", tag: "Digital",
+    id: 11, image: "/ipd_images/opd-appoinment.webp", tag: "Digital",
     title: "Smart Appointment Booking & OPD Patient Registration",
     description: "Streamline your front-desk operations with a high-speed patient onboarding system. Eliminate manual entry errors with smart UHID search, automated demographic collection, and a structured specialist scheduling engine for 10x faster clinical registration.",
     icon: <Layout size={18} />
   },
   {
-    id: 10, image: "/ipd_images/opd appoinment list.webp", tag: "Digital",
+    id: 10, image: "/ipd_images/opd-appoinment-list.webp", tag: "Digital",
     title: "Intelligent Patient Queue & Clinic Management System",
     description: "Optimize patient throughput and eliminate hospital congestion with a real-time queuing module. Seamlessly coordinate appointments across specialized departments with automated status triggers and doctor-wise traffic filtering for a superior patient experience.",
     icon: <Calendar size={18} />
   },
   {
-    id: 12, image: "/ipd_images/specialist graph.webp", tag: "Analytics",
+    id: 12, image: "/ipd_images/specialist-graph.webp", tag: "Analytics",
     title: "Specialist Performance Analytics & Clinical Productivity",
     description: "Identify top-performing consultants and departments with granular specialist tracking. Use high-fidelity visual charts to analyze consultation volume, case-load trends, and department-wise revenue to optimize hospital staffing and resource allocation efficiently.",
     icon: <Activity size={18} />
   },
   {
-    id: 6, image: "/ipd_images/lab comparision report.webp", tag: "Digital",
+    id: 6, image: "/ipd_images/lab-comparision-report.webp", tag: "Digital",
     title: "Universal Lab Integration & Trend Analysis",
     description: "Connect your diagnostic lab system for instant, cloud-synced reporting. Our smart comparison engine highlights health trends and detects abnormal values (Red/Green), enabling faster clinical decisions and better patient outcomes.",
     icon: <PieChart size={18} />
   },
   {
-    id: 1, image: "/ipd_images/manage patinet ipd paper.webp", tag: "Paperless",
+    id: 1, image: "/ipd_images/manage-patinet-ipd-paper.webp", tag: "Paperless",
     title: "Paperless Indoor Patient File (IPD) & EMR Management",
     description: "Eliminate physical medical charts with a 100% paperless indoor patient file system. Digitally track patient progress, nursing notes, and treatment charts in one secure EMR ecosystem. Streamline clinical workflows and ensure documentation continuity across the entire hospitalization cycle.",
     icon: <FileText size={18} />
   },
   {
-    id: 2, image: "/ipd_images/ipd document.webp", tag: "Digital",
+    id: 2, image: "/ipd_images/ipd-document.webp", tag: "Digital",
     title: "Secure Medical Document Vault",
     description: "Digitize and protect sensitive patient records. Our structured Document Folder system provides secure, HIPAA-compliant storage for X-Rays, Scans, and external medical history reports in one central location.",
     icon: <Database size={18} />
   },
   {
-    id: 3, image: "/ipd_images/ipd paper switch paper.webp", tag: "Paperless",
+    id: 3, image: "/ipd_images/ipd-paper-switch-paper.webp", tag: "Paperless",
     title: "Intelligent Nursing Navigation",
     description: "Empower your nursing staff with one-tap access to patient records. Our floating navigation system allows for quick switching between clinical notes, ensuring continuity of care without the friction of paper browsing.",
     icon: <Zap size={18} />
   },
   {
-    id: 4, image: "/ipd_images/ipd paper view.webp", tag: "Paperless",
+    id: 4, image: "/ipd_images/ipd-paper-view.webp", tag: "Paperless",
     title: "Clinical Observation Digitization",
     description: "Capture clinical observations with the speed of handwriting and the efficiency of digital storage. Mirror traditional medical charts with dynamic digital interfaces that track patient history, complaints, and drug allergies.",
     icon: <Activity size={18} />
   },
   {
-    id: 5, image: "/ipd_images/ipd patient details.webp", tag: "Digital",
+    id: 5, image: "/ipd_images/ipd-patient-details.webp", tag: "Digital",
     title: "Centralized Patient Intelligence & Demographics System",
     description: "Achieve 360° clinical visibility with a centralized patient health record. Sync core registration, admission details, and real-time bed assignments. Empower your medical team with instant access to patient history and demographics for evidence-based care delivery.",
     icon: <UserPlus size={18} />
   },
   {
-    id: 7, image: "/ipd_images/daily performance report.webp", tag: "Analytics",
+    id: 7, image: "/ipd_images/daily-performance-report.webp", tag: "Analytics",
     title: "Daily Performance Report (DPR)",
     description: "Gain complete hospital performance tracking with our DPR system. Get a real-time operations summary including OPD appointments, IPD admissions, discharges, and births. Make data-driven decisions with a comprehensive service breakdown summary.",
     icon: <Activity size={18} />

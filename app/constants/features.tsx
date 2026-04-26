@@ -30,7 +30,7 @@ export const FEATURES: Feature[] = [
   {
     id: 1,
     slug: "ai-medical-voice-scribe",
-    image: "/ipd_images/opd ai prescription.webp",
+    image: "/ipd_images/opd-ai-prescription.webp",
     tag: "AI-Powered",
     title: "AI Medical Voice Scribe & Smart EMR",
     description: "Automate clinical documentation with our advanced AI voice scribe. Instantly transcribe symptoms and treatments into structured digital records.",
@@ -57,7 +57,7 @@ export const FEATURES: Feature[] = [
   {
     id: 2,
     slug: "revenue-analytics-dashboard",
-    image: "/ipd_images/opd admin.webp",
+    image: "/ipd_images/opd-admin.webp",
     tag: "Analytics",
     title: "Executive Revenue Analytics Dashboard",
     description: "Master your hospital's Revenue Cycle Management (RCM) with a high-density executive dashboard tracking cash vs digital collections.",
@@ -84,7 +84,7 @@ export const FEATURES: Feature[] = [
   {
     id: 3,
     slug: "smart-appointment-booking",
-    image: "/ipd_images/opd appoinment.webp",
+    image: "/ipd_images/opd-appoinment.webp",
     tag: "Digital",
     title: "Smart Appointment Booking System",
     description: "Streamline front-desk operations with a high-speed patient onboarding system and structured specialist scheduling engine.",
@@ -111,7 +111,7 @@ export const FEATURES: Feature[] = [
   {
     id: 4,
     slug: "intelligent-patient-queue",
-    image: "/ipd_images/opd appoinment list.webp",
+    image: "/ipd_images/opd-appoinment-list.webp",
     tag: "Digital",
     title: "Intelligent Patient Queue Management",
     description: "Optimize patient throughput and eliminate hospital congestion with a real-time queuing module and automated status triggers.",
@@ -138,7 +138,7 @@ export const FEATURES: Feature[] = [
   {
     id: 5,
     slug: "specialist-performance-analytics",
-    image: "/ipd_images/specialist graph.webp",
+    image: "/ipd_images/specialist-graph.webp",
     tag: "Analytics",
     title: "Specialist Performance Analytics",
     description: "Identify top-performing consultants and departments with granular tracking and high-fidelity visual charts.",
@@ -165,7 +165,7 @@ export const FEATURES: Feature[] = [
   {
     id: 6,
     slug: "universal-lab-integration",
-    image: "/ipd_images/lab comparision report.webp",
+    image: "/ipd_images/lab-comparision-report.webp",
     tag: "Digital",
     title: "Laboratory Information System (LIS)",
     description: "Connect your diagnostic lab for instant cloud-synced reporting and trend analysis to highlight abnormal health values.",
@@ -192,7 +192,7 @@ export const FEATURES: Feature[] = [
   {
     id: 7,
     slug: "paperless-ipd-management",
-    image: "/ipd_images/manage patinet ipd paper.webp",
+    image: "/ipd_images/manage-patinet-ipd-paper.webp",
     tag: "Paperless",
     title: "Paperless Indoor Patient File (IPD)",
     description: "Eliminate physical medical charts with a 100% paperless indoor patient file system digitally tracking nursing notes and treatments.",
@@ -219,7 +219,7 @@ export const FEATURES: Feature[] = [
   {
     id: 8,
     slug: "secure-medical-document-vault",
-    image: "/ipd_images/ipd document.webp",
+    image: "/ipd_images/ipd-document.webp",
     tag: "Digital",
     title: "Secure Medical Document Vault",
     description: "Digitize and protect sensitive patient records with HIPAA-compliant storage for X-Rays, Scans and medical histories.",
@@ -246,7 +246,7 @@ export const FEATURES: Feature[] = [
   {
     id: 9,
     slug: "intelligent-nursing-navigation",
-    image: "/ipd_images/ipd paper switch paper.webp",
+    image: "/ipd_images/ipd-paper-switch-paper.webp",
     tag: "Paperless",
     title: "Intelligent Nursing Navigation",
     description: "Empower nursing staff with one-tap access to patient records, ensuring continuity of care without the friction of paper browsing.",
@@ -273,7 +273,7 @@ export const FEATURES: Feature[] = [
   {
     id: 10,
     slug: "clinical-observation-digitization",
-    image: "/ipd_images/ipd paper view.webp",
+    image: "/ipd_images/ipd-paper-view.webp",
     tag: "Paperless",
     title: "Clinical Observation Digitization",
     description: "Capture clinical observations with the speed of handwriting and the efficiency of digital storage, mirroring traditional medical charts.",
@@ -300,7 +300,7 @@ export const FEATURES: Feature[] = [
   {
     id: 11,
     slug: "centralized-patient-intelligence",
-    image: "/ipd_images/ipd patient details.webp",
+    image: "/ipd_images/ipd-patient-details.webp",
     tag: "Digital",
     title: "Centralized Patient Intelligence System",
     description: "Achieve 360° clinical visibility with a centralized health record syncing registration, admissions and real-time bed assignments.",
@@ -327,7 +327,7 @@ export const FEATURES: Feature[] = [
   {
     id: 12,
     slug: "daily-performance-report",
-    image: "/ipd_images/daily performance report.webp",
+    image: "/ipd_images/daily-performance-report.webp",
     tag: "Analytics",
     title: "Daily Performance Report (DPR)",
     description: "Gain complete hospital performance tracking with real-time operations summary including appointments, admissions and births.",
