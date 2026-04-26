@@ -392,7 +392,8 @@ function FeatureSection({ feature, index, onImageClick }: { feature: Feature; in
             background: `linear-gradient(135deg, #1D4ED8 0%, #0891B2 100%)`,
             boxShadow: `0 20px 50px -10px rgba(37, 99, 235, 0.2), 0 10px 20px -5px rgba(0, 0, 0, 0.1)`,
             border: `1.5px solid rgba(29, 78, 216, 0.25)`,
-            maxWidth: '100%',
+            width: '100%',
+            maxWidth: '800px',
             aspectRatio: '16/10'
           }}
         >
