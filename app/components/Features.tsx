@@ -104,7 +104,7 @@ const tagColors: Record<string, string> = {
 const ANIMATION_CONFIG = {
   duration: 0.5,
   ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
-  viewport: { once: true, margin: "-100px" },
+  viewport: { once: true, margin: "-20px" },
 };
 
 export default function Features() {
@@ -392,18 +392,18 @@ function FeatureSection({ feature, index, onImageClick }: { feature: Feature; in
             background: `linear-gradient(135deg, #1D4ED8 0%, #0891B2 100%)`,
             boxShadow: `0 20px 50px -10px rgba(37, 99, 235, 0.2), 0 10px 20px -5px rgba(0, 0, 0, 0.1)`,
             border: `1.5px solid rgba(29, 78, 216, 0.25)`,
-            maxWidth: '100%'
+            maxWidth: '100%',
+            aspectRatio: '16/10'
           }}
         >
-          <div className="relative rounded-[20px] overflow-hidden bg-white shadow-inner">
+          <div className="relative rounded-[20px] overflow-hidden bg-white shadow-inner w-full h-full">
              <Image
                 src={imagePath}
                 alt={feature.title}
-                width={1200}
-                height={800}
-                className="w-full h-auto max-h-[500px] block object-contain"
-                loading={displayNum <= 2 ? "eager" : "lazy"}
-                priority={displayNum <= 2}
+                fill
+                className="block object-contain p-2"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 800px"
+                priority={displayNum <= 4}
               />
               
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-400 bg-blue-600/5 backdrop-blur-[1px] flex items-center justify-center">
