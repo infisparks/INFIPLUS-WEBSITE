@@ -28,7 +28,7 @@ export default function BlogPostClient({ post }: { post: BlogPost }) {
   return (
     <>
       <Navbar onBookDemo={() => setDemoOpen(true)} />
-      <main style={{ paddingTop: "100px", background: "white" }}>
+      <main style={{ paddingTop: "clamp(80px, 12vh, 120px)", background: "white" }}>
         <article className="container-main" style={{ maxWidth: "900px", paddingBottom: "100px" }}>
           <Link 
             href="/blog" 
@@ -51,14 +51,16 @@ export default function BlogPostClient({ post }: { post: BlogPost }) {
               {post.title}
             </h1>
             
-            <div style={{ 
+            <div className="blog-meta-header" style={{ 
               display: "flex", 
               alignItems: "center", 
               justifyContent: "space-between",
               paddingBottom: "24px",
-              borderBottom: "1px solid var(--border-subtle)"
+              borderBottom: "1px solid var(--border-subtle)",
+              gap: "16px",
+              flexWrap: "wrap"
             }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "20px", flexWrap: "wrap" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                   <div style={{ width: "32px", height: "32px", borderRadius: "50%", background: "var(--bg-surface)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                     <User size={16} />
@@ -80,7 +82,8 @@ export default function BlogPostClient({ post }: { post: BlogPost }) {
                 gap: "8px",
                 cursor: "pointer",
                 fontSize: "0.85rem",
-                fontWeight: 600
+                fontWeight: 600,
+                width: "fit-content"
               }}>
                 <Share2 size={14} /> Share
               </button>
@@ -89,7 +92,7 @@ export default function BlogPostClient({ post }: { post: BlogPost }) {
 
           <div style={{ 
             position: "relative", 
-            height: "450px", 
+            height: "clamp(220px, 50vw, 450px)", 
             borderRadius: "var(--radius-xl)", 
             overflow: "hidden", 
             marginBottom: "50px",
@@ -160,6 +163,16 @@ export default function BlogPostClient({ post }: { post: BlogPost }) {
         }
         .blog-content strong {
           color: var(--color-primary);
+        }
+        @media (max-width: 640px) {
+          .blog-meta-header {
+            flex-direction: column;
+            align-items: flex-start !important;
+            gap: 12px !important;
+          }
+          .blog-meta-header > div {
+            gap: 12px !important;
+          }
         }
       `}</style>
     </>
