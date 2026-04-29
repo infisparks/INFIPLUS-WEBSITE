@@ -88,8 +88,10 @@ export default function ContactFooter() {
               <span
                 style={{
                   background: "linear-gradient(135deg, #2563EB, #6366F1)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
+                  color: "white",
+                  padding: "2px 12px",
+                  borderRadius: "8px",
+                  display: "inline-block",
                 }}
               >
                 Hospital Operations?

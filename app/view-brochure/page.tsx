@@ -97,8 +97,10 @@ export default function ViewBrochurePage() {
           }}>
             India&apos;s Best <span style={{ 
               background: "linear-gradient(135deg, #2563EB, #7C3AED)", 
-              WebkitBackgroundClip: "text", 
-              WebkitTextFillColor: "transparent" 
+              color: "white",
+              padding: "4px 14px",
+              borderRadius: "12px",
+              display: "inline-block"
             }}>Hospital Software</span>
           </h1>
 

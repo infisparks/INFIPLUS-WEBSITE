@@ -10,20 +10,20 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.infiplus.in"),
+  metadataBase: new URL("https://infiplus.in"),
   alternates: {
     canonical: "/",
   },
-  title: "INFIPLUS | AI-Powered Paperless Hospital Management System & EMR",
+  title: "Best Hospital Management Software India | INFIPLUS AI-HMS & EMR",
   description:
-    "Transform your facility with INFIPLUS, the #1 AI-powered hospital management software. Replace paper files with secure digital records, manage OPD/IPD, and scale hospital revenue with real-time analytics.",
+    "INFIPLUS is India's best hospital management software (HMS) for clinics and hospitals. Go paperless with AI-powered EMR, OPD/IPD management, Lab, and Pharmacy automation.",
   keywords:
-    "hospital management system, EMR software India, healthcare automation, paperless hospital software, AI medical scribe, OPD management, IPD management, medical analytics, INFIPLUS healthcare",
+    "best hospital management software, hospital management system India, HMS software, EMR system, paperless hospital, healthcare ERP, clinic management software, INFIPLUS healthcare",
   authors: [{ name: "Infisparks Healthcare" }],
   openGraph: {
-    title: "INFIPLUS | AI-Powered Hospital Management System",
-    description: "The next generation of paperless healthcare. Streamline operations and improve patient care with INFIPLUS.",
-    url: "https://www.infiplus.in",
+    title: "Best Hospital Management Software | INFIPLUS AI-HMS",
+    description: "The #1 choice for paperless healthcare in India. Streamline operations and scale your facility with INFIPLUS.",
+    url: "https://infiplus.in",
     siteName: "INFIPLUS Healthcare",
     images: [
       {

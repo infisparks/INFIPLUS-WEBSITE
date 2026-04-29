@@ -118,8 +118,10 @@ export default function WhyInfiplus() {
               <span
                 style={{
                   background: "linear-gradient(135deg, #2563EB 0%, #6366F1 100%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
+                  color: "white",
+                  padding: "2px 10px",
+                  borderRadius: "8px",
+                  display: "inline-block",
                 }}
               >
                 Modern Healthcare
