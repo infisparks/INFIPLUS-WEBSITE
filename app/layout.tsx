@@ -14,23 +14,43 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
-  title: "Best Hospital Management Software India | INFIPLUS AI-HMS & EMR",
+  title: {
+    default: "Best Hospital Management Software India | INFIPLUS AI-HMS & EMR",
+    template: "%s | INFIPLUS Healthcare"
+  },
   description:
-    "INFIPLUS is India's best hospital management software (HMS) for clinics and hospitals. Go paperless with AI-powered EMR, OPD/IPD management, Lab, and Pharmacy automation.",
-  keywords:
-    "best hospital management software, hospital management system India, HMS software, EMR system, paperless hospital, healthcare ERP, clinic management software, INFIPLUS healthcare",
-  authors: [{ name: "Infisparks Healthcare" }],
+    "INFIPLUS is India's leading AI-powered hospital management software (HMS) and EMR system. Automate OPD, IPD, Lab, and Pharmacy operations with our paperless healthcare solutions.",
+  keywords: [
+    "best hospital management software",
+    "hospital management system India",
+    "HMS software",
+    "EMR system",
+    "paperless hospital",
+    "healthcare ERP",
+    "clinic management software",
+    "INFIPLUS healthcare",
+    "LIS software India",
+    "diagnostic center software"
+  ],
+  authors: [{ name: "Shaikh Mudassir" }, { name: "Moin Zariwala" }],
+  creator: "INFIPLUS Team",
+  publisher: "INFIPLUS Healthcare",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
   openGraph: {
-    title: "Best Hospital Management Software | INFIPLUS AI-HMS",
-    description: "The #1 choice for paperless healthcare in India. Streamline operations and scale your facility with INFIPLUS.",
+    title: "INFIPLUS | Best Hospital & Lab Management Software in India",
+    description: "Transform your healthcare facility with India's #1 AI-powered HMS. Paperless, efficient, and scalable solutions for modern hospitals and labs.",
     url: "https://infiplus.in",
     siteName: "INFIPLUS Healthcare",
     images: [
       {
-        url: "/og-image.png",
+        url: "/whatsap.webp",
         width: 1200,
         height: 630,
-        alt: "INFIPLUS Hospital Management Dashboard",
+        alt: "INFIPLUS Healthcare Software Thumbnail",
       },
     ],
     locale: "en_IN",
@@ -38,14 +58,29 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "INFIPLUS | AI-Powered Hospital Management",
-    description: "Go paperless and automate your clinical workflows with INFIPLUS.",
-    images: ["/og-image.png"],
+    title: "INFIPLUS | Leading Hospital Management Software",
+    description: "Streamline clinical workflows and go paperless with India's best AI-HMS and EMR system.",
+    images: ["/whatsap.webp"],
+    creator: "@infiplus",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
   icons: {
     icon: "/meta-logo.png",
     shortcut: "/meta-logo.png",
     apple: "/meta-logo.png",
+  },
+  verification: {
+    google: "google-site-verification-id", // User should replace with actual ID
   },
 };
 

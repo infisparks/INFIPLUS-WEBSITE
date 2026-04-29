@@ -27,9 +27,12 @@ export default function Navbar({ onBookDemo }: NavbarProps) {
   }, []);
 
   const navLinks = [
-    { title: "Features", href: "#features" },
-    { title: "Why Infiplus", href: "#why-info" },
-    { title: "Contact", href: "#contact" },
+    { title: "Services", href: "/services" },
+    { title: "Modules", href: "/modules" },
+    { title: "Features", href: "/#features" },
+    { title: "Blog", href: "/blog" },
+    { title: "Why Infiplus", href: "/#why-info" },
+    { title: "Contact", href: "/#contact" },
   ];
 
   return (
