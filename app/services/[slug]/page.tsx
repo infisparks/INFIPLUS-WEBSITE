@@ -28,8 +28,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${service.title} | Best Healthcare Software India`,
     description: service.description,
     alternates: {
-      canonical: `https://infiplus.in
-    }
+      canonical: `https://infiplus.in/services/${slug}`,
+    },
   };
 }
 
