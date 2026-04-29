@@ -10,6 +10,10 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.infiplus.in"),
+  alternates: {
+    canonical: "/",
+  },
   title: "INFIPLUS | AI-Powered Paperless Hospital Management System & EMR",
   description:
     "Transform your facility with INFIPLUS, the #1 AI-powered hospital management software. Replace paper files with secure digital records, manage OPD/IPD, and scale hospital revenue with real-time analytics.",
@@ -19,7 +23,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "INFIPLUS | AI-Powered Hospital Management System",
     description: "The next generation of paperless healthcare. Streamline operations and improve patient care with INFIPLUS.",
-    url: "https://infiplus.com",
+    url: "https://www.infiplus.in",
     siteName: "INFIPLUS Healthcare",
     images: [
       {

@@ -9,6 +9,9 @@ export const metadata: Metadata = {
     description: "Transform your hospital with India's most reliable and paperless HMS. View our detailed features and benefits.",
     images: ["/brochure/brochure.png"],
   },
+  alternates: {
+    canonical: "/view-brochure",
+  },
 };
 
 export default function BrochureLayout({
