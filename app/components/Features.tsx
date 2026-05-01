@@ -210,6 +210,7 @@ export default function Features() {
              >
                 <button 
                   onClick={() => handleZoom(0.3)}
+                  aria-label="Zoom In"
                   className="pro-btn-glass"
                   style={{ width: '52px', height: '52px', borderRadius: '16px', color: 'var(--color-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                   title="Zoom In"
@@ -218,6 +219,7 @@ export default function Features() {
                 </button>
                 <button 
                   onClick={() => handleZoom(-0.3)}
+                  aria-label="Zoom Out"
                   className="pro-btn-glass"
                   style={{ width: '52px', height: '52px', borderRadius: '16px', color: 'var(--color-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                   title="Zoom Out"
@@ -226,6 +228,7 @@ export default function Features() {
                 </button>
                 <button 
                   onClick={closeLightbox}
+                  aria-label="Close Preview"
                   className="pro-btn-glass close-btn"
                   style={{ width: '52px', height: '52px', borderRadius: '16px', color: '#ef4444', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                   title="Close"

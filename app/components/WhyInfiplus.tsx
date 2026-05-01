@@ -148,6 +148,7 @@ export default function WhyInfiplus() {
           {/* CTA pill — desktop only */}
           <motion.a
             href="#contact"
+            aria-label="Talk to Sales"
             initial={{ opacity: 0, x: 12 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}

@@ -271,6 +271,7 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
           >
             <motion.button
               onClick={onBookDemo}
+              aria-label="Book a Demo"
               whileHover={isMobile ? undefined : { scale: 1.05, boxShadow: "0 20px 48px -8px rgba(37,99,235,0.45)" }}
               whileTap={isMobile ? undefined : { scale: 0.97 }}
               className="glow-btn-primary"
@@ -290,8 +291,9 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
               <ArrowRight size={15} strokeWidth={2.5} />
             </motion.button>
 
-            <Link href="/view-brochure" style={{ textDecoration: "none" }}>
+            <Link href="/view-brochure" style={{ textDecoration: "none" }} aria-label="View Infiplus Brochure">
               <motion.button
+                aria-label="Download Brochure"
                 whileHover={isMobile ? undefined : {
                   background: "rgba(255,255,255,1)",
                   borderColor: "rgba(37,99,235,0.6)",
@@ -322,6 +324,7 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
               onClick={() => {
                 document.getElementById("features")?.scrollIntoView({ behavior: "smooth" });
               }}
+              aria-label="Explore Features"
               whileHover={isMobile ? undefined : {
                 background: "rgba(255,255,255,1)",
                 borderColor: "rgba(37,99,235,0.6)",
@@ -634,12 +637,12 @@ function MetricCard({ icon, title, desc, color, isMobile }: {
         {icon}
       </div>
       <div>
-        <h4 style={{
+        <h3 style={{
           fontSize: "clamp(0.78rem, 1.6vw, 1rem)",
           fontWeight: 700, color: "#0F172A", marginBottom: 5, letterSpacing: "-0.01em",
         }}>
           {title}
-        </h4>
+        </h3>
         <p style={{
           fontSize: "clamp(0.68rem, 1.3vw, 0.82rem)",
           color: "#475569", lineHeight: 1.6, fontWeight: 500,

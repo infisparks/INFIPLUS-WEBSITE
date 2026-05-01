@@ -116,6 +116,8 @@ export default function Navbar({ onBookDemo }: NavbarProps) {
           {/* Logo */}
           <motion.div
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            role="button"
+            aria-label="Scroll to top"
             style={{ cursor: "pointer", position: "relative", width: 110, height: 32 }}
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
@@ -137,6 +139,7 @@ export default function Navbar({ onBookDemo }: NavbarProps) {
                 <a
                   key={link.title}
                   href={link.href}
+                  aria-label={link.title}
                   className="nav-link"
                   style={{
                     fontSize: "0.82rem",
@@ -158,6 +161,7 @@ export default function Navbar({ onBookDemo }: NavbarProps) {
             {/* Phone quick link */}
             <a
               href="tel:+919958399157"
+              aria-label="Call Infiplus at +91 99583 99157"
               style={{
                 display: "flex",
                 alignItems: "center",
@@ -181,6 +185,7 @@ export default function Navbar({ onBookDemo }: NavbarProps) {
 
             <motion.button
               onClick={onBookDemo}
+              aria-label="Book a Demo"
               className="glow-btn-primary"
               whileHover={{ scale: 1.04 }}
               whileTap={{ scale: 0.96 }}
@@ -206,6 +211,7 @@ export default function Navbar({ onBookDemo }: NavbarProps) {
           {/* Mobile Toggle */}
           <motion.button
             onClick={() => setIsOpen(!isOpen)}
+            aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
             whileTap={{ scale: 0.9 }}
             style={{
               background: isOpen ? "rgba(37, 99, 235, 0.1)" : "white",
@@ -252,6 +258,7 @@ export default function Navbar({ onBookDemo }: NavbarProps) {
                   <motion.a
                     key={link.title}
                     href={link.href}
+                    aria-label={link.title}
                     onClick={() => setIsOpen(false)}
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -276,6 +283,7 @@ export default function Navbar({ onBookDemo }: NavbarProps) {
                 {/* Phone row */}
                 <a
                   href="tel:+919958399157"
+                  aria-label="Call Infiplus at +91 99583 99157"
                   style={{
                     display: "flex",
                     alignItems: "center",
@@ -296,6 +304,7 @@ export default function Navbar({ onBookDemo }: NavbarProps) {
                 </a>
                 <motion.button
                   onClick={() => { onBookDemo(); setIsOpen(false); }}
+                  aria-label="Book a Demo"
                   initial={{ opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.16 }}

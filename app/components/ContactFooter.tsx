@@ -120,6 +120,7 @@ export default function ContactFooter() {
                 <motion.a
                   key={info.title}
                   href={info.href}
+                  aria-label={info.title}
                   initial={{ opacity: 0, x: -14 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
@@ -183,6 +184,7 @@ export default function ContactFooter() {
               href="https://wa.me/919765768571"
               target="_blank"
               rel="noopener"
+              aria-label="Chat on WhatsApp"
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -346,9 +348,9 @@ export default function ContactFooter() {
               Revolutionizing medical ecosystems with the most intuitive, paperless management software. Trusted by 50+ providers across India.
             </p>
             <div style={{ display: "flex", gap: 10, marginTop: "clamp(18px, 2.5vw, 28px)" }}>
-              <SocialLink icon={<Instagram size={15} />} color="#E1306C" />
-              <SocialLink icon={<Linkedin size={15} />} color="#0A66C2" />
-              <SocialLink icon={<Twitter size={15} />} color="#1DA1F2" />
+              <SocialLink icon={<Instagram size={15} />} color="#E1306C" ariaLabel="Infiplus Instagram" />
+              <SocialLink icon={<Linkedin size={15} />} color="#0A66C2" ariaLabel="Infiplus Linkedin" />
+              <SocialLink icon={<Twitter size={15} />} color="#1DA1F2" ariaLabel="Infiplus Twitter" />
             </div>
           </div>
 
@@ -545,6 +547,7 @@ function FooterLink({ text, href = "#" }: { text: string; href?: string }) {
   return (
     <motion.a
       href={href}
+      aria-label={text}
       whileHover={{ x: 4, color: "#2563EB" }}
       style={{
         fontSize: "clamp(0.72rem, 1.3vw, 0.82rem)",
@@ -561,10 +564,11 @@ function FooterLink({ text, href = "#" }: { text: string; href?: string }) {
   );
 }
 
-function SocialLink({ icon, color }: { icon: any; color: string }) {
+function SocialLink({ icon, color, ariaLabel }: { icon: any; color: string; ariaLabel: string }) {
   return (
     <motion.a
       href="#"
+      aria-label={ariaLabel}
       whileHover={{ y: -3, borderColor: color, color }}
       style={{
         width: 36,
