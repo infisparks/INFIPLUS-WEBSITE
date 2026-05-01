@@ -191,16 +191,6 @@ export default function WhyInfiplus() {
         </div>
       </div>
 
-      <style jsx>{`
-        @media (max-width: 640px) {
-          .why-header {
-            grid-template-columns: 1fr !important;
-          }
-          .why-cta-btn {
-            display: none !important;
-          }
-        }
-      `}</style>
     </section>
   );
 }

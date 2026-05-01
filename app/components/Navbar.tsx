@@ -318,29 +318,6 @@ export default function Navbar({ onBookDemo }: NavbarProps) {
             </motion.div>
           )}
         </AnimatePresence>
-
-        <style jsx>{`
-          .desktop-nav { display: flex !important; }
-          .mobile-nav-toggle { display: none !important; }
-
-          @media (max-width: 960px) {
-            .desktop-nav { display: none !important; }
-            .mobile-nav-toggle { display: flex !important; }
-            .navbar-content { padding: 5px 0 !important; }
-            .navbar-logo { width: 100px !important; height: 28px !important; }
-          }
-
-          @media (max-width: 1100px) {
-            .phone-link-nav { display: none !important; }
-          }
-
-          .nav-link:hover { color: #2563EB !important; }
-
-          .mobile-link:hover {
-            background: rgba(37, 99, 235, 0.05) !important;
-            color: #2563EB !important;
-          }
-        `}</style>
       </nav>
     </header>
   );

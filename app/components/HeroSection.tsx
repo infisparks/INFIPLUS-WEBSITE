@@ -25,6 +25,8 @@ const ROTATING_WORDS = ["OPD Automation", "IPD & Billing", "Lab Reporting", "Pha
 
 export default function HeroSection({ onBookDemo }: HeroSectionProps) {
   const [wordIndex, setWordIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(true);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -32,6 +34,43 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
     }, 2200);
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      const mobile = window.matchMedia("(max-width: 768px)").matches;
+      setIsMobile(mobile);
+      if (mobile) {
+        setIsLoaded(false);
+        const timer = setTimeout(() => {
+          setIsLoaded(true);
+        }, 1000);
+        return () => clearTimeout(timer);
+      } else {
+        setIsLoaded(true);
+      }
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  if (isMobile && !isLoaded) {
+    return (
+      <section
+        id="hero"
+        style={{
+          position: "relative",
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          overflow: "hidden",
+          background: "linear-gradient(155deg, #FFFFFF 0%, #EFF6FF 55%, #F5F3FF 100%)",
+        }}
+      />
+    );
+  }
 
   return (
     <>
@@ -74,7 +113,7 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
           borderRadius: "50%",
           background: "radial-gradient(circle, rgba(37,99,235,0.07) 0%, transparent 70%)",
           filter: "blur(50px)", zIndex: 0,
-          animation: "float-y 8s ease-in-out infinite",
+          animation: isMobile ? undefined : "float-y 8s ease-in-out infinite",
         }} />
         <div style={{
           position: "absolute", bottom: "18%", left: "4%",
@@ -82,7 +121,7 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
           borderRadius: "50%",
           background: "radial-gradient(circle, rgba(99,102,241,0.06) 0%, transparent 70%)",
           filter: "blur(50px)", zIndex: 0,
-          animation: "float-y 10s ease-in-out infinite reverse",
+          animation: isMobile ? undefined : "float-y 10s ease-in-out infinite reverse",
         }} />
 
         <div
@@ -94,9 +133,9 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
         >
           {/* ── Top badge ── */}
           <motion.div
-            initial={{ opacity: 0, y: -12, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.55, ease: EASE }}
+            initial={isMobile ? undefined : { opacity: 0, y: -12, scale: 0.9 }}
+            animate={isMobile ? undefined : { opacity: 1, y: 0, scale: 1 }}
+            transition={isMobile ? undefined : { duration: 0.55, ease: EASE }}
             style={{
               display: "inline-flex", alignItems: "center", gap: 8,
               padding: "5px 16px 5px 6px",
@@ -129,9 +168,9 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
 
           {/* ── Headline ── */}
           <motion.h1
-            initial={{ opacity: 0, y: 32 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.85, ease: EASE, delay: 0.1 }}
+            initial={isMobile ? undefined : { opacity: 0, y: 32 }}
+            animate={isMobile ? undefined : { opacity: 1, y: 0 }}
+            transition={isMobile ? undefined : { duration: 0.85, ease: EASE, delay: 0.1 }}
             style={{
               fontSize: "clamp(1.2rem, 5.5vw, 4.6rem)",
               fontWeight: 900,
@@ -150,19 +189,11 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
               position: "relative",
               minWidth: "clamp(90px, 26vw, 380px)",
             }}>
-              <AnimatePresence mode="wait">
-                <motion.span
-                  key={wordIndex}
-                  initial={{ opacity: 0, y: 25, rotateX: -30, filter: "blur(8px)", scale: 0.95 }}
-                  animate={{ opacity: 1, y: 0, rotateX: 0, filter: "blur(0px)", scale: 1 }}
-                  exit={{ opacity: 0, y: -25, rotateX: 30, filter: "blur(8px)", scale: 0.95 }}
-                  transition={{ 
-                    duration: 0.5, 
-                    ease: [0.16, 1, 0.3, 1], // Custom fast-out ease
-                  }}
+              {isMobile ? (
+                <span
                   style={{
                     display: "inline-block",
-                    background: "linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)", // Vibrate Blue
+                    background: "linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)",
                     color: "white",
                     padding: "4px 18px",
                     borderRadius: "14px",
@@ -171,16 +202,40 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
                   }}
                 >
                   {ROTATING_WORDS[wordIndex]}
-                </motion.span>
-              </AnimatePresence>
+                </span>
+              ) : (
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={wordIndex}
+                    initial={{ opacity: 0, y: 25, rotateX: -30, filter: "blur(8px)", scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, rotateX: 0, filter: "blur(0px)", scale: 1 }}
+                    exit={{ opacity: 0, y: -25, rotateX: 30, filter: "blur(8px)", scale: 0.95 }}
+                    transition={{ 
+                      duration: 0.5, 
+                      ease: [0.16, 1, 0.3, 1], // Custom fast-out ease
+                    }}
+                    style={{
+                      display: "inline-block",
+                      background: "linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)", // Vibrate Blue
+                      color: "white",
+                      padding: "4px 18px",
+                      borderRadius: "14px",
+                      boxShadow: "0 15px 35px -8px rgba(37,99,235,0.5)",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {ROTATING_WORDS[wordIndex]}
+                  </motion.span>
+                </AnimatePresence>
+              )}
             </span>
           </motion.h1>
 
           {/* ── Subheadline ── */}
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.75, ease: EASE, delay: 0.22 }}
+            initial={isMobile ? undefined : { opacity: 0, y: 20 }}
+            animate={isMobile ? undefined : { opacity: 1, y: 0 }}
+            transition={isMobile ? undefined : { duration: 0.75, ease: EASE, delay: 0.22 }}
             style={{
               fontSize: "clamp(0.68rem, 1.7vw, 1.05rem)",
               color: "#475569",
@@ -206,9 +261,9 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
 
           {/* ── CTA Buttons ── */}
           <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.75, ease: EASE, delay: 0.32 }}
+            initial={isMobile ? undefined : { opacity: 0, y: 18 }}
+            animate={isMobile ? undefined : { opacity: 1, y: 0 }}
+            transition={isMobile ? undefined : { duration: 0.75, ease: EASE, delay: 0.32 }}
             style={{
               display: "flex", gap: "clamp(10px, 2.5vw, 14px)",
               justifyContent: "center", flexWrap: "wrap",
@@ -216,8 +271,8 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
           >
             <motion.button
               onClick={onBookDemo}
-              whileHover={{ scale: 1.05, boxShadow: "0 20px 48px -8px rgba(37,99,235,0.45)" }}
-              whileTap={{ scale: 0.97 }}
+              whileHover={isMobile ? undefined : { scale: 1.05, boxShadow: "0 20px 48px -8px rgba(37,99,235,0.45)" }}
+              whileTap={isMobile ? undefined : { scale: 0.97 }}
               className="glow-btn-primary"
               style={{
                 padding: "clamp(8px, 1.6vw, 16px) clamp(14px, 3.5vw, 44px)",
@@ -237,12 +292,12 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
 
             <Link href="/view-brochure" style={{ textDecoration: "none" }}>
               <motion.button
-                whileHover={{
+                whileHover={isMobile ? undefined : {
                   background: "rgba(255,255,255,1)",
                   borderColor: "rgba(37,99,235,0.6)",
                   scale: 1.04,
                 }}
-                whileTap={{ scale: 0.97 }}
+                whileTap={isMobile ? undefined : { scale: 0.97 }}
                 style={{
                   padding: "clamp(8px, 1.6vw, 16px) clamp(14px, 3.5vw, 44px)",
                   borderRadius: "9999px",
@@ -267,12 +322,12 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
               onClick={() => {
                 document.getElementById("features")?.scrollIntoView({ behavior: "smooth" });
               }}
-              whileHover={{
+              whileHover={isMobile ? undefined : {
                 background: "rgba(255,255,255,1)",
                 borderColor: "rgba(37,99,235,0.6)",
                 scale: 1.04,
               }}
-              whileTap={{ scale: 0.97 }}
+              whileTap={isMobile ? undefined : { scale: 0.97 }}
               style={{
                 padding: "clamp(8px, 1.6vw, 16px) clamp(14px, 3.5vw, 44px)",
                 borderRadius: "9999px",
@@ -293,9 +348,9 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
 
           {/* ── Trust checkmarks ── */}
           <motion.div
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: EASE, delay: 0.44 }}
+            initial={isMobile ? undefined : { opacity: 0, y: 14 }}
+            animate={isMobile ? undefined : { opacity: 1, y: 0 }}
+            transition={isMobile ? undefined : { duration: 0.7, ease: EASE, delay: 0.44 }}
             style={{
               display: "flex", alignItems: "center", justifyContent: "center",
               gap: "clamp(8px, 2vw, 18px)",
@@ -317,9 +372,9 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
 
           {/* ── Stats strip ── */}
           <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.75, ease: EASE, delay: 0.55 }}
+            initial={isMobile ? undefined : { opacity: 0, y: 12 }}
+            animate={isMobile ? undefined : { opacity: 1, y: 0 }}
+            transition={isMobile ? undefined : { duration: 0.75, ease: EASE, delay: 0.55 }}
             style={{
               display: "inline-flex", alignItems: "center", justifyContent: "center",
               gap: "clamp(10px, 2.5vw, 28px)",
@@ -435,20 +490,20 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
           {/* Section header */}
           <div style={{ textAlign: "center", marginBottom: "clamp(24px, 4vw, 48px)" }}>
             <motion.span
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={isMobile ? undefined : { opacity: 0, y: 10 }}
+              whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, ease: EASE }}
+              transition={isMobile ? undefined : { duration: 0.5, ease: EASE }}
               className="section-badge"
             >
               WHY GO PAPERLESS
             </motion.span>
 
             <motion.h2
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={isMobile ? undefined : { opacity: 0, y: 16 }}
+              whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.7, ease: EASE, delay: 0.08 }}
+              transition={isMobile ? undefined : { duration: 0.7, ease: EASE, delay: 0.08 }}
               style={{
                 fontSize: "clamp(1.15rem, 3.5vw, 2.5rem)",
                 fontWeight: 900, color: "#0F172A",
@@ -469,10 +524,10 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
             </motion.h2>
 
             <motion.p
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={isMobile ? undefined : { opacity: 0, y: 12 }}
+              whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.65, ease: EASE, delay: 0.16 }}
+              transition={isMobile ? undefined : { duration: 0.65, ease: EASE, delay: 0.16 }}
               style={{
                 color: "#475569", lineHeight: 1.65, fontWeight: 500,
                 fontSize: "clamp(0.72rem, 1.5vw, 0.92rem)",
@@ -489,18 +544,18 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
             gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
             gap: "clamp(12px, 2vw, 20px)",
           }}>
-            <MetricCard icon={<Star size={18} strokeWidth={2} />} title="Unified Digital Charts" desc="View every patient's history, labs, and vitals from any ward tablet or desktop." color="#2563EB" />
-            <MetricCard icon={<Fingerprint size={18} strokeWidth={2} />} title="Smart Progress Notes" desc="Automated timestamping and smart templates that learn your writing style." color="#7C3AED" />
-            <MetricCard icon={<Clock size={18} strokeWidth={2} />} title="Real-Time Diagnostics" desc="Pathology results delivered digitally the second they are verified." color="#0891B2" />
-            <MetricCard icon={<Activity size={18} strokeWidth={2} />} title="Revenue Analytics" desc="Track performance in real-time with doctor-wise revenue dashboards." color="#10B981" />
+            <MetricCard icon={<Star size={18} strokeWidth={2} />} title="Unified Digital Charts" desc="View every patient's history, labs, and vitals from any ward tablet or desktop." color="#2563EB" isMobile={isMobile} />
+            <MetricCard icon={<Fingerprint size={18} strokeWidth={2} />} title="Smart Progress Notes" desc="Automated timestamping and smart templates that learn your writing style." color="#7C3AED" isMobile={isMobile} />
+            <MetricCard icon={<Clock size={18} strokeWidth={2} />} title="Real-Time Diagnostics" desc="Pathology results delivered digitally the second they are verified." color="#0891B2" isMobile={isMobile} />
+            <MetricCard icon={<Activity size={18} strokeWidth={2} />} title="Revenue Analytics" desc="Track performance in real-time with doctor-wise revenue dashboards." color="#10B981" isMobile={isMobile} />
           </div>
 
           {/* KPI strip */}
           <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={isMobile ? undefined : { opacity: 0, y: 12 }}
+            whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.65, ease: EASE, delay: 0.1 }}
+            transition={isMobile ? undefined : { duration: 0.65, ease: EASE, delay: 0.1 }}
             style={{
               display: "flex", gap: "clamp(14px, 3vw, 28px)",
               justifyContent: "center", flexWrap: "wrap",
@@ -541,16 +596,16 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
   );
 }
 
-function MetricCard({ icon, title, desc, color }: {
-  icon: React.ReactNode; title: string; desc: string; color: string;
+function MetricCard({ icon, title, desc, color, isMobile }: {
+  icon: React.ReactNode; title: string; desc: string; color: string; isMobile: boolean;
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={isMobile ? undefined : { opacity: 0, y: 20 }}
+      whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-      whileHover={{ y: -6, boxShadow: `0 20px 48px -10px ${color}28` }}
+      transition={isMobile ? undefined : { duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+      whileHover={isMobile ? undefined : { y: -6, boxShadow: `0 20px 48px -10px ${color}28` }}
       style={{
         background: "#FFFFFF",
         borderRadius: "clamp(12px, 2vw, 20px)",
