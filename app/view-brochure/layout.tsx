@@ -7,10 +7,16 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Infiplus - Complete Hospital Management Software Brochure",
     description: "Transform your hospital with India's most reliable and paperless HMS. View our detailed features and benefits.",
-    images: ["/brochure/brochure.png"],
+    images: ["https://infiplus.in/brochure/brochure.png"],
   },
   alternates: {
     canonical: "/view-brochure",
+  },
+  other: {
+    "instagram:card": "summary_large_image",
+    "instagram:title": "Infiplus - Complete Hospital Management Software Brochure",
+    "instagram:description": "Transform your hospital with India's most reliable and paperless HMS. View our detailed features and benefits.",
+    "instagram:image": "https://infiplus.in/brochure/brochure.png",
   },
 };
 

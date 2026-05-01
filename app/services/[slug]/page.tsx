@@ -52,6 +52,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: service.description,
       images: [imageUrl],
     },
+    other: {
+      "instagram:card": "summary_large_image",
+      "instagram:title": `${service.title} | Best Healthcare Software India`,
+      "instagram:description": service.description,
+      "instagram:image": imageUrl,
+    },
   };
 }
 

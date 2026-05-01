@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     siteName: "INFIPLUS Healthcare",
     images: [
       {
-        url: "/whatsap.webp",
+        url: "https://infiplus.in/whatsap.webp",
         width: 1200,
         height: 630,
         alt: "INFIPLUS Healthcare Software Thumbnail",
@@ -60,8 +60,14 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "INFIPLUS | Leading Hospital Management Software",
     description: "Streamline clinical workflows and go paperless with India's best AI-HMS and EMR system.",
-    images: ["/whatsap.webp"],
+    images: ["https://infiplus.in/whatsap.webp"],
     creator: "@infiplus",
+  },
+  other: {
+    "instagram:card": "summary_large_image",
+    "instagram:title": "INFIPLUS | Best Hospital & Lab Management Software in India",
+    "instagram:description": "Transform your healthcare facility with India's #1 AI-powered HMS. Paperless, efficient, and scalable solutions for modern hospitals and labs.",
+    "instagram:image": "https://infiplus.in/whatsap.webp",
   },
   robots: {
     index: true,

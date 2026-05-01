@@ -45,6 +45,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: post.description,
       images: [imageUrl],
     },
+    other: {
+      "instagram:card": "summary_large_image",
+      "instagram:title": `${post.title} | INFIPLUS Blog`,
+      "instagram:description": post.description,
+      "instagram:image": imageUrl,
+    },
   };
 }
 
