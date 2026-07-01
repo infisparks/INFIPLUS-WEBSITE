@@ -19,7 +19,6 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
   // Form states
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
   const [hospitalName, setHospitalName] = useState("");
   const [beds, setBeds] = useState("Choose...");
   const [agree, setAgree] = useState(false);
@@ -38,7 +37,7 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name || !email || !phone || !hospitalName || beds === "Choose...") {
+    if (!name || !email || !hospitalName || beds === "Choose...") {
       setError("Please fill in all required fields.");
       return;
     }
@@ -48,11 +47,22 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
     }
     setError(null);
     setIsSubmitting(true);
-    // Simulate API call
+    
+    // Construct WhatsApp message
+    const message = `Hi Infiplus, I would like to activate my 7-day free trial. Here are my details:\n\n` +
+      `• Name: ${name}\n` +
+      `• Email: ${email}\n` +
+      `• Hospital/Clinic: ${hospitalName}\n` +
+      `• Number of Beds: ${beds}`;
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/919958399157?text=${encodedMessage}`;
+
+    // Simulate API call and redirect
     setTimeout(() => {
       setIsSubmitting(false);
       setIsSubmitted(true);
-    }, 1000);
+      window.open(whatsappUrl, "_blank");
+    }, 800);
   };
 
   const handleWhatsAppClick = () => {
@@ -290,10 +300,10 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
                       <Check size={30} strokeWidth={3} />
                     </div>
                     <h3 style={{ fontSize: "20px", fontWeight: 800, color: "#111827", marginBottom: "10px" }}>
-                      Trial Form Submitted!
+                      Opening WhatsApp...
                     </h3>
                     <p style={{ fontSize: "14px", color: "#4B5563", lineHeight: 1.5 }}>
-                      Thank you, <strong>{name}</strong>! We will contact you at <strong>{phone}</strong> within 2 hours to set up your free trial.
+                      Thank you, <strong>{name}</strong>! We have opened WhatsApp to activate your free trial. If it didn&apos;t open automatically, please check your browser pop-up blocker.
                     </p>
                   </div>
                 ) : (
@@ -380,45 +390,24 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
                       </div>
                     </div>
 
-                    <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "12px" }}>
-                      <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-                        <label style={{ fontSize: "12px", fontWeight: 600, color: "#374151" }}>Phone *</label>
-                        <input
-                          type="tel"
-                          placeholder="+91 98XXXXXXXX"
-                          required
-                          value={phone}
-                          onChange={(e) => setPhone(e.target.value)}
-                          style={{
-                            padding: "10px 12px",
-                            fontSize: "13px",
-                            border: "1px solid #E5E7EB",
-                            borderRadius: "8px",
-                            outline: "none",
-                            color: "#111827",
-                            background: "#FFFFFF",
-                          }}
-                        />
-                      </div>
-                      <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-                        <label style={{ fontSize: "12px", fontWeight: 600, color: "#374151" }}>Hospital / Clinic Name *</label>
-                        <input
-                          type="text"
-                          placeholder="e.g., hospital"
-                          required
-                          value={hospitalName}
-                          onChange={(e) => setHospitalName(e.target.value)}
-                          style={{
-                            padding: "10px 12px",
-                            fontSize: "13px",
-                            border: "1px solid #E5E7EB",
-                            borderRadius: "8px",
-                            outline: "none",
-                            color: "#111827",
-                            background: "#FFFFFF",
-                          }}
-                        />
-                      </div>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+                      <label style={{ fontSize: "12px", fontWeight: 600, color: "#374151" }}>Hospital / Clinic Name *</label>
+                      <input
+                        type="text"
+                        placeholder="e.g., hospital"
+                        required
+                        value={hospitalName}
+                        onChange={(e) => setHospitalName(e.target.value)}
+                        style={{
+                          padding: "10px 12px",
+                          fontSize: "13px",
+                          border: "1px solid #E5E7EB",
+                          borderRadius: "8px",
+                          outline: "none",
+                          color: "#111827",
+                          background: "#FFFFFF",
+                        }}
+                      />
                     </div>
 
                     <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
