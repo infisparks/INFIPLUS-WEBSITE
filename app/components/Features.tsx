@@ -127,7 +127,7 @@ export default function Features() {
   };
 
   return (
-    <section id="features" style={{ position: "relative", paddingTop: 72, paddingBottom: 80, backgroundColor: 'var(--bg-main)', overflowX: 'hidden' }}>
+    <section id="features" style={{ position: "relative", paddingTop: 72, paddingBottom: 80, backgroundColor: '#FFFFFF', overflowX: 'hidden' }}>
       <div className="container-main">
         {/* Section Header */}
         <div style={{ textAlign: "center", marginBottom: "clamp(44px, 7vw, 68px)" }}>
@@ -162,7 +162,7 @@ export default function Features() {
 
         {/* Feature Items */}
         <div style={{ display: "flex", flexDirection: "column", gap: "clamp(56px, 9vw, 96px)" }}>
-          {features.map((feature, index) => (
+          {features.slice(0, 9).map((feature, index) => (
             <FeatureSection 
                 key={feature.id} 
                 feature={feature} 
