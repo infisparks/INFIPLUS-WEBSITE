@@ -89,7 +89,7 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
           `,
           backgroundSize: "100% 100%, 35px 100%, 100% 100%",
           paddingTop: isMobile ? "90px" : "130px",
-          paddingBottom: isMobile ? "110px" : "0px", // space for mobile sticky bar
+          paddingBottom: isMobile ? "80px" : "0px", // space for mobile sticky bar
         }}
       >
         <div 
@@ -591,63 +591,71 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
       {isMobile && (
         <div style={{
           position: "fixed",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          background: "#FFFFFF",
-          borderTop: "1px solid #E5E7EB",
-          padding: "10px 14px",
+          bottom: "14px",
+          left: "14px",
+          right: "14px",
+          background: "rgba(255, 255, 255, 0.85)",
+          backdropFilter: "blur(16px)",
+          WebkitBackdropFilter: "blur(16px)",
+          border: "1px solid rgba(226, 232, 240, 0.85)",
+          padding: "5px 6px",
           display: "flex",
-          gap: "10px",
+          gap: "8px",
           zIndex: 1100,
-          boxShadow: "0 -4px 16px rgba(0, 0, 0, 0.08)",
+          borderRadius: "100px",
+          boxShadow: "0 10px 30px -5px rgba(0, 0, 0, 0.1), 0 4px 12px -2px rgba(0, 0, 0, 0.05)",
+          maxWidth: "480px",
+          margin: "0 auto",
         }}>
-          <button
+          <motion.button
             onClick={() => {
               const el = document.getElementById("trial-form-card");
               if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
             }}
+            whileTap={{ scale: 0.96 }}
             style={{
-              flex: 1,
-              height: "44px",
-              background: "#2563EB",
+              flex: 1.15,
+              height: "36px",
+              background: "linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)",
               color: "#FFFFFF",
               border: "none",
-              borderRadius: "8px",
+              borderRadius: "100px",
               fontWeight: 700,
-              fontSize: "13px",
+              fontSize: "12.5px",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              gap: "6px",
+              gap: "5px",
               cursor: "pointer",
+              boxShadow: "0 4px 10px rgba(37, 99, 235, 0.2)",
             }}
           >
-            <Send size={14} style={{ transform: "rotate(-45deg)" }} />
+            <Send size={13} style={{ transform: "rotate(-45deg)" }} />
             Book Free Demo
-          </button>
+          </motion.button>
           
-          <button
+          <motion.button
             onClick={handleWhatsAppClick}
+            whileTap={{ scale: 0.96 }}
             style={{
-              flex: 1,
-              height: "44px",
-              background: "#FFFFFF",
-              color: "#25D366",
-              border: "1px solid #25D366",
-              borderRadius: "8px",
+              flex: 0.85,
+              height: "36px",
+              background: "rgba(37, 211, 102, 0.08)",
+              color: "#16A34A",
+              border: "1px solid rgba(37, 211, 102, 0.35)",
+              borderRadius: "100px",
               fontWeight: 700,
-              fontSize: "13px",
+              fontSize: "12.5px",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              gap: "6px",
+              gap: "5px",
               cursor: "pointer",
             }}
           >
-            <MessageCircle size={15} fill="#25D366" color="#FFFFFF" />
+            <MessageCircle size={14} fill="#16A34A" color="#16A34A" />
             WhatsApp
-          </button>
+          </motion.button>
         </div>
       )}
     </>

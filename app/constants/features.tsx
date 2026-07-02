@@ -29,222 +29,33 @@ export interface Feature {
 export const FEATURES: Feature[] = [
   {
     id: 1,
-    slug: "ai-medical-voice-scribe",
-    image: "/ipd_images/opd-ai-prescription.webp",
-    tag: "AI-Powered",
-    title: "AI Medical Voice Scribe & Smart EMR",
-    description: "Automate clinical documentation with our advanced AI voice scribe. Instantly transcribe symptoms and treatments into structured digital records.",
-    icon: <Stethoscope size={18} />,
+    slug: "clinical-observation-digitization",
+    image: "/ipd_images/ipd-paper-view.webp",
+    tag: "Paperless",
+    title: "Clinical Observation Digitization",
+    description: "Capture clinical observations with the speed of handwriting and the efficiency of digital storage, mirroring traditional medical charts.",
+    icon: <Activity size={18} />,
     detail: {
-      slug: "ai-medical-voice-scribe",
-      fullDescription: "Maximize clinical productivity with India's most advanced AI-powered medical voice scribe. Scale your hospital's output by automating high-fidelity documentation—instantly transcribing symptoms, histories, and clinical treatments directly into structured digital presets. Our AI understands medical terminology and context, reducing the time spent on data entry and allowing doctors to focus on patient care.",
+      slug: "clinical-observation-digitization",
+      fullDescription: "Capture clinical observations with the speed of handwriting and the efficiency of digital storage. Mirror traditional medical charts with dynamic digital interfaces that track patient history, complaints, and drug allergies. This module bridges the gap between old-school charting and modern data analytics.",
       keyFeatures: [
-        "Real-time voice-to-text transcription",
-        "Medical-grade AI vocabulary",
-        "Automated clinical summary generation",
-        "Integration with existing EMR and HMS systems",
-        "Multi-language support for diverse clinical settings"
+        "Template-driven clinical input",
+        "Drawing tools for anatomical notation",
+        "Past history quick-fill options",
+        "Allergy and contraindication alerts",
+        "Dynamic treatment plan adjustments"
       ],
       benefits: [
-        "Saves doctors up to 2 hours of documentation daily",
-        "Reduces burnout among medical staff",
-        "Improves accuracy of clinical records",
-        "Enhances patient-doctor interaction"
+        "Faster data entry than typing",
+        "Maintains familiar clinical layouts",
+        "Enables data extraction for research",
+        "Higher accuracy in capturing symptoms"
       ],
-      seoKeywords: ["AI medical voice scribe", "best EMR software India", "hospital documentation automation", "smart clinic management software"]
+      seoKeywords: ["clinical charting software", "medical observation digitization", "EHR systems India", "best hms software company"]
     }
   },
   {
     id: 2,
-    slug: "revenue-analytics-dashboard",
-    image: "/ipd_images/opd-admin.webp",
-    tag: "Analytics",
-    title: "Executive Revenue Analytics Dashboard",
-    description: "Master your hospital's Revenue Cycle Management (RCM) with a high-density executive dashboard tracking cash vs digital collections.",
-    icon: <DollarSign size={18} />,
-    detail: {
-      slug: "revenue-analytics-dashboard",
-      fullDescription: "Master your hospital's Revenue Cycle Management (RCM) with a high-density executive dashboard. Track cash vs. digital collections in real-time, monitor department-wise growth, and gain actionable financial insights to drive practice profitability. Our dashboard provides a 360-degree view of your hospital's financial health, from daily collections to long-term revenue trends.",
-      keyFeatures: [
-        "Real-time revenue tracking",
-        "Cash vs. Digital payment breakdown",
-        "Department-wise performance metrics",
-        "Automated financial forecasting",
-        "Exportable reports for auditing and accounting"
-      ],
-      benefits: [
-        "Identifies revenue leakages instantly",
-        "Optimizes hospital resource allocation",
-        "Empowers data-driven financial decisions",
-        "Simplifies complex financial auditing"
-      ],
-      seoKeywords: ["hospital revenue management software", "healthcare analytics dashboard", "RCM software India", "best hms software Mumbai"]
-    }
-  },
-  {
-    id: 3,
-    slug: "smart-appointment-booking",
-    image: "/ipd_images/opd-appoinment.webp",
-    tag: "Digital",
-    title: "Smart Appointment Booking System",
-    description: "Streamline front-desk operations with a high-speed patient onboarding system and structured specialist scheduling engine.",
-    icon: <Layout size={18} />,
-    detail: {
-      slug: "smart-appointment-booking",
-      fullDescription: "Streamline your front-desk operations with a high-speed patient onboarding system. Eliminate manual entry errors with smart UHID search, automated demographic collection, and a structured specialist scheduling engine for 10x faster clinical registration. Our system ensures that patient appointments are managed efficiently, reducing wait times and improving patient satisfaction.",
-      keyFeatures: [
-        "Online and offline booking integration",
-        "Automated SMS/Email reminders",
-        "Doctor availability calendar sync",
-        "Waitlist management",
-        "Integrated tele-consultation scheduling"
-      ],
-      benefits: [
-        "Reduces patient no-shows by 40%",
-        "Eliminates wait-time frustration",
-        "Improves front-desk productivity",
-        "Smoother patient check-in experience"
-      ],
-      seoKeywords: ["doctor appointment booking system", "hospital patient registration software", "clinic management software Mumbai", "best healthcare software India"]
-    }
-  },
-  {
-    id: 4,
-    slug: "intelligent-patient-queue",
-    image: "/ipd_images/opd-appoinment-list.webp",
-    tag: "Digital",
-    title: "Intelligent Patient Queue Management",
-    description: "Optimize patient throughput and eliminate hospital congestion with a real-time queuing module and automated status triggers.",
-    icon: <Calendar size={18} />,
-    detail: {
-      slug: "intelligent-patient-queue",
-      fullDescription: "Optimize patient throughput and eliminate hospital congestion with a real-time queuing module. Seamlessly coordinate appointments across specialized departments with automated status triggers and doctor-wise traffic filtering for a superior patient experience. Real-time updates help clinical staff manage flow effectively during peak hours.",
-      keyFeatures: [
-        "Live queue status display",
-        "Automated token generation",
-        "Priority queue management for emergencies",
-        "Doctor-wise traffic analysis",
-        "Mobile queue tracking for patients"
-      ],
-      benefits: [
-        "Reduces crowd congestion in waiting areas",
-        "Increases patient throughput capacity",
-        "Provides predictable wait times",
-        "Enhances overall patient journey"
-      ],
-      seoKeywords: ["patient queue management system", "hospital flow optimization", "healthcare traffic management", "best hms software India"]
-    }
-  },
-  {
-    id: 5,
-    slug: "specialist-performance-analytics",
-    image: "/ipd_images/specialist-graph.webp",
-    tag: "Analytics",
-    title: "Specialist Performance Analytics",
-    description: "Identify top-performing consultants and departments with granular tracking and high-fidelity visual charts.",
-    icon: <Activity size={18} />,
-    detail: {
-      slug: "specialist-performance-analytics",
-      fullDescription: "Identify top-performing consultants and departments with granular specialist tracking. Use high-fidelity visual charts to analyze consultation volume, case-load trends, and department-wise revenue to optimize hospital staffing and resource allocation efficiently. Data is presented in easy-to-read graphs for executive decision-making.",
-      keyFeatures: [
-        "In-depth consultant performance KPIs",
-        "Comparative department analysis",
-        "Case-load trend visualization",
-        "Revenue-per-consultant tracking",
-        "Staffing optimization recommendations"
-      ],
-      benefits: [
-        "Optimizes doctor-to-patient ratios",
-        "Highlights high-growth clinical areas",
-        "Improves surgical outcome tracking",
-        "Enhances staff accountability"
-      ],
-      seoKeywords: ["healthcare specialist analytics", "doctor performance tracking", "hospital KPI software", "best hms software Mumbai"]
-    }
-  },
-  {
-    id: 6,
-    slug: "universal-lab-integration",
-    image: "/ipd_images/lab-comparision-report.webp",
-    tag: "Digital",
-    title: "Laboratory Information System (LIS)",
-    description: "Connect your diagnostic lab for instant cloud-synced reporting and trend analysis to highlight abnormal health values.",
-    icon: <PieChart size={18} />,
-    detail: {
-      slug: "universal-lab-integration",
-      fullDescription: "Connect your diagnostic lab system for instant, cloud-synced reporting. Our smart comparison engine highlights health trends and detects abnormal values (Red/Green), enabling faster clinical decisions and better patient outcomes. Our LIS covers the entire workflow from sample collection to report generation and delivery.",
-      keyFeatures: [
-        "Automated lab test result sync",
-        "Trend analysis and health graphs",
-        "Bi-directional instrument integration",
-        "Abnormal value alerts",
-        "Patient-facing test report portal"
-      ],
-      benefits: [
-        "Faster turnaround time for lab reports",
-        "Reduces manual data entry errors",
-        "Enables longitudinal health tracking",
-        "Improves diagnostic accuracy"
-      ],
-      seoKeywords: ["best lab management software", "LIS software India", "diagnostic lab system Mumbai", "blood test software company"]
-    }
-  },
-  {
-    id: 7,
-    slug: "paperless-ipd-management",
-    image: "/ipd_images/manage-patinet-ipd-paper.webp",
-    tag: "Paperless",
-    title: "Paperless Indoor Patient File (IPD)",
-    description: "Eliminate physical medical charts with a 100% paperless indoor patient file system digitally tracking nursing notes and treatments.",
-    icon: <FileText size={18} />,
-    detail: {
-      slug: "paperless-ipd-management",
-      fullDescription: "Eliminate physical medical charts with a 100% paperless indoor patient file system. Digitally track patient progress, nursing notes, and treatment charts in one secure EMR ecosystem. Streamline clinical workflows and ensure documentation continuity across the entire hospitalization cycle, from admission to discharge.",
-      keyFeatures: [
-        "Digitized vital sign charting",
-        "Online drug administration notes",
-        "Real-time nursing worklists",
-        "Integrated discharge summary builder",
-        "Multi-disciplinary clinical notes"
-      ],
-      benefits: [
-        "Instant accessibility of patient files",
-        "No more missing or illegible paper files",
-        "Enhanced security of sensitive health data",
-        "Coordinated care across medical teams"
-      ],
-      seoKeywords: ["IPD management software India", "paperless hospital management", "EMR software Mumbai", "indoor patient file system"]
-    }
-  },
-  {
-    id: 8,
-    slug: "secure-medical-document-vault",
-    image: "/ipd_images/ipd-document.webp",
-    tag: "Digital",
-    title: "Secure Medical Document Vault",
-    description: "Digitize and protect sensitive patient records with HIPAA-compliant storage for X-Rays, Scans and medical histories.",
-    icon: <Database size={18} />,
-    detail: {
-      slug: "secure-medical-document-vault",
-      fullDescription: "Digitize and protect sensitive patient records. Our structured Document Folder system provides secure, HIPAA-compliant storage for X-Rays, Scans, and external medical history reports in one central location. Advanced encryption ensures that only authorized personnel can access historical medical data.",
-      keyFeatures: [
-        "Encrypted cloud storage for DICOM images",
-        "Historical medical history archiving",
-        "Role-based access control (RBAC)",
-        "Instant search and retrieval engine",
-        "Consent-based data sharing"
-      ],
-      benefits: [
-        "Ensures long-term data preservation",
-        "Facilitates easy second opinions",
-        "Reduces physical storage costs",
-        "Enhances patient data privacy"
-      ],
-      seoKeywords: ["medical document archive system", "secure health record storage", "HIPAA compliant HMS", "best medical software India"]
-    }
-  },
-  {
-    id: 9,
     slug: "intelligent-nursing-navigation",
     image: "/ipd_images/ipd-paper-switch-paper.webp",
     tag: "Paperless",
@@ -271,30 +82,219 @@ export const FEATURES: Feature[] = [
     }
   },
   {
-    id: 10,
-    slug: "clinical-observation-digitization",
-    image: "/ipd_images/ipd-paper-view.webp",
-    tag: "Paperless",
-    title: "Clinical Observation Digitization",
-    description: "Capture clinical observations with the speed of handwriting and the efficiency of digital storage, mirroring traditional medical charts.",
-    icon: <Activity size={18} />,
+    id: 3,
+    slug: "ai-medical-voice-scribe",
+    image: "/ipd_images/opd-ai-prescription.webp",
+    tag: "AI-Powered",
+    title: "AI Medical Voice Scribe & Smart EMR",
+    description: "Automate clinical documentation with our advanced AI voice scribe. Instantly transcribe symptoms and treatments into structured digital records.",
+    icon: <Stethoscope size={18} />,
     detail: {
-      slug: "clinical-observation-digitization",
-      fullDescription: "Capture clinical observations with the speed of handwriting and the efficiency of digital storage. Mirror traditional medical charts with dynamic digital interfaces that track patient history, complaints, and drug allergies. This module bridges the gap between old-school charting and modern data analytics.",
+      slug: "ai-medical-voice-scribe",
+      fullDescription: "Maximize clinical productivity with India's most advanced AI-powered medical voice scribe. Scale your hospital's output by automating high-fidelity documentation—instantly transcribing symptoms, histories, and clinical treatments directly into structured digital presets. Our AI understands medical terminology and context, reducing the time spent on data entry and allowing doctors to focus on patient care.",
       keyFeatures: [
-        "Template-driven clinical input",
-        "Drawing tools for anatomical notation",
-        "Past history quick-fill options",
-        "Allergy and contraindication alerts",
-        "Dynamic treatment plan adjustments"
+        "Real-time voice-to-text transcription",
+        "Medical-grade AI vocabulary",
+        "Automated clinical summary generation",
+        "Integration with existing EMR and HMS systems",
+        "Multi-language support for diverse clinical settings"
       ],
       benefits: [
-        "Faster data entry than typing",
-        "Maintains familiar clinical layouts",
-        "Enables data extraction for research",
-        "Higher accuracy in capturing symptoms"
+        "Saves doctors up to 2 hours of documentation daily",
+        "Reduces burnout among medical staff",
+        "Improves accuracy of clinical records",
+        "Enhances patient-doctor interaction"
       ],
-      seoKeywords: ["clinical charting software", "medical observation digitization", "EHR systems India", "best hms software company"]
+      seoKeywords: ["AI medical voice scribe", "best EMR software India", "hospital documentation automation", "smart clinic management software"]
+    }
+  },
+  {
+    id: 4,
+    slug: "revenue-analytics-dashboard",
+    image: "/ipd_images/opd-admin.webp",
+    tag: "Analytics",
+    title: "Executive Revenue Analytics Dashboard",
+    description: "Master your hospital's Revenue Cycle Management (RCM) with a high-density executive dashboard tracking cash vs digital collections.",
+    icon: <DollarSign size={18} />,
+    detail: {
+      slug: "revenue-analytics-dashboard",
+      fullDescription: "Master your hospital's Revenue Cycle Management (RCM) with a high-density executive dashboard. Track cash vs. digital collections in real-time, monitor department-wise growth, and gain actionable financial insights to drive practice profitability. Our dashboard provides a 360-degree view of your hospital's financial health, from daily collections to long-term revenue trends.",
+      keyFeatures: [
+        "Real-time revenue tracking",
+        "Cash vs. Digital payment breakdown",
+        "Department-wise performance metrics",
+        "Automated financial forecasting",
+        "Exportable reports for auditing and accounting"
+      ],
+      benefits: [
+        "Identifies revenue leakages instantly",
+        "Optimizes hospital resource allocation",
+        "Empowers data-driven financial decisions",
+        "Simplifies complex financial auditing"
+      ],
+      seoKeywords: ["hospital revenue management software", "healthcare analytics dashboard", "RCM software India", "best hms software Mumbai"]
+    }
+  },
+  {
+    id: 5,
+    slug: "smart-appointment-booking",
+    image: "/ipd_images/opd-appoinment.webp",
+    tag: "Digital",
+    title: "Smart Appointment Booking System",
+    description: "Streamline front-desk operations with a high-speed patient onboarding system and structured specialist scheduling engine.",
+    icon: <Layout size={18} />,
+    detail: {
+      slug: "smart-appointment-booking",
+      fullDescription: "Streamline your front-desk operations with a high-speed patient onboarding system. Eliminate manual entry errors with smart UHID search, automated demographic collection, and a structured specialist scheduling engine for 10x faster clinical registration. Our system ensures that patient appointments are managed efficiently, reducing wait times and improving patient satisfaction.",
+      keyFeatures: [
+        "Online and offline booking integration",
+        "Automated SMS/Email reminders",
+        "Doctor availability calendar sync",
+        "Waitlist management",
+        "Integrated tele-consultation scheduling"
+      ],
+      benefits: [
+        "Reduces patient no-shows by 40%",
+        "Eliminates wait-time frustration",
+        "Improves front-desk productivity",
+        "Smoother patient check-in experience"
+      ],
+      seoKeywords: ["doctor appointment booking system", "hospital patient registration software", "clinic management software Mumbai", "best healthcare software India"]
+    }
+  },
+  {
+    id: 6,
+    slug: "intelligent-patient-queue",
+    image: "/ipd_images/opd-appoinment-list.webp",
+    tag: "Digital",
+    title: "Intelligent Patient Queue Management",
+    description: "Optimize patient throughput and eliminate hospital congestion with a real-time queuing module and automated status triggers.",
+    icon: <Calendar size={18} />,
+    detail: {
+      slug: "intelligent-patient-queue",
+      fullDescription: "Optimize patient throughput and eliminate hospital congestion with a real-time queuing module. Seamlessly coordinate appointments across specialized departments with automated status triggers and doctor-wise traffic filtering for a superior patient experience. Real-time updates help clinical staff manage flow effectively during peak hours.",
+      keyFeatures: [
+        "Live queue status display",
+        "Automated token generation",
+        "Priority queue management for emergencies",
+        "Doctor-wise traffic analysis",
+        "Mobile queue tracking for patients"
+      ],
+      benefits: [
+        "Reduces crowd congestion in waiting areas",
+        "Increases patient throughput capacity",
+        "Provides predictable wait times",
+        "Enhances overall patient journey"
+      ],
+      seoKeywords: ["patient queue management system", "hospital flow optimization", "healthcare traffic management", "best hms software India"]
+    }
+  },
+  {
+    id: 7,
+    slug: "specialist-performance-analytics",
+    image: "/ipd_images/specialist-graph.webp",
+    tag: "Analytics",
+    title: "Specialist Performance Analytics",
+    description: "Identify top-performing consultants and departments with granular tracking and high-fidelity visual charts.",
+    icon: <Activity size={18} />,
+    detail: {
+      slug: "specialist-performance-analytics",
+      fullDescription: "Identify top-performing consultants and departments with granular specialist tracking. Use high-fidelity visual charts to analyze consultation volume, case-load trends, and department-wise revenue to optimize hospital staffing and resource allocation efficiently. Data is presented in easy-to-read graphs for executive decision-making.",
+      keyFeatures: [
+        "In-depth consultant performance KPIs",
+        "Comparative department analysis",
+        "Case-load trend visualization",
+        "Revenue-per-consultant tracking",
+        "Staffing optimization recommendations"
+      ],
+      benefits: [
+        "Optimizes doctor-to-patient ratios",
+        "Highlights high-growth clinical areas",
+        "Improves surgical outcome tracking",
+        "Enhances staff accountability"
+      ],
+      seoKeywords: ["healthcare specialist analytics", "doctor performance tracking", "hospital KPI software", "best hms software Mumbai"]
+    }
+  },
+  {
+    id: 8,
+    slug: "universal-lab-integration",
+    image: "/ipd_images/lab-comparision-report.webp",
+    tag: "Digital",
+    title: "Laboratory Information System (LIS)",
+    description: "Connect your diagnostic lab for instant cloud-synced reporting and trend analysis to highlight abnormal health values.",
+    icon: <PieChart size={18} />,
+    detail: {
+      slug: "universal-lab-integration",
+      fullDescription: "Connect your diagnostic lab system for instant, cloud-synced reporting. Our smart comparison engine highlights health trends and detects abnormal values (Red/Green), enabling faster clinical decisions and better patient outcomes. Our LIS covers the entire workflow from sample collection to report generation and delivery.",
+      keyFeatures: [
+        "Automated lab test result sync",
+        "Trend analysis and health graphs",
+        "Bi-directional instrument integration",
+        "Abnormal value alerts",
+        "Patient-facing test report portal"
+      ],
+      benefits: [
+        "Faster turnaround time for lab reports",
+        "Reduces manual data entry errors",
+        "Enables longitudinal health tracking",
+        "Improves diagnostic accuracy"
+      ],
+      seoKeywords: ["best lab management software", "LIS software India", "diagnostic lab system Mumbai", "blood test software company"]
+    }
+  },
+  {
+    id: 9,
+    slug: "paperless-ipd-management",
+    image: "/ipd_images/manage-patinet-ipd-paper.webp",
+    tag: "Paperless",
+    title: "Paperless Indoor Patient File (IPD)",
+    description: "Eliminate physical medical charts with a 100% paperless indoor patient file system digitally tracking nursing notes and treatments.",
+    icon: <FileText size={18} />,
+    detail: {
+      slug: "paperless-ipd-management",
+      fullDescription: "Eliminate physical medical charts with a 100% paperless indoor patient file system. Digitally track patient progress, nursing notes, and treatment charts in one secure EMR ecosystem. Streamline clinical workflows and ensure documentation continuity across the entire hospitalization cycle, from admission to discharge.",
+      keyFeatures: [
+        "Digitized vital sign charting",
+        "Online drug administration notes",
+        "Real-time nursing worklists",
+        "Integrated discharge summary builder",
+        "Multi-disciplinary clinical notes"
+      ],
+      benefits: [
+        "Instant accessibility of patient files",
+        "No more missing or illegible paper files",
+        "Enhanced security of sensitive health data",
+        "Coordinated care across medical teams"
+      ],
+      seoKeywords: ["IPD management software India", "paperless hospital management", "EMR software Mumbai", "indoor patient file system"]
+    }
+  },
+  {
+    id: 10,
+    slug: "secure-medical-document-vault",
+    image: "/ipd_images/ipd-document.webp",
+    tag: "Digital",
+    title: "Secure Medical Document Vault",
+    description: "Digitize and protect sensitive patient records with HIPAA-compliant storage for X-Rays, Scans and medical histories.",
+    icon: <Database size={18} />,
+    detail: {
+      slug: "secure-medical-document-vault",
+      fullDescription: "Digitize and protect sensitive patient records. Our structured Document Folder system provides secure, HIPAA-compliant storage for X-Rays, Scans, and external medical history reports in one central location. Advanced encryption ensures that only authorized personnel can access historical medical data.",
+      keyFeatures: [
+        "Encrypted cloud storage for DICOM images",
+        "Historical medical history archiving",
+        "Role-based access control (RBAC)",
+        "Instant search and retrieval engine",
+        "Consent-based data sharing"
+      ],
+      benefits: [
+        "Ensures long-term data preservation",
+        "Facilitates easy second opinions",
+        "Reduces physical storage costs",
+        "Enhances patient data privacy"
+      ],
+      seoKeywords: ["medical document archive system", "secure health record storage", "HIPAA compliant HMS", "best medical software India"]
     }
   },
   {
