@@ -611,7 +611,7 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
         </div>
       </section>
 
-      {/* ── MOBILE STICKY BOTTOM BAR ── */}
+      {/* ── MOBILE STICKY BOTTOM BAR ─asdf─ */}
       {isMobile && (
         <div style={{
           position: "fixed",
