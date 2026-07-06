@@ -8,6 +8,8 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import { db } from "../lib/firebase";
+import { ref, push } from "firebase/database";
 
 interface HeroSectionProps {
   onBookDemo: () => void;
@@ -21,7 +23,6 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
   const [email, setEmail] = useState("");
   const [hospitalName, setHospitalName] = useState("");
   const [beds, setBeds] = useState("Choose...");
-  const [agree, setAgree] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -35,14 +36,10 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !email || !hospitalName || beds === "Choose...") {
       setError("Please fill in all required fields.");
-      return;
-    }
-    if (!agree) {
-      setError("You must agree to the Terms & Conditions.");
       return;
     }
     setError(null);
@@ -57,12 +54,25 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/919958399157?text=${encodedMessage}`;
 
-    // Simulate API call and redirect
-    setTimeout(() => {
+    try {
+      // Save details to Firebase
+      await push(ref(db, "submissions"), {
+        name,
+        email,
+        hospitalName,
+        beds,
+        type: "Free Trial",
+        timestamp: Date.now(),
+        dateString: new Date().toLocaleString()
+      });
+      
       setIsSubmitting(false);
       setIsSubmitted(true);
       window.open(whatsappUrl, "_blank");
-    }, 800);
+    } catch (err: any) {
+      setError(err.message || "Failed to submit. Please try again.");
+      setIsSubmitting(false);
+    }
   };
 
   const handleWhatsAppClick = () => {
@@ -450,18 +460,7 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
                       <span>🎁</span> Full access for 7 days — all modules, no restrictions
                     </div>
 
-                    <div style={{ display: "flex", gap: "8px", alignItems: "flex-start" }}>
-                      <input
-                        type="checkbox"
-                        id="agree-trial"
-                        checked={agree}
-                        onChange={(e) => setAgree(e.target.checked)}
-                        style={{ marginTop: "3px", cursor: "pointer" }}
-                      />
-                      <label htmlFor="agree-trial" style={{ fontSize: "11px", color: "#6B7280", lineHeight: 1.4, cursor: "pointer" }}>
-                        By submitting the above information, you agree to our Privacy Policy and Terms & Conditions.
-                      </label>
-                    </div>
+
 
                     <motion.button
                       type="submit"

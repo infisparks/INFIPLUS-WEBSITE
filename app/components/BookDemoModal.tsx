@@ -3,6 +3,8 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Calendar, User, Mail, Building, ArrowRight, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
+import { db } from "../lib/firebase";
+import { ref, push } from "firebase/database";
 
 interface BookDemoModalProps {
   isOpen: boolean;
@@ -11,6 +13,46 @@ interface BookDemoModalProps {
 
 export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
   const [focused, setFocused] = useState<string | null>(null);
+  
+  // Form states
+  const [name, setName] = useState("");
+  const [address, setAddress] = useState("");
+  const [phone, setPhone] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!name || !address || !phone) {
+      setError("Please fill in all fields.");
+      return;
+    }
+    setError(null);
+    setIsSubmitting(true);
+    try {
+      await push(ref(db, "submissions"), {
+        name,
+        address,
+        phone,
+        type: "Book Demo Modal",
+        timestamp: Date.now(),
+        dateString: new Date().toLocaleString()
+      });
+      setIsSubmitted(true);
+      setTimeout(() => {
+        setIsSubmitted(false);
+        setName("");
+        setAddress("");
+        setPhone("");
+        onClose();
+      }, 2000);
+    } catch (err: any) {
+      setError(err.message || "Failed to book. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const stats = [
     { label: "Implementation", value: "3-5 Days" },
@@ -87,32 +129,70 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
                  <X size={28} />
                </button>
 
-               <form style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-                 <ModalInput label="Full Name" icon={<User size={18} />} type="text" id="name" placeholder="John Doe" focused={focused==="name"} onFocus={()=>setFocused("name")} onBlur={()=>setFocused(null)} />
-                 <ModalInput label="Hospital Address" icon={<Building size={18} />} type="text" id="address" placeholder="Mumbai, MH" focused={focused==="address"} onFocus={()=>setFocused("address")} onBlur={()=>setFocused(null)} />
-                 <ModalInput label="Contact Number" icon={<Mail size={18} />} type="text" id="phone" placeholder="+91 XXXX XXXX XXX" focused={focused==="phone"} onFocus={()=>setFocused("phone")} onBlur={()=>setFocused(null)} />
+               {isSubmitted ? (
+                 <div style={{ textAlign: "center", padding: "40px 10px", display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
+                   <div style={{
+                     width: "56px",
+                     height: "56px",
+                     borderRadius: "50%",
+                     background: "rgba(16, 185, 129, 0.1)",
+                     color: "#10B981",
+                     display: "flex",
+                     alignItems: "center",
+                     justifyContent: "center"
+                   }}>
+                     <CheckCircle2 size={30} strokeWidth={3} />
+                   </div>
+                   <h3 style={{ fontSize: "20px", fontWeight: 800, color: "#111827", margin: 0 }}>
+                     Demo Booked!
+                   </h3>
+                   <p style={{ fontSize: "14px", color: "#4B5563", lineHeight: 1.5, margin: 0 }}>
+                     Thank you! Your request has been saved. We will contact you shortly to schedule your demo.
+                   </p>
+                 </div>
+               ) : (
+                 <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+                   {error && (
+                     <div style={{
+                       padding: "10px 12px",
+                       background: "#FEE2E2",
+                       border: "1px solid #FCA5A5",
+                       borderRadius: "8px",
+                       color: "#B91C1C",
+                       fontSize: "13px",
+                       fontWeight: 500
+                     }}>
+                       {error}
+                     </div>
+                   )}
+                   <ModalInput label="Full Name" icon={<User size={18} />} type="text" id="name" placeholder="John Doe" focused={focused==="name"} onFocus={()=>setFocused("name")} onBlur={()=>setFocused(null)} value={name} onChange={(e: any)=>setName(e.target.value)} />
+                   <ModalInput label="Hospital Address" icon={<Building size={18} />} type="text" id="address" placeholder="Mumbai, MH" focused={focused==="address"} onFocus={()=>setFocused("address")} onBlur={()=>setFocused(null)} value={address} onChange={(e: any)=>setAddress(e.target.value)} />
+                   <ModalInput label="Contact Number" icon={<Mail size={18} />} type="text" id="phone" placeholder="+91 XXXX XXXX XXX" focused={focused==="phone"} onFocus={()=>setFocused("phone")} onBlur={()=>setFocused(null)} value={phone} onChange={(e: any)=>setPhone(e.target.value)} />
 
-                 <button
-                   className="glow-btn-primary"
-                   style={{ 
-                     padding: "clamp(12px, 2vw, 16px)", 
-                     borderRadius: "50px", 
-                     border: "none", 
-                     color: "#fff", 
-                     fontSize: "clamp(0.8rem, 1.5vw, 0.9rem)", 
-                     fontWeight: 700, 
-                     display: "flex", 
-                     alignItems: "center", 
-                     justifyContent: "center", 
-                     gap: 10,
-                     marginTop: 12,
-                     cursor: "pointer"
-                   }}
-                 >
-                   Get My Private Tour
-                   <ArrowRight size={20} strokeWidth={2.5} />
-                 </button>
-               </form>
+                   <button
+                     type="submit"
+                     disabled={isSubmitting}
+                     className="glow-btn-primary"
+                     style={{ 
+                       padding: "clamp(12px, 2vw, 16px)", 
+                       borderRadius: "50px", 
+                       border: "none", 
+                       color: "#fff", 
+                       fontSize: "clamp(0.8rem, 1.5vw, 0.9rem)", 
+                       fontWeight: 700, 
+                       display: "flex", 
+                       alignItems: "center", 
+                       justifyContent: "center", 
+                       gap: 10,
+                       marginTop: 12,
+                       cursor: "pointer"
+                     }}
+                   >
+                     {isSubmitting ? "Booking..." : "Get My Private Tour"}
+                     <ArrowRight size={20} strokeWidth={2.5} />
+                   </button>
+                 </form>
+               )}
             </div>
           </motion.div>
         </div>
@@ -140,7 +220,7 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
   );
 }
 
-function ModalInput({ label, icon, type, id, placeholder, focused, onFocus, onBlur }: any) {
+function ModalInput({ label, icon, type, id, placeholder, focused, onFocus, onBlur, value, onChange }: any) {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
       <label htmlFor={id} style={{ fontSize: "0.85rem", fontWeight: 700, color: focused ? "var(--color-primary)" : "var(--text-dim)", transition: "all 0.3s ease" }}>{label}</label>
@@ -152,6 +232,9 @@ function ModalInput({ label, icon, type, id, placeholder, focused, onFocus, onBl
           placeholder={placeholder}
           onFocus={onFocus}
           onBlur={onBlur}
+          value={value}
+          onChange={onChange}
+          required
           style={{ 
             width: "100%",
             padding: "0 24px 0 60px", 

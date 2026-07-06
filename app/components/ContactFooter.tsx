@@ -7,6 +7,8 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { useRef, useState } from "react";
+import { db } from "../lib/firebase";
+import { ref, push } from "firebase/database";
 
 const EASE = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
@@ -14,6 +16,45 @@ export default function ContactFooter() {
   const [focused, setFocused] = useState<string | null>(null);
   const formRef = useRef(null);
   const isFormInView = useInView(formRef, { once: true, margin: "-10%" });
+
+  // Form states
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!name || !email || !subject) {
+      setError("Please fill in all required fields.");
+      return;
+    }
+    setError(null);
+    setIsSubmitting(true);
+    try {
+      await push(ref(db, "submissions"), {
+        name,
+        email,
+        hospitalName: subject, // subject is Hospital / Clinic name
+        message,
+        type: "Contact Footer",
+        timestamp: Date.now(),
+        dateString: new Date().toLocaleString()
+      });
+      setIsSubmitted(true);
+      setName("");
+      setEmail("");
+      setSubject("");
+      setMessage("");
+    } catch (err: any) {
+      setError(err.message || "Failed to schedule demo. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const contactInfo = [
     {
@@ -246,74 +287,128 @@ export default function ContactFooter() {
               Our consultants respond within 24 hours.
             </p>
 
-            <form style={{ display: "flex", flexDirection: "column", gap: "clamp(12px, 2vw, 18px)" }}>
-              <div className="form-row">
-                <FormInput label="Full Name" type="text" id="name" placeholder="John Doe" focused={focused === "name"} onFocus={() => setFocused("name")} onBlur={() => setFocused(null)} />
-                <FormInput label="Work Email" type="email" id="email" placeholder="john@hospital.com" focused={focused === "email"} onFocus={() => setFocused("email")} onBlur={() => setFocused(null)} />
-              </div>
-              <FormInput label="Hospital / Clinic Name" type="text" id="subject" placeholder="St. Mary's Clinic" focused={focused === "subject"} onFocus={() => setFocused("subject")} onBlur={() => setFocused(null)} />
-
-              <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                <label
-                  htmlFor="message"
+            {isSubmitted ? (
+              <div style={{ textAlign: "center", padding: "40px 10px", display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
+                <div style={{
+                  width: "56px",
+                  height: "56px",
+                  borderRadius: "50%",
+                  background: "rgba(16, 185, 129, 0.1)",
+                  color: "#10B981",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}>
+                  <CheckCircle2 size={30} strokeWidth={3} />
+                </div>
+                <h3 style={{ fontSize: "20px", fontWeight: 800, color: "#0F172A", margin: 0 }}>
+                  Demo Scheduled!
+                </h3>
+                <p style={{ fontSize: "14px", color: "#475569", lineHeight: 1.5, margin: 0 }}>
+                  Thank you! Your information has been saved successfully. Our team will contact you within 24 hours.
+                </p>
+                <button
+                  onClick={() => setIsSubmitted(false)}
                   style={{
-                    fontSize: "clamp(0.68rem, 1.2vw, 0.76rem)",
+                    background: "transparent",
+                    border: "none",
+                    color: "#2563EB",
+                    fontSize: "13px",
+                    fontWeight: 600,
+                    cursor: "pointer",
+                    textDecoration: "underline",
+                    marginTop: 8
+                  }}
+                >
+                  Send another message
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "clamp(12px, 2vw, 18px)" }}>
+                {error && (
+                  <div style={{
+                    padding: "10px 12px",
+                    background: "#FEE2E2",
+                    border: "1px solid #FCA5A5",
+                    borderRadius: "8px",
+                    color: "#B91C1C",
+                    fontSize: "13px",
+                    fontWeight: 500
+                  }}>
+                    {error}
+                  </div>
+                )}
+                <div className="form-row">
+                  <FormInput label="Full Name" type="text" id="name" placeholder="John Doe" focused={focused === "name"} onFocus={() => setFocused("name")} onBlur={() => setFocused(null)} value={name} onChange={(e: any) => setName(e.target.value)} />
+                  <FormInput label="Work Email" type="email" id="email" placeholder="john@hospital.com" focused={focused === "email"} onFocus={() => setFocused("email")} onBlur={() => setFocused(null)} value={email} onChange={(e: any) => setEmail(e.target.value)} />
+                </div>
+                <FormInput label="Hospital / Clinic Name" type="text" id="subject" placeholder="St. Mary's Clinic" focused={focused === "subject"} onFocus={() => setFocused("subject")} onBlur={() => setFocused(null)} value={subject} onChange={(e: any) => setSubject(e.target.value)} />
+
+                <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                  <label
+                    htmlFor="message"
+                    style={{
+                      fontSize: "clamp(0.68rem, 1.2vw, 0.76rem)",
+                      fontWeight: 700,
+                      color: focused === "message" ? "#2563EB" : "#475569",
+                      transition: "color 0.3s",
+                      paddingLeft: 2,
+                      letterSpacing: "0.01em",
+                    }}
+                  >
+                    Message (Optional)
+                  </label>
+                  <textarea
+                    id="message"
+                    placeholder="Tell us about your requirements..."
+                    onFocus={() => setFocused("message")}
+                    onBlur={() => setFocused(null)}
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    style={{
+                      padding: "clamp(10px, 1.5vw, 14px)",
+                      borderRadius: "clamp(10px, 1.5vw, 13px)",
+                      background: "#F8FAFC",
+                      border: `1.5px solid ${focused === "message" ? "#2563EB" : "rgba(226,232,240,0.9)"}`,
+                      color: "#0F172A",
+                      fontSize: "clamp(0.78rem, 1.4vw, 0.88rem)",
+                      minHeight: "clamp(80px, 12vw, 110px)",
+                      outline: "none",
+                      transition: "all 0.3s ease",
+                      boxShadow: focused === "message" ? "0 0 0 3px rgba(37,99,235,0.07)" : "none",
+                      fontFamily: "var(--font-outfit), sans-serif",
+                      resize: "vertical",
+                    }}
+                  />
+                </div>
+
+                <motion.button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="glow-btn-primary"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  style={{
+                    padding: "clamp(11px, 1.8vw, 15px)",
+                    borderRadius: "9999px",
+                    border: "none",
+                    color: "#fff",
+                    fontSize: "clamp(0.78rem, 1.5vw, 0.9rem)",
                     fontWeight: 700,
-                    color: focused === "message" ? "#2563EB" : "#475569",
-                    transition: "color 0.3s",
-                    paddingLeft: 2,
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 8,
+                    marginTop: 4,
                     letterSpacing: "0.01em",
                   }}
                 >
-                  Message (Optional)
-                </label>
-                <textarea
-                  id="message"
-                  placeholder="Tell us about your requirements..."
-                  onFocus={() => setFocused("message")}
-                  onBlur={() => setFocused(null)}
-                  style={{
-                    padding: "clamp(10px, 1.5vw, 14px)",
-                    borderRadius: "clamp(10px, 1.5vw, 13px)",
-                    background: "#F8FAFC",
-                    border: `1.5px solid ${focused === "message" ? "#2563EB" : "rgba(226,232,240,0.9)"}`,
-                    color: "#0F172A",
-                    fontSize: "clamp(0.78rem, 1.4vw, 0.88rem)",
-                    minHeight: "clamp(80px, 12vw, 110px)",
-                    outline: "none",
-                    transition: "all 0.3s ease",
-                    boxShadow: focused === "message" ? "0 0 0 3px rgba(37,99,235,0.07)" : "none",
-                    fontFamily: "var(--font-outfit), sans-serif",
-                    resize: "vertical",
-                  }}
-                />
-              </div>
-
-              <motion.button
-                type="submit"
-                className="glow-btn-primary"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                style={{
-                  padding: "clamp(11px, 1.8vw, 15px)",
-                  borderRadius: "9999px",
-                  border: "none",
-                  color: "#fff",
-                  fontSize: "clamp(0.78rem, 1.5vw, 0.9rem)",
-                  fontWeight: 700,
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: 8,
-                  marginTop: 4,
-                  letterSpacing: "0.01em",
-                }}
-              >
-                Book Private Tour
-                <ArrowRight size={15} strokeWidth={2.5} />
-              </motion.button>
-            </form>
+                  {isSubmitting ? "Booking..." : "Book Private Tour"}
+                  <ArrowRight size={15} strokeWidth={2.5} />
+                </motion.button>
+              </form>
+            )}
           </motion.div>
         </div>
 
@@ -501,7 +596,7 @@ export default function ContactFooter() {
 }
 
 function FormInput({
-  label, type, id, placeholder, focused, onFocus, onBlur,
+  label, type, id, placeholder, focused, onFocus, onBlur, value, onChange
 }: any) {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
@@ -524,6 +619,9 @@ function FormInput({
         placeholder={placeholder}
         onFocus={onFocus}
         onBlur={onBlur}
+        value={value}
+        onChange={onChange}
+        required
         style={{
           padding: "0 clamp(12px, 1.8vw, 16px)",
           height: "clamp(42px, 6vw, 52px)",
