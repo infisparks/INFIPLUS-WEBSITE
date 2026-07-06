@@ -316,7 +316,10 @@ export default function AdminDashboard() {
                           </div>
                           <div>
                             <div style={{ fontWeight: 600, color: "#111827" }}>{sub.name}</div>
-                            {sub.email && <div style={{ fontSize: "12px", color: "#6B7280", marginTop: "2px" }}>{sub.email}</div>}
+                            <div style={{ fontSize: "12px", color: "#6B7280", marginTop: "2px", display: "flex", flexDirection: "column", gap: "2px" }}>
+                              {sub.email && <span>{sub.email}</span>}
+                              {sub.phone && <span style={{ color: "#4F46E5", fontWeight: 500 }}>{sub.phone}</span>}
+                            </div>
                           </div>
                         </div>
                       </td>
@@ -606,7 +609,7 @@ export default function AdminDashboard() {
                   { label: "Hospital / Clinic", value: selectedSub.hospitalName },
                   { label: "Number of Beds", value: selectedSub.beds, show: selectedSub.type === "Free Trial" },
                   { label: "Hospital Address", value: selectedSub.address, show: selectedSub.type === "Book Demo Modal" },
-                  { label: "Contact Number", value: selectedSub.phone, show: selectedSub.type === "Book Demo Modal" },
+                  { label: "Contact Number", value: selectedSub.phone, show: selectedSub.type === "Book Demo Modal" || selectedSub.type === "Free Trial" },
                   { label: "Message / Query", value: selectedSub.message, show: selectedSub.type === "Contact Footer", isMessage: true },
                   { label: "Date & Time", value: selectedSub.dateString || new Date(selectedSub.timestamp).toLocaleString() }
                 ].map((row, idx) => {

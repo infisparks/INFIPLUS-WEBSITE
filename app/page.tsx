@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Navbar from "./components/Navbar";
 import HeroSection from "./components/HeroSection";
+import Clients from "./components/Clients";
 import Features from "./components/Features";
 import WhyInfiplus from "./components/WhyInfiplus";
 import ContactFooter from "./components/ContactFooter";
@@ -17,6 +18,7 @@ export default function Home() {
       <Navbar onBookDemo={() => setDemoOpen(true)} />
       <main>
         <HeroSection onBookDemo={() => setDemoOpen(true)} />
+        <Clients />
         <Features />
         <WhyInfiplus />
         <ContactFooter />
