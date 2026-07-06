@@ -1,13 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../lib/firebase";
 import { useRouter } from "next/navigation";
-import { LogIn, UserPlus } from "lucide-react";
+import { LogIn } from "lucide-react";
 
 export default function LoginPage() {
-  const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -23,20 +22,12 @@ export default function LoginPage() {
     setError(null);
     setLoading(true);
     try {
-      if (isLogin) {
-        await signInWithEmailAndPassword(auth, email, password);
-      } else {
-        await createUserWithEmailAndPassword(auth, email, password);
-      }
+      await signInWithEmailAndPassword(auth, email, password);
       router.push("/admin");
     } catch (err: any) {
       let msg = "Failed to authenticate.";
-      if (err.code === "auth/invalid-credential") {
+      if (err.code === "auth/invalid-credential" || err.code === "auth/user-not-found" || err.code === "auth/wrong-password") {
         msg = "Invalid email or password.";
-      } else if (err.code === "auth/email-already-in-use") {
-        msg = "This email is already in use.";
-      } else if (err.code === "auth/weak-password") {
-        msg = "Password should be at least 6 characters.";
       } else if (err.message) {
         msg = err.message;
       }
@@ -67,56 +58,16 @@ export default function LoginPage() {
         boxShadow: "0 4px 20px rgba(0, 0, 0, 0.05)",
         overflow: "hidden"
       }}>
-        {/* Toggle tabs */}
-        <div style={{ display: "flex", borderBottom: "1px solid #E5E7EB" }}>
-          <button 
-            onClick={() => { setIsLogin(true); setError(null); }}
-            style={{
-              flex: 1,
-              padding: "16px",
-              border: "none",
-              background: isLogin ? "#FFFFFF" : "#F9FAFB",
-              borderBottom: isLogin ? "2px solid #4F46E5" : "none",
-              color: isLogin ? "#4F46E5" : "#6B7280",
-              fontWeight: 600,
-              fontSize: "14px",
-              cursor: "pointer",
-              outline: "none",
-              transition: "all 0.2s"
-            }}
-          >
-            Login
-          </button>
-          <button 
-            onClick={() => { setIsLogin(false); setError(null); }}
-            style={{
-              flex: 1,
-              padding: "16px",
-              border: "none",
-              background: !isLogin ? "#FFFFFF" : "#F9FAFB",
-              borderBottom: !isLogin ? "2px solid #4F46E5" : "none",
-              color: !isLogin ? "#4F46E5" : "#6B7280",
-              fontWeight: 600,
-              fontSize: "14px",
-              cursor: "pointer",
-              outline: "none",
-              transition: "all 0.2s"
-            }}
-          >
-            Register Admin
-          </button>
-        </div>
-
         <form onSubmit={handleSubmit} style={{ padding: "28px 24px", display: "flex", flexDirection: "column", gap: "16px" }}>
           <div style={{ textAlign: "center", marginBottom: "8px" }}>
             <div style={{ display: "inline-flex", width: "48px", height: "48px", borderRadius: "12px", background: "#EEF2F6", alignItems: "center", justifyContent: "center", color: "#4F46E5", marginBottom: "12px" }}>
-              {isLogin ? <LogIn size={24} /> : <UserPlus size={24} />}
+              <LogIn size={24} />
             </div>
             <h2 style={{ fontSize: "20px", fontWeight: "bold", color: "#111827", margin: "0 0 4px", letterSpacing: "-0.02em" }}>
-              {isLogin ? "Admin Login" : "Create Admin Account"}
+              Admin Login
             </h2>
             <p style={{ fontSize: "13px", color: "#6B7280", margin: 0, lineHeight: 1.4 }}>
-              {isLogin ? "Access the INFIPLUS lead manager portal" : "Register new admin credentials for INFIPLUS"}
+              Access the INFIPLUS lead manager portal
             </p>
           </div>
 
@@ -202,7 +153,7 @@ export default function LoginPage() {
             onMouseEnter={(e) => e.currentTarget.style.background = "#4338CA"}
             onMouseLeave={(e) => e.currentTarget.style.background = "#4F46E5"}
           >
-            {loading ? "Please wait..." : isLogin ? "Sign In" : "Register Admin"}
+            {loading ? "Please wait..." : "Sign In"}
           </button>
         </form>
       </div>
