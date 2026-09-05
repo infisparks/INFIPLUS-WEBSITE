@@ -6,6 +6,7 @@ import HeroSection from "./components/HeroSection";
 import Clients from "./components/Clients";
 import Features from "./components/Features";
 import WhyInfiplus from "./components/WhyInfiplus";
+import Founders from "./components/Founders";
 import ContactFooter from "./components/ContactFooter";
 import BookDemoModal from "./components/BookDemoModal";
 import GoToTop from "./components/GoToTop";
@@ -21,6 +22,7 @@ export default function Home() {
         <Clients />
         <Features />
         <WhyInfiplus />
+        <Founders />
         <ContactFooter />
         
         {/* Semantic SEO Section */}

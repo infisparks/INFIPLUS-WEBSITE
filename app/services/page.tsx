@@ -5,6 +5,7 @@ import Navbar from "../components/Navbar";
 import ContactFooter from "../components/ContactFooter";
 import BookDemoModal from "../components/BookDemoModal";
 import GoToTop from "../components/GoToTop";
+import Founders from "../components/Founders";
 import { motion } from "framer-motion";
 import { 
   ShieldCheck, 
@@ -172,7 +173,7 @@ export default function ServicesPage() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <span className="section-badge">Founder's Vision</span>
+              <span className="section-badge">Founder&apos;s Vision</span>
               <h2 style={{ marginBottom: "24px" }}>Driving Innovation in Indian Healthcare</h2>
               <p style={{ color: "var(--text-dim)", marginBottom: "20px" }}>
                 Under the leadership of <strong>Shaikh Mudassir</strong> and <strong>Moin Zariwala</strong>, INFIPLUS has grown into a trusted partner for hospitals and labs across India. Our goal is to provide affordable yet high-performance software that empowers healthcare professionals.
@@ -205,6 +206,8 @@ export default function ServicesPage() {
             </motion.div>
           </div>
         </section>
+
+        <Founders />
 
         <ContactFooter />
       </main>

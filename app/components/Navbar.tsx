@@ -47,8 +47,9 @@ export default function Navbar({ onBookDemo }: NavbarProps) {
     { title: "Services", href: "/services" },
     { title: "Modules", href: "/modules" },
     { title: "Features", href: "/#features" },
-    { title: "Blog", href: "/blog" },
     { title: "Why Infiplus", href: "/#why-info" },
+    { title: "Founders", href: "/#founders" },
+    { title: "Blog", href: "/blog" },
     { title: "Contact", href: "/#contact" },
   ];
 
