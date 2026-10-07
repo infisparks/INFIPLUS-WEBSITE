@@ -135,12 +135,12 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
               <div style={{ display: "flex", justifyContent: "center", width: "100%", marginBottom: "22px" }}>
                 <div className="hero-video-wrapper">
                   <iframe
-                    src="https://www.youtube.com/embed/jmJCWnpNRfk?rel=0"
+                    key="infiplus-yt-player"
+                    src="https://www.youtube-nocookie.com/embed/jmJCWnpNRfk?rel=0&modestbranding=1&enablejsapi=1"
                     title="Infiplus Hospital Management ERP Software Demo"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerPolicy="strict-origin-when-cross-origin"
+                    referrerPolicy="no-referrer-when-downgrade"
                     allowFullScreen
-                    loading="lazy"
                   />
                 </div>
               </div>
@@ -163,47 +163,18 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
                 </div>
               </div>
 
-              {/* Badge Cloud */}
-              <div style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                gap: "8px",
-                maxWidth: "580px",
-                margin: "0 auto",
-              }}>
-                <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "8px" }}>
+              {/* Badge Cloud (Strict 2-Row Layout on Desktop & Mobile) */}
+              <div className="hero-badge-cloud-container">
+                <div className="hero-badge-cloud-row">
                   {["OPD Management", "IPD & Ward", "Laboratory"].map((module) => (
-                    <span
-                      key={module}
-                      className="hero-cloud-badge"
-                      style={{
-                        padding: "5px 12px",
-                        background: "rgba(255, 255, 255, 0.05)",
-                        border: "1px solid rgba(255, 255, 255, 0.12)",
-                        borderRadius: "9999px",
-                        color: "#FFFFFF",
-                        fontWeight: 500,
-                      }}
-                    >
+                    <span key={module} className="hero-cloud-badge">
                       {module}
                     </span>
                   ))}
                 </div>
-                <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "8px" }}>
+                <div className="hero-badge-cloud-row">
                   {["Billing & TPA", "Complete Paperless", "WhatsApp Integration"].map((module) => (
-                    <span
-                      key={module}
-                      className="hero-cloud-badge"
-                      style={{
-                        padding: "5px 12px",
-                        background: "rgba(255, 255, 255, 0.05)",
-                        border: "1px solid rgba(255, 255, 255, 0.12)",
-                        borderRadius: "9999px",
-                        color: "#FFFFFF",
-                        fontWeight: 500,
-                      }}
-                    >
+                    <span key={module} className="hero-cloud-badge">
                       {module}
                     </span>
                   ))}
