@@ -1,10 +1,10 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Star, CheckCircle, TrendingUp, Users, Activity,
   Download, Zap, Shield, Clock, Fingerprint, Calendar, Check,
-  Send, MessageCircle, Cloud, LayoutDashboard, Smartphone
+  Send, MessageCircle, Cloud, LayoutDashboard, Smartphone, ArrowRight
 } from "lucide-react";
 import Image from "next/image";
 import { useState, useEffect } from "react";
@@ -17,6 +17,7 @@ interface HeroSectionProps {
 
 export default function HeroSection({ onBookDemo }: HeroSectionProps) {
   const [isMobile, setIsMobile] = useState(false);
+  const [scrolledPastHero, setScrolledPastHero] = useState(false);
   
   // Form states
   const [name, setName] = useState("");
@@ -35,6 +36,22 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
     checkMobile();
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const heroEl = document.getElementById("hero");
+      if (heroEl) {
+        const rect = heroEl.getBoundingClientRect();
+        // Show sticky bar only when scrolled past the hero section
+        setScrolledPastHero(rect.bottom < 120);
+      } else {
+        setScrolledPastHero(window.scrollY > 450);
+      }
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -171,8 +188,8 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
                 padding: "0 10px",
               }}>
                 <div style={{ textAlign: "center", flex: 1 }}>
-                  <div style={{ fontSize: isMobile ? "20px" : "28px", fontWeight: 800, color: "#FFFFFF", lineHeight: 1.1 }}>1000+</div>
-                  <div style={{ fontSize: isMobile ? "10px" : "12px", color: "rgba(255,255,255,0.6)", marginTop: "4px", lineHeight: 1.2 }}>Hospitals & Clinics</div>
+                  <div style={{ fontSize: isMobile ? "16px" : "24px", fontWeight: 800, color: "#FFFFFF", lineHeight: 1.1 }}>ABDM & NABH</div>
+                  <div style={{ fontSize: isMobile ? "10px" : "12px", color: "rgba(255,255,255,0.6)", marginTop: "4px", lineHeight: 1.2 }}>Ready & Compliant</div>
                 </div>
                 <div style={{ width: "1px", height: "36px", background: "rgba(255,255,255,0.15)" }} />
                 <div style={{ textAlign: "center", flex: 1 }}>
@@ -253,56 +270,46 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
                 </div>
               </div>
 
-              {/* Mobile CTA Buttons (Replaces form in mobile version) */}
+              {/* Mobile CTA Button (Attractive single button, replaces form on mobile) */}
               {isMobile && (
-                <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "10px", width: "100%", marginTop: "18px" }}>
+                <div style={{ display: "flex", justifyContent: "center", width: "100%", marginTop: "20px" }}>
                   <motion.button
                     onClick={onBookDemo}
-                    whileTap={{ scale: 0.97 }}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.96 }}
                     style={{
                       width: "100%",
-                      maxWidth: "380px",
-                      padding: "13px 20px",
-                      borderRadius: "10px",
-                      border: "none",
-                      background: "linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)",
+                      maxWidth: "360px",
+                      padding: "14px 22px",
+                      borderRadius: "12px",
+                      border: "1px solid rgba(255, 255, 255, 0.25)",
+                      background: "linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%)",
                       color: "#FFFFFF",
                       fontWeight: 700,
-                      fontSize: "14.5px",
+                      fontSize: "15px",
+                      letterSpacing: "0.01em",
                       cursor: "pointer",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      gap: "8px",
-                      boxShadow: "0 6px 18px rgba(37, 99, 235, 0.4)",
+                      gap: "10px",
+                      boxShadow: "0 8px 25px -4px rgba(37, 99, 235, 0.6), 0 0 16px rgba(59, 130, 246, 0.35)",
+                      position: "relative",
                     }}
                   >
-                    <Calendar size={17} />
-                    Book a Free Demo
-                  </motion.button>
-
-                  <motion.button
-                    onClick={handleWhatsAppClick}
-                    whileTap={{ scale: 0.97 }}
-                    style={{
-                      width: "100%",
-                      maxWidth: "380px",
-                      padding: "11px 20px",
-                      borderRadius: "10px",
-                      border: "1px solid rgba(34, 197, 94, 0.4)",
-                      background: "rgba(34, 197, 94, 0.1)",
-                      color: "#22C55E",
-                      fontWeight: 600,
-                      fontSize: "13.5px",
-                      cursor: "pointer",
+                    <div style={{
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      gap: "8px",
-                    }}
-                  >
-                    <MessageCircle size={17} />
-                    Chat on WhatsApp
+                      width: "26px",
+                      height: "26px",
+                      borderRadius: "8px",
+                      background: "rgba(255, 255, 255, 0.2)",
+                    }}>
+                      <Calendar size={15} />
+                    </div>
+                    <span>Book a Free Demo</span>
+                    <ArrowRight size={16} strokeWidth={2.5} />
                   </motion.button>
                 </div>
               )}
