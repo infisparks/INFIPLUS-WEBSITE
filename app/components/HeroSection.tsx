@@ -6,7 +6,6 @@ import {
   Download, Zap, Shield, Clock, Fingerprint, Calendar, Check,
   Send, MessageCircle, Cloud, LayoutDashboard, Smartphone, ArrowRight
 } from "lucide-react";
-import Image from "next/image";
 import { useState, useEffect } from "react";
 import { db } from "../lib/firebase";
 import { ref, push } from "firebase/database";
@@ -17,7 +16,6 @@ interface HeroSectionProps {
 
 export default function HeroSection({ onBookDemo }: HeroSectionProps) {
   const [scrolledPastHero, setScrolledPastHero] = useState(false);
-  const [isPlayingVideo, setIsPlayingVideo] = useState(false);
   
   // Form states - The 3 questions only
   const [name, setName] = useState("");
@@ -133,68 +131,17 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
                 Manage OPD, IPD, EMR, billing, pharmacy, lab and patient records through one cloud-based Hospital Management Software built for modern Indian hospitals.
               </p>
 
-              {/* YouTube Video Player with Custom Thumbnail Facade */}
+              {/* YouTube Video Player */}
               <div style={{ display: "flex", justifyContent: "center", width: "100%", marginBottom: "22px" }}>
-                <div
-                  className={`hero-video-wrapper ${isPlayingVideo ? "is-playing" : ""}`}
-                  style={{ cursor: isPlayingVideo ? "default" : "pointer" }}
-                  onClick={() => !isPlayingVideo && setIsPlayingVideo(true)}
-                >
-                  {isPlayingVideo ? (
-                    <iframe
-                      key="infiplus-yt-player"
-                      src="https://www.youtube-nocookie.com/embed/jmJCWnpNRfk?autoplay=1&rel=0&modestbranding=1&enablejsapi=1"
-                      title="Infiplus Hospital Management ERP Software Demo"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      referrerPolicy="no-referrer-when-downgrade"
-                      allowFullScreen
-                    />
-                  ) : (
-                    <div style={{ position: "relative", width: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                      <Image
-                        src="/thumbnail.png"
-                        alt="Infiplus Hospital Management ERP Software Demo"
-                        width={1983}
-                        height={793}
-                        style={{ width: "100%", height: "auto", display: "block" }}
-                        priority
-                      />
-
-                      {/* Official YouTube Play Logo in the Center */}
-                      <motion.div
-                        whileHover={{ scale: 1.15, filter: "drop-shadow(0 0 24px rgba(255, 0, 0, 0.85))" }}
-                        whileTap={{ scale: 0.95 }}
-                        style={{
-                          position: "absolute",
-                          top: "50%",
-                          left: "50%",
-                          transform: "translate(-50%, -50%)",
-                          zIndex: 2,
-                          cursor: "pointer",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          filter: "drop-shadow(0 6px 18px rgba(0, 0, 0, 0.65))",
-                          transition: "filter 0.25s ease",
-                        }}
-                      >
-                        <svg
-                          width="68"
-                          height="48"
-                          viewBox="0 0 68 48"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                          style={{ display: "block" }}
-                        >
-                          <path
-                            d="M66.52 7.74C65.74 4.83 63.46 2.54 60.55 1.76C55.28 0.33 34 0.33 34 0.33C34 0.33 12.72 0.33 7.45 1.76C4.54 2.54 2.26 4.83 1.48 7.74C0.05 13.01 0 24 0 24C0 24 0.05 34.99 1.48 40.26C2.26 43.17 4.54 45.46 7.45 46.24C12.72 47.67 34 47.67 34 47.67C34 47.67 55.28 47.67 60.55 46.24C63.46 45.46 65.74 43.17 66.52 40.26C67.95 34.99 68 24 68 24C68 24 67.95 13.01 66.52 7.74Z"
-                            fill="#FF0000"
-                          />
-                          <polygon points="27,33 44,24 27,15" fill="#FFFFFF" />
-                        </svg>
-                      </motion.div>
-                    </div>
-                  )}
+                <div className="hero-video-wrapper">
+                  <iframe
+                    key="infiplus-yt-player"
+                    src="https://www.youtube-nocookie.com/embed/jmJCWnpNRfk?rel=0&modestbranding=1&enablejsapi=1"
+                    title="Infiplus Hospital Management ERP Software Demo"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    allowFullScreen
+                  />
                 </div>
               </div>
 
