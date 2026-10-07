@@ -366,11 +366,23 @@ p  { font-size: clamp(0.8rem, 1.5vw, 0.9rem); line-height: 1.65; }
   margin-bottom: 32px;
 }
 
-.hero-stethoscope-wrapper {
+.hero-stethoscope-wrapper,
+.hero-video-wrapper {
   position: relative;
   width: 100%;
   max-width: 580px;
-  height: 190px;
+  aspect-ratio: 16 / 9;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.12), 0 0 30px rgba(37, 99, 235, 0.25);
+  background: #000000;
+}
+
+.hero-video-wrapper iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
 }
 
 .hero-mobile-cta-wrapper {
@@ -464,6 +476,14 @@ p  { font-size: clamp(0.8rem, 1.5vw, 0.9rem); line-height: 1.65; }
 
   .hero-stethoscope-wrapper {
     height: 130px !important;
+  }
+
+  .hero-video-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 16 / 9 !important;
+    border-radius: 12px !important;
   }
 
   .hero-mobile-cta-wrapper {

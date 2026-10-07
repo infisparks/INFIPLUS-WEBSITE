@@ -6,7 +6,6 @@ import {
   Download, Zap, Shield, Clock, Fingerprint, Calendar, Check,
   Send, MessageCircle, Cloud, LayoutDashboard, Smartphone, ArrowRight
 } from "lucide-react";
-import Image from "next/image";
 import { useState, useEffect } from "react";
 import { db } from "../lib/firebase";
 import { ref, push } from "firebase/database";
@@ -226,15 +225,16 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
                 </motion.button>
               </div>
 
-              {/* Stethoscope Graphic */}
+              {/* YouTube Video Player */}
               <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
-                <div className="hero-stethoscope-wrapper">
-                  <Image
-                    src="/herosectino/heroicon.png"
-                    alt="Stethoscope clinical workflows"
-                    fill
-                    style={{ objectFit: "contain" }}
-                    priority
+                <div className="hero-video-wrapper">
+                  <iframe
+                    src="https://www.youtube.com/embed/jmJCWnpNRfk?rel=0"
+                    title="Infiplus Hospital Management ERP Software Demo"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allowFullScreen
+                    loading="lazy"
                   />
                 </div>
               </div>
