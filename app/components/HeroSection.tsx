@@ -176,31 +176,48 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
               {/* Badge Cloud */}
               <div style={{
                 display: "flex",
-                flexWrap: "wrap",
-                justifyContent: "center",
+                flexDirection: "column",
+                alignItems: "center",
                 gap: "8px",
                 maxWidth: "580px",
                 margin: "0 auto 28px",
               }}>
-                {[
-                  "OPD Management", "IPD & Ward", "Laboratory", "OT Scheduling",
-                  "Billing & TPA", "Complete Paperless", "WhatsApp Integration", "AI Prescriptions"
-                ].map((module) => (
-                  <span
-                    key={module}
-                    className="hero-cloud-badge"
-                    style={{
-                      padding: "5px 12px",
-                      background: "rgba(255, 255, 255, 0.05)",
-                      border: "1px solid rgba(255, 255, 255, 0.12)",
-                      borderRadius: "9999px",
-                      color: "#FFFFFF",
-                      fontWeight: 500,
-                    }}
-                  >
-                    {module}
-                  </span>
-                ))}
+                <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "8px" }}>
+                  {["OPD Management", "IPD & Ward", "Laboratory"].map((module) => (
+                    <span
+                      key={module}
+                      className="hero-cloud-badge"
+                      style={{
+                        padding: "5px 12px",
+                        background: "rgba(255, 255, 255, 0.05)",
+                        border: "1px solid rgba(255, 255, 255, 0.12)",
+                        borderRadius: "9999px",
+                        color: "#FFFFFF",
+                        fontWeight: 500,
+                      }}
+                    >
+                      {module}
+                    </span>
+                  ))}
+                </div>
+                <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "8px" }}>
+                  {["Billing & TPA", "Complete Paperless", "WhatsApp Integration"].map((module) => (
+                    <span
+                      key={module}
+                      className="hero-cloud-badge"
+                      style={{
+                        padding: "5px 12px",
+                        background: "rgba(255, 255, 255, 0.05)",
+                        border: "1px solid rgba(255, 255, 255, 0.12)",
+                        borderRadius: "9999px",
+                        color: "#FFFFFF",
+                        fontWeight: 500,
+                      }}
+                    >
+                      {module}
+                    </span>
+                  ))}
+                </div>
               </div>
 
               {/* Watch Dashboard Button */}
