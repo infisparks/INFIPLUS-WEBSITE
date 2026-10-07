@@ -97,7 +97,7 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
             }}
             className="modal-container"
           >
-            {/* Left Side: Info */}
+            {/* Left Side: Info (Desktop) */}
             <div className="modal-left" style={{ padding: "clamp(28px, 4vw, 48px)", background: "linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, transparent 100%)", position: "relative" }}>
                <div className="section-badge" style={{ marginBottom: 20, fontSize: "0.7rem", backgroundColor: 'rgba(37, 99, 235, 0.08)' }}>FREE LIVE DEMO</div>
                <h2 style={{ fontSize: "clamp(1.5rem, 3.5vw, 2.1rem)", fontWeight: 800, color: "var(--text-main)", marginBottom: 14, letterSpacing: "-0.04em", lineHeight: 1.15 }}>Experience the <br /> <span className="gradient-text-teal">Future of Healthcare</span></h2>
@@ -118,16 +118,36 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
                </div>
             </div>
 
-            {/* Right Side: Form */}
-            <div className="modal-right" style={{ padding: "clamp(24px, 4vw, 44px)", borderLeft: "1px solid rgba(0, 0, 0, 0.03)", position: "relative" }}>
+            {/* Right Side: Form (Mobile & Desktop) */}
+            <div className="modal-right" style={{ 
+              padding: "clamp(24px, 4vw, 40px)", 
+              borderLeft: "1px solid rgba(0, 0, 0, 0.04)", 
+              position: "relative",
+              background: "linear-gradient(180deg, #FFFFFF 0%, #FAFBFC 100%)",
+            }}>
                <button 
                  onClick={onClose}
                  aria-label="Close modal"
-                 style={{ position: "absolute", top: 20, right: 24, color: "var(--text-muted)", background: "transparent", border: "none", cursor: "pointer", transition: "color 0.3s" }}
-                 onMouseEnter={(e) => e.currentTarget.style.color = "var(--color-primary)"}
-                 onMouseLeave={(e) => e.currentTarget.style.color = "var(--text-muted)"}
+                 style={{ 
+                   position: "absolute", 
+                   top: 18, 
+                   right: 18, 
+                   width: "34px",
+                   height: "34px",
+                   borderRadius: "50%",
+                   background: "#F1F5F9",
+                   border: "1px solid #E2E8F0",
+                   display: "flex",
+                   alignItems: "center",
+                   justifyContent: "center",
+                   color: "#64748B", 
+                   cursor: "pointer", 
+                   transition: "all 0.2s ease" 
+                 }}
+                 onMouseEnter={(e) => { e.currentTarget.style.background = "#E2E8F0"; e.currentTarget.style.color = "#0F172A"; }}
+                 onMouseLeave={(e) => { e.currentTarget.style.background = "#F1F5F9"; e.currentTarget.style.color = "#64748B"; }}
                >
-                 <X size={26} />
+                 <X size={18} strokeWidth={2.5} />
                </button>
 
                {isSubmitted ? (
@@ -152,10 +172,27 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
                    </p>
                  </div>
                ) : (
-                 <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 18 }}>
+                 <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                    <div>
-                     <h3 style={{ fontSize: "20px", fontWeight: 800, color: "#111827", margin: "0 0 6px" }}>Book a Free Demo</h3>
-                     <p style={{ fontSize: "13px", color: "#6B7280", margin: 0 }}>Fill out this quick form and our team will get in touch.</p>
+                     <div style={{
+                       display: "inline-flex",
+                       alignItems: "center",
+                       gap: "6px",
+                       padding: "4px 10px",
+                       borderRadius: "9999px",
+                       background: "rgba(37, 99, 235, 0.08)",
+                       border: "1px solid rgba(37, 99, 235, 0.18)",
+                       color: "#2563EB",
+                       fontSize: "10.5px",
+                       fontWeight: 700,
+                       letterSpacing: "0.03em",
+                       marginBottom: "8px",
+                       textTransform: "uppercase",
+                     }}>
+                       ✦ 1-ON-1 PERSONALIZED LIVE DEMO
+                     </div>
+                     <h3 style={{ fontSize: "22px", fontWeight: 800, color: "#0F172A", margin: "0 0 4px", letterSpacing: "-0.02em" }}>Book a Free Demo</h3>
+                     <p style={{ fontSize: "13px", color: "#64748B", margin: 0, lineHeight: 1.5 }}>Takes under 60 seconds · Direct walkthrough with our specialist.</p>
                    </div>
 
                    {error && (
@@ -178,27 +215,42 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
                    <button
                      type="submit"
                      disabled={isSubmitting}
-                     className="glow-btn-primary"
                      style={{ 
-                       padding: "14px 24px", 
-                       borderRadius: "12px", 
-                       border: "none", 
-                       background: "#2563EB",
+                       padding: "13px 22px", 
+                       borderRadius: "10px", 
+                       border: "1px solid rgba(255, 255, 255, 0.2)", 
+                       background: "linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)",
                        color: "#fff", 
-                       fontSize: "14px", 
+                       fontSize: "14.5px", 
                        fontWeight: 700, 
+                       letterSpacing: "0.01em",
                        display: "flex", 
                        alignItems: "center", 
                        justifyContent: "center", 
-                       gap: 10,
-                       marginTop: 8,
+                       gap: 8,
+                       marginTop: 4,
                        cursor: "pointer",
-                       boxShadow: "0 4px 14px rgba(37, 99, 235, 0.35)",
+                       boxShadow: "0 6px 18px rgba(37, 99, 235, 0.4)",
+                       transition: "all 0.2s ease"
                      }}
                    >
-                     {isSubmitting ? "Booking..." : "Book Free Demo"}
-                     <ArrowRight size={18} strokeWidth={2.5} />
+                     <Calendar size={16} />
+                     <span>{isSubmitting ? "Booking Demo..." : "Book Free Demo"}</span>
+                     <ArrowRight size={16} strokeWidth={2.5} />
                    </button>
+
+                   <div style={{
+                     display: "flex",
+                     alignItems: "center",
+                     justifyContent: "center",
+                     gap: "6px",
+                     fontSize: "11px",
+                     color: "#64748B",
+                     fontWeight: 500,
+                     marginTop: "-4px",
+                   }}>
+                     <span>🔒</span> 100% Free · No sales pressure · Direct live walkthrough
+                   </div>
                  </form>
                )}
             </div>
@@ -210,15 +262,16 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
         @media (max-width: 900px) {
           .modal-container {
              grid-template-columns: 1fr !important;
-             max-height: 90vh !important;
+             max-height: 92vh !important;
              overflow-y: auto !important;
              border-radius: 24px !important;
+             box-shadow: 0 25px 60px rgba(0,0,0,0.3) !important;
           }
           .modal-left {
              display: none !important;
           }
           .modal-right {
-             padding: 28px 20px !important;
+             padding: 24px 18px 28px !important;
              border-left: none !important;
           }
         }
@@ -229,10 +282,12 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
 
 function ModalInput({ label, icon, type, id, placeholder, focused, onFocus, onBlur, value, onChange }: any) {
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-      <label htmlFor={id} style={{ fontSize: "0.82rem", fontWeight: 600, color: focused ? "#2563EB" : "#374151", transition: "all 0.2s ease" }}>{label}</label>
+    <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+      <label htmlFor={id} style={{ fontSize: "0.82rem", fontWeight: 600, color: focused ? "#2563EB" : "#334155", transition: "all 0.2s ease", display: "flex", alignItems: "center", gap: "4px" }}>
+        {label} <span style={{ color: "#EF4444" }}>*</span>
+      </label>
       <div style={{ position: "relative" }}>
-        <div style={{ position: "absolute", left: 16, top: "50%", transform: "translateY(-50%)", color: focused ? "#2563EB" : "#9CA3AF", transition: "all 0.2s ease", display: "flex", alignItems: "center" }}>{icon}</div>
+        <div style={{ position: "absolute", left: 15, top: "50%", transform: "translateY(-50%)", color: focused ? "#2563EB" : "#94A3B8", transition: "all 0.2s ease", display: "flex", alignItems: "center" }}>{icon}</div>
         <input 
           type={type} 
           id={id} 
@@ -244,13 +299,13 @@ function ModalInput({ label, icon, type, id, placeholder, focused, onFocus, onBl
           required
           style={{ 
             width: "100%",
-            padding: "0 18px 0 46px", 
-            height: "50px", 
+            padding: "0 16px 0 44px", 
+            height: "48px", 
             borderRadius: "10px", 
             background: "#F8FAFC", 
             border: `1.5px solid ${focused ? "#2563EB" : "#E2E8F0"}`, 
-            color: "#111827", 
-            fontSize: "0.95rem", 
+            color: "#0F172A", 
+            fontSize: "0.92rem", 
             outline: "none", 
             transition: "all 0.2s ease",
             boxShadow: focused ? "0 0 0 3px rgba(37, 99, 235, 0.12)" : "none"

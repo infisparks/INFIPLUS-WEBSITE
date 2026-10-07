@@ -19,7 +19,7 @@ export default function ContactFooter() {
 
   // Form states
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -28,7 +28,7 @@ export default function ContactFooter() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name || !email || !subject) {
+    if (!name || !phone || !subject) {
       setError("Please fill in all required fields.");
       return;
     }
@@ -37,7 +37,7 @@ export default function ContactFooter() {
     try {
       await push(ref(db, "submissions"), {
         name,
-        email,
+        phone,
         hospitalName: subject, // subject is Hospital / Clinic name
         message,
         type: "Contact Footer",
@@ -46,7 +46,7 @@ export default function ContactFooter() {
       });
       setIsSubmitted(true);
       setName("");
-      setEmail("");
+      setPhone("");
       setSubject("");
       setMessage("");
     } catch (err: any) {
@@ -339,10 +339,10 @@ export default function ContactFooter() {
                   </div>
                 )}
                 <div className="form-row">
-                  <FormInput label="Full Name" type="text" id="name" placeholder="John Doe" focused={focused === "name"} onFocus={() => setFocused("name")} onBlur={() => setFocused(null)} value={name} onChange={(e: any) => setName(e.target.value)} />
-                  <FormInput label="Work Email" type="email" id="email" placeholder="john@hospital.com" focused={focused === "email"} onFocus={() => setFocused("email")} onBlur={() => setFocused(null)} value={email} onChange={(e: any) => setEmail(e.target.value)} />
+                  <FormInput label="Full Name" type="text" id="name" placeholder="Dr. / Mr. / Ms. Name" focused={focused === "name"} onFocus={() => setFocused("name")} onBlur={() => setFocused(null)} value={name} onChange={(e: any) => setName(e.target.value)} />
+                  <FormInput label="Contact Number (Calling / WhatsApp)" type="tel" id="phone" placeholder="+91 98765 43210" focused={focused === "phone"} onFocus={() => setFocused("phone")} onBlur={() => setFocused(null)} value={phone} onChange={(e: any) => setPhone(e.target.value)} />
                 </div>
-                <FormInput label="Hospital / Clinic Name" type="text" id="subject" placeholder="St. Mary's Clinic" focused={focused === "subject"} onFocus={() => setFocused("subject")} onBlur={() => setFocused(null)} value={subject} onChange={(e: any) => setSubject(e.target.value)} />
+                <FormInput label="Hospital / Clinic Name" type="text" id="subject" placeholder="e.g. City Hospital, Mumbai" focused={focused === "subject"} onFocus={() => setFocused("subject")} onBlur={() => setFocused(null)} value={subject} onChange={(e: any) => setSubject(e.target.value)} />
 
                 <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                   <label

@@ -19,12 +19,10 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
   const [isMobile, setIsMobile] = useState(false);
   const [scrolledPastHero, setScrolledPastHero] = useState(false);
   
-  // Form states
+  // Form states - The 3 questions only
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
   const [hospitalName, setHospitalName] = useState("");
-  const [beds, setBeds] = useState("Choose...");
+  const [phone, setPhone] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -56,7 +54,7 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name || !email || !phone || !hospitalName || beds === "Choose...") {
+    if (!name || !phone || !hospitalName) {
       setError("Please fill in all required fields.");
       return;
     }
@@ -67,10 +65,8 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
       // Save details to Firebase
       await push(ref(db, "submissions"), {
         name,
-        email,
-        phone,
         hospitalName,
-        beds,
+        phone,
         type: "Book Demo",
         timestamp: Date.now(),
         dateString: new Date().toLocaleString()
@@ -394,53 +390,32 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
                       </div>
                     )}
 
-                    {/* Inputs */}
-                    <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "12px" }}>
-                      <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-                        <label style={{ fontSize: "12px", fontWeight: 600, color: "#374151" }}>Full Name *</label>
-                        <input
-                          type="text"
-                          placeholder="e.g., Harpreet Singh"
-                          required
-                          value={name}
-                          onChange={(e) => setName(e.target.value)}
-                          style={{
-                            padding: "10px 12px",
-                            fontSize: "13px",
-                            border: "1px solid #E5E7EB",
-                            borderRadius: "8px",
-                            outline: "none",
-                            color: "#111827",
-                            background: "#FFFFFF",
-                          }}
-                        />
-                      </div>
-                      <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-                        <label style={{ fontSize: "12px", fontWeight: 600, color: "#374151" }}>Email *</label>
-                        <input
-                          type="email"
-                          placeholder="name@hospital.com"
-                          required
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                          style={{
-                            padding: "10px 12px",
-                            fontSize: "13px",
-                            border: "1px solid #E5E7EB",
-                            borderRadius: "8px",
-                            outline: "none",
-                            color: "#111827",
-                            background: "#FFFFFF",
-                          }}
-                        />
-                      </div>
+                    {/* 3 Questions Only (Same as popup modal) */}
+                    <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+                      <label style={{ fontSize: "12px", fontWeight: 600, color: "#374151" }}>Full Name *</label>
+                      <input
+                        type="text"
+                        placeholder="Dr. / Mr. / Ms. Name"
+                        required
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        style={{
+                          padding: "10px 12px",
+                          fontSize: "13px",
+                          border: "1px solid #E5E7EB",
+                          borderRadius: "8px",
+                          outline: "none",
+                          color: "#111827",
+                          background: "#FFFFFF",
+                        }}
+                      />
                     </div>
 
                     <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
                       <label style={{ fontSize: "12px", fontWeight: 600, color: "#374151" }}>Hospital / Clinic Name *</label>
                       <input
                         type="text"
-                        placeholder="e.g., hospital"
+                        placeholder="e.g. City Care Hospital, Mumbai"
                         required
                         value={hospitalName}
                         onChange={(e) => setHospitalName(e.target.value)}
@@ -456,50 +431,24 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
                       />
                     </div>
 
-                    <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "12px" }}>
-                      <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-                        <label style={{ fontSize: "12px", fontWeight: 600, color: "#374151" }}>Phone Number *</label>
-                        <input
-                          type="tel"
-                          placeholder="e.g., +91 9999999999"
-                          required
-                          value={phone}
-                          onChange={(e) => setPhone(e.target.value)}
-                          style={{
-                            padding: "10px 12px",
-                            fontSize: "13px",
-                            border: "1px solid #E5E7EB",
-                            borderRadius: "8px",
-                            outline: "none",
-                            color: "#111827",
-                            background: "#FFFFFF",
-                          }}
-                        />
-                      </div>
-                      <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-                        <label style={{ fontSize: "12px", fontWeight: 600, color: "#374151" }}>No. of Beds</label>
-                        <select
-                          value={beds}
-                          onChange={(e) => setBeds(e.target.value)}
-                          style={{
-                            padding: "10px 12px",
-                            fontSize: "13px",
-                            border: "1px solid #E5E7EB",
-                            borderRadius: "8px",
-                            background: "#FFFFFF",
-                            color: beds === "Choose..." ? "#9CA3AF" : "#111827",
-                            outline: "none",
-                            cursor: "pointer",
-                            width: "100%"
-                          }}
-                        >
-                          <option disabled value="Choose...">Choose...</option>
-                          <option value="1-10">1 - 10 Beds</option>
-                          <option value="11-50">11 - 50 Beds</option>
-                          <option value="51-100">51 - 100 Beds</option>
-                          <option value="100+">100+ Beds</option>
-                        </select>
-                      </div>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+                      <label style={{ fontSize: "12px", fontWeight: 600, color: "#374151" }}>Contact Number (Calling / WhatsApp) *</label>
+                      <input
+                        type="tel"
+                        placeholder="+91 98765 43210"
+                        required
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        style={{
+                          padding: "10px 12px",
+                          fontSize: "13px",
+                          border: "1px solid #E5E7EB",
+                          borderRadius: "8px",
+                          outline: "none",
+                          color: "#111827",
+                          background: "#FFFFFF",
+                        }}
+                      />
                     </div>
 
                     <div style={{
