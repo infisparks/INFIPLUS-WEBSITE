@@ -155,6 +155,20 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
                 Manage OPD, IPD, EMR, billing, pharmacy, lab and patient records through one cloud-based Hospital Management Software built for modern Indian hospitals.
               </p>
 
+              {/* YouTube Video Player */}
+              <div style={{ display: "flex", justifyContent: "center", width: "100%", marginBottom: "28px" }}>
+                <div className="hero-video-wrapper">
+                  <iframe
+                    src="https://www.youtube.com/embed/jmJCWnpNRfk?rel=0"
+                    title="Infiplus Hospital Management ERP Software Demo"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allowFullScreen
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+
               {/* Numbers Row */}
               <div className="hero-numbers-row">
                 <div style={{ textAlign: "center", flex: 1 }}>
@@ -180,7 +194,7 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
                 alignItems: "center",
                 gap: "8px",
                 maxWidth: "580px",
-                margin: "0 auto 28px",
+                margin: "0 auto",
               }}>
                 <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "8px" }}>
                   {["OPD Management", "IPD & Ward", "Laboratory"].map((module) => (
@@ -217,42 +231,6 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
                       {module}
                     </span>
                   ))}
-                </div>
-              </div>
-
-              {/* Watch Dashboard Button */}
-              <div className="hero-dashboard-btn-wrapper">
-                <motion.button
-                  onClick={onBookDemo}
-                  whileHover={{ scale: 1.03, borderColor: "#3B82F6", background: "rgba(59, 130, 246, 0.08)" }}
-                  whileTap={{ scale: 0.97 }}
-                  style={{
-                    padding: "10px 24px",
-                    borderRadius: "8px",
-                    border: "2px solid #2563EB",
-                    background: "transparent",
-                    color: "#FFFFFF",
-                    fontWeight: 600,
-                    fontSize: "14px",
-                    cursor: "pointer",
-                    transition: "all 0.2s ease",
-                  }}
-                >
-                  Watch How Dashboard Looks
-                </motion.button>
-              </div>
-
-              {/* YouTube Video Player */}
-              <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
-                <div className="hero-video-wrapper">
-                  <iframe
-                    src="https://www.youtube.com/embed/jmJCWnpNRfk?rel=0"
-                    title="Infiplus Hospital Management ERP Software Demo"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerPolicy="strict-origin-when-cross-origin"
-                    allowFullScreen
-                    loading="lazy"
-                  />
                 </div>
               </div>
 
