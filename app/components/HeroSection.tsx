@@ -136,7 +136,7 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
                 <div className="hero-video-wrapper">
                   <iframe
                     key="infiplus-yt-player"
-                    src="https://www.youtube-nocookie.com/embed/jmJCWnpNRfk?rel=0&modestbranding=1&enablejsapi=1"
+                    src="https://www.youtube-nocookie.com/embed/eEO-k5gQeJ8?rel=0&modestbranding=1&enablejsapi=1"
                     title="Infiplus Hospital Management ERP Software Demo"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerPolicy="no-referrer-when-downgrade"
