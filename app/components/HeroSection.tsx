@@ -99,30 +99,6 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
           <div className="hero-content-grid">
             {/* Left Column: Content */}
             <div style={{ display: "flex", flexDirection: "column", width: "100%", alignItems: "center" }}>
-              {/* Blue Capsule Badge */}
-              <div style={{ display: "flex", justifyContent: "center", marginBottom: "18px" }}>
-                <div
-                  className="hero-capsule-badge"
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "8px",
-                    padding: "5px 14px",
-                    background: "#2563EB",
-                    borderRadius: "9999px",
-                    color: "#FFFFFF",
-                    fontWeight: 700,
-                    letterSpacing: "0.02em",
-                    textTransform: "uppercase",
-                    boxShadow: "0 4px 12px rgba(37, 99, 235, 0.2)",
-                    textAlign: "center",
-                  }}
-                >
-                  <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: "#10B981" }} />
-                  HOSPITAL ERP SOFTWARE- BUILD FOR INDIAN HOSPITALS
-                </div>
-              </div>
-
               {/* Main Headline */}
               <h1
                 className="hero-main-heading"
@@ -131,8 +107,8 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
                   letterSpacing: "-0.02em",
                   color: "#FFFFFF",
                   textAlign: "center",
-                  marginBottom: "16px",
-                  lineHeight: 1.2,
+                  marginBottom: "18px",
+                  lineHeight: 1.18,
                 }}
               >
                 <span style={{ display: "inline-block", maxWidth: "100%" }}>India&apos;s #1 Hospital Management</span>
@@ -144,10 +120,10 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
               <p
                 className="hero-main-desc"
                 style={{
-                  color: "rgba(255, 255, 255, 0.75)",
+                  color: "rgba(255, 255, 255, 0.8)",
                   lineHeight: 1.6,
-                  maxWidth: "580px",
-                  margin: "0 auto 24px",
+                  maxWidth: "600px",
+                  margin: "0 auto 26px",
                   textAlign: "center",
                   fontWeight: 400,
                 }}
