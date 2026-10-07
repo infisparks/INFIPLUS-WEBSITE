@@ -309,14 +309,14 @@ p  { font-size: clamp(0.8rem, 1.5vw, 0.9rem); line-height: 1.65; }
 
 /* ─── HERO & NAVBAR RESPONSIVE STYLES (Pure CSS - Eliminates Mobile Refresh Layout Shift) ─── */
 .hero-main-section {
-  padding-top: 130px;
+  padding-top: 112px;
   padding-bottom: 0px;
 }
 
 .hero-container-inner {
   width: 100%;
   z-index: 2;
-  padding: 40px 20px 60px;
+  padding: 24px 20px 50px;
 }
 
 .hero-content-grid {
@@ -416,12 +416,12 @@ p  { font-size: clamp(0.8rem, 1.5vw, 0.9rem); line-height: 1.65; }
     display: block !important;
   }
   .hero-main-section {
-    padding-top: 110px !important;
-    padding-bottom: 80px !important;
+    padding-top: 76px !important;
+    padding-bottom: 70px !important;
   }
 
   .hero-container-inner {
-    padding: 16px 14px 40px !important;
+    padding: 8px 14px 36px !important;
   }
 
   .hero-content-grid {
@@ -467,6 +467,11 @@ p  { font-size: clamp(0.8rem, 1.5vw, 0.9rem); line-height: 1.65; }
 
   .hero-mobile-cta-wrapper {
     display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    margin: 20px auto 0 !important;
+    text-align: center !important;
   }
 
   .hero-desktop-form-wrapper {

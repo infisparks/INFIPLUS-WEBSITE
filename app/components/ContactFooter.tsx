@@ -2,7 +2,7 @@
 
 import { motion, useInView } from "framer-motion";
 import {
-  Mail, MapPin, Phone, ArrowRight,
+  Mail, MapPin, Phone, ArrowRight, Calendar,
   Instagram, Linkedin, Twitter, CheckCircle2, Award, MessageCircle,
 } from "lucide-react";
 import Image from "next/image";
@@ -17,18 +17,17 @@ export default function ContactFooter() {
   const formRef = useRef(null);
   const isFormInView = useInView(formRef, { once: true, margin: "-10%" });
 
-  // Form states
+  // Form states - The 3 Questions Only
   const [name, setName] = useState("");
+  const [hospitalName, setHospitalName] = useState("");
   const [phone, setPhone] = useState("");
-  const [subject, setSubject] = useState("");
-  const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name || !phone || !subject) {
+    if (!name || !hospitalName || !phone) {
       setError("Please fill in all required fields.");
       return;
     }
@@ -37,18 +36,16 @@ export default function ContactFooter() {
     try {
       await push(ref(db, "submissions"), {
         name,
+        hospitalName,
         phone,
-        hospitalName: subject, // subject is Hospital / Clinic name
-        message,
         type: "Contact Footer",
         timestamp: Date.now(),
         dateString: new Date().toLocaleString()
       });
       setIsSubmitted(true);
       setName("");
+      setHospitalName("");
       setPhone("");
-      setSubject("");
-      setMessage("");
     } catch (err: any) {
       setError(err.message || "Failed to schedule demo. Please try again.");
     } finally {
@@ -272,19 +269,36 @@ export default function ContactFooter() {
             {/* Form top accent */}
             <div style={{ position: "absolute", top: 0, left: "15%", right: "15%", height: 2.5, background: "linear-gradient(90deg, #2563EB, #6366F1, #3B82F6)", borderRadius: "0 0 5px 5px" }} />
 
+            {/* Top Badge */}
+            <div style={{ display: "inline-flex", alignSelf: "flex-start", marginBottom: "8px" }}>
+              <div style={{
+                background: "rgba(37, 99, 235, 0.08)",
+                border: "1px solid rgba(37, 99, 235, 0.2)",
+                borderRadius: "9999px",
+                padding: "4px 10px",
+                color: "#2563EB",
+                fontSize: "10.5px",
+                fontWeight: 700,
+                letterSpacing: "0.03em",
+                textTransform: "uppercase",
+              }}>
+                ✦ 100% Free Clinic &amp; Hospital Demo
+              </div>
+            </div>
+
             <h3
               style={{
-                fontSize: "clamp(1.1rem, 2.5vw, 1.55rem)",
+                fontSize: "clamp(1.15rem, 2.5vw, 1.6rem)",
                 fontWeight: 800,
                 color: "#0F172A",
-                marginBottom: "clamp(4px, 0.8vw, 8px)",
-                letterSpacing: "-0.025em",
+                marginBottom: "4px",
+                letterSpacing: "-0.02em",
               }}
             >
-              Schedule Your Demo
+              Book a Free Demo
             </h3>
-            <p style={{ color: "#64748B", marginBottom: "clamp(20px, 3vw, 32px)", fontWeight: 500, fontSize: "clamp(0.75rem, 1.3vw, 0.85rem)" }}>
-              Our consultants respond within 24 hours.
+            <p style={{ color: "#64748B", marginBottom: "clamp(16px, 2.5vw, 24px)", fontWeight: 500, fontSize: "clamp(0.78rem, 1.3vw, 0.88rem)", lineHeight: 1.5 }}>
+              Takes 2 minutes. See Infiplus live in action customized for your hospital.
             </p>
 
             {isSubmitted ? (
@@ -302,10 +316,10 @@ export default function ContactFooter() {
                   <CheckCircle2 size={30} strokeWidth={3} />
                 </div>
                 <h3 style={{ fontSize: "20px", fontWeight: 800, color: "#0F172A", margin: 0 }}>
-                  Demo Scheduled!
+                  Demo Request Received!
                 </h3>
                 <p style={{ fontSize: "14px", color: "#475569", lineHeight: 1.5, margin: 0 }}>
-                  Thank you! Your information has been saved successfully. Our team will contact you within 24 hours.
+                  Thank you, <strong>{name}</strong>! Your demo request has been submitted. Our healthcare specialist will contact you soon.
                 </p>
                 <button
                   onClick={() => setIsSubmitted(false)}
@@ -320,11 +334,11 @@ export default function ContactFooter() {
                     marginTop: 8
                   }}
                 >
-                  Send another message
+                  Send another request
                 </button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "clamp(12px, 2vw, 18px)" }}>
+              <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "13px" }}>
                 {error && (
                   <div style={{
                     padding: "10px 12px",
@@ -338,75 +352,182 @@ export default function ContactFooter() {
                     {error}
                   </div>
                 )}
-                <div className="form-row">
-                  <FormInput label="Full Name" type="text" id="name" placeholder="Dr. / Mr. / Ms. Name" focused={focused === "name"} onFocus={() => setFocused("name")} onBlur={() => setFocused(null)} value={name} onChange={(e: any) => setName(e.target.value)} />
-                  <FormInput label="Contact Number (Calling / WhatsApp)" type="tel" id="phone" placeholder="+91 98765 43210" focused={focused === "phone"} onFocus={() => setFocused("phone")} onBlur={() => setFocused(null)} value={phone} onChange={(e: any) => setPhone(e.target.value)} />
-                </div>
-                <FormInput label="Hospital / Clinic Name" type="text" id="subject" placeholder="e.g. City Hospital, Mumbai" focused={focused === "subject"} onFocus={() => setFocused("subject")} onBlur={() => setFocused(null)} value={subject} onChange={(e: any) => setSubject(e.target.value)} />
-
-                <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                  <label
-                    htmlFor="message"
+                
+                {/* 3 Questions Only */}
+                <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
+                  <label style={{ fontSize: "12.5px", fontWeight: 600, color: "#374151" }}>Full Name *</label>
+                  <input
+                    type="text"
+                    placeholder="Dr. / Mr. / Ms. Name"
+                    required
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                     style={{
-                      fontSize: "clamp(0.68rem, 1.2vw, 0.76rem)",
-                      fontWeight: 700,
-                      color: focused === "message" ? "#2563EB" : "#475569",
-                      transition: "color 0.3s",
-                      paddingLeft: 2,
-                      letterSpacing: "0.01em",
-                    }}
-                  >
-                    Message (Optional)
-                  </label>
-                  <textarea
-                    id="message"
-                    placeholder="Tell us about your requirements..."
-                    onFocus={() => setFocused("message")}
-                    onBlur={() => setFocused(null)}
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    style={{
-                      padding: "clamp(10px, 1.5vw, 14px)",
-                      borderRadius: "clamp(10px, 1.5vw, 13px)",
-                      background: "#F8FAFC",
-                      border: `1.5px solid ${focused === "message" ? "#2563EB" : "rgba(226,232,240,0.9)"}`,
-                      color: "#0F172A",
-                      fontSize: "clamp(0.78rem, 1.4vw, 0.88rem)",
-                      minHeight: "clamp(80px, 12vw, 110px)",
+                      padding: "11px 14px",
+                      fontSize: "13.5px",
+                      border: "1.5px solid #E2E8F0",
+                      borderRadius: "10px",
                       outline: "none",
-                      transition: "all 0.3s ease",
-                      boxShadow: focused === "message" ? "0 0 0 3px rgba(37,99,235,0.07)" : "none",
-                      fontFamily: "var(--font-outfit), sans-serif",
-                      resize: "vertical",
+                      color: "#111827",
+                      background: "#F8FAFC",
+                      transition: "all 0.2s ease",
+                    }}
+                    onFocus={(e) => {
+                      e.target.style.borderColor = "#2563EB";
+                      e.target.style.background = "#FFFFFF";
+                      e.target.style.boxShadow = "0 0 0 3px rgba(37, 99, 235, 0.12)";
+                    }}
+                    onBlur={(e) => {
+                      e.target.style.borderColor = "#E2E8F0";
+                      e.target.style.background = "#F8FAFC";
+                      e.target.style.boxShadow = "none";
                     }}
                   />
                 </div>
 
-                <motion.button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="glow-btn-primary"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  style={{
-                    padding: "clamp(11px, 1.8vw, 15px)",
-                    borderRadius: "9999px",
-                    border: "none",
-                    color: "#fff",
-                    fontSize: "clamp(0.78rem, 1.5vw, 0.9rem)",
-                    fontWeight: 700,
-                    cursor: "pointer",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: 8,
-                    marginTop: 4,
-                    letterSpacing: "0.01em",
-                  }}
-                >
-                  {isSubmitting ? "Booking..." : "Book Private Tour"}
-                  <ArrowRight size={15} strokeWidth={2.5} />
-                </motion.button>
+                <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
+                  <label style={{ fontSize: "12.5px", fontWeight: 600, color: "#374151" }}>Hospital / Clinic Name *</label>
+                  <input
+                    type="text"
+                    placeholder="e.g. City Care Hospital, Mumbai"
+                    required
+                    value={hospitalName}
+                    onChange={(e) => setHospitalName(e.target.value)}
+                    style={{
+                      padding: "11px 14px",
+                      fontSize: "13.5px",
+                      border: "1.5px solid #E2E8F0",
+                      borderRadius: "10px",
+                      outline: "none",
+                      color: "#111827",
+                      background: "#F8FAFC",
+                      transition: "all 0.2s ease",
+                    }}
+                    onFocus={(e) => {
+                      e.target.style.borderColor = "#2563EB";
+                      e.target.style.background = "#FFFFFF";
+                      e.target.style.boxShadow = "0 0 0 3px rgba(37, 99, 235, 0.12)";
+                    }}
+                    onBlur={(e) => {
+                      e.target.style.borderColor = "#E2E8F0";
+                      e.target.style.background = "#F8FAFC";
+                      e.target.style.boxShadow = "none";
+                    }}
+                  />
+                </div>
+
+                <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
+                  <label style={{ fontSize: "12.5px", fontWeight: 600, color: "#374151" }}>Contact Number (Calling / WhatsApp) *</label>
+                  <input
+                    type="tel"
+                    placeholder="+91 98765 43210"
+                    required
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    style={{
+                      padding: "11px 14px",
+                      fontSize: "13.5px",
+                      border: "1.5px solid #E2E8F0",
+                      borderRadius: "10px",
+                      outline: "none",
+                      color: "#111827",
+                      background: "#F8FAFC",
+                      transition: "all 0.2s ease",
+                    }}
+                    onFocus={(e) => {
+                      e.target.style.borderColor = "#2563EB";
+                      e.target.style.background = "#FFFFFF";
+                      e.target.style.boxShadow = "0 0 0 3px rgba(37, 99, 235, 0.12)";
+                    }}
+                    onBlur={(e) => {
+                      e.target.style.borderColor = "#E2E8F0";
+                      e.target.style.background = "#F8FAFC";
+                      e.target.style.boxShadow = "none";
+                    }}
+                  />
+                </div>
+
+                {/* Info Pill */}
+                <div style={{
+                  background: "#EFF6FF",
+                  borderRadius: "10px",
+                  padding: "9px 12px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "6px",
+                  color: "#1E40AF",
+                  fontSize: "12px",
+                  fontWeight: 600,
+                  border: "1px solid rgba(37, 99, 235, 0.12)",
+                  textAlign: "center",
+                }}>
+                  <span>✨</span> Personalized 1-on-1 walkthrough — tailored to your workflow
+                </div>
+
+                {/* Centered Button (Matching Site Design System) */}
+                <div style={{ display: "flex", justifyContent: "center", width: "100%", marginTop: "4px" }}>
+                  <motion.button
+                    type="submit"
+                    disabled={isSubmitting}
+                    whileHover={{ scale: 1.02, boxShadow: "0 10px 28px -4px rgba(37, 99, 235, 0.7)" }}
+                    whileTap={{ scale: 0.97 }}
+                    style={{
+                      width: "100%",
+                      padding: "13px 22px",
+                      borderRadius: "12px",
+                      border: "1px solid rgba(255, 255, 255, 0.25)",
+                      background: "linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%)",
+                      color: "#FFFFFF",
+                      fontWeight: 700,
+                      fontSize: "14.5px",
+                      letterSpacing: "0.01em",
+                      cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "10px",
+                      boxShadow: "0 8px 25px -4px rgba(37, 99, 235, 0.6), 0 0 16px rgba(59, 130, 246, 0.35)",
+                      position: "relative",
+                    }}
+                  >
+                    <div style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      width: "26px",
+                      height: "26px",
+                      borderRadius: "8px",
+                      background: "rgba(255, 255, 255, 0.2)",
+                    }}>
+                      <Calendar size={15} />
+                    </div>
+                    <span>{isSubmitting ? "Scheduling Demo..." : "Book a Free Demo"}</span>
+                    <ArrowRight size={16} strokeWidth={2.5} />
+                  </motion.button>
+                </div>
+
+                {/* Trust Footer */}
+                <div style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "6px",
+                  background: "rgba(16, 185, 129, 0.05)",
+                  border: "1px solid rgba(16, 185, 129, 0.15)",
+                  borderRadius: "9999px",
+                  padding: "6px 14px",
+                  fontSize: "11px",
+                  color: "#166534",
+                  fontWeight: 600,
+                  marginTop: "2px",
+                  textAlign: "center",
+                }}>
+                  <div style={{ color: "#10B981", display: "flex" }}>
+                    <CheckCircle2 size={12} fill="#10B981" color="#FFFFFF" />
+                  </div>
+                  <span>No spam · No sales pressure · We call within 2 hours</span>
+                </div>
               </form>
             )}
           </motion.div>

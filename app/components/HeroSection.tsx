@@ -358,9 +358,9 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
                       </div>
                     )}
 
-                    {/* 3 Questions Only (Same as popup modal) */}
-                    <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-                      <label style={{ fontSize: "12px", fontWeight: 600, color: "#374151" }}>Full Name *</label>
+                    {/* 3 Questions Only */}
+                    <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
+                      <label style={{ fontSize: "12.5px", fontWeight: 600, color: "#374151" }}>Full Name *</label>
                       <input
                         type="text"
                         placeholder="Dr. / Mr. / Ms. Name"
@@ -368,19 +368,30 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         style={{
-                          padding: "10px 12px",
-                          fontSize: "13px",
-                          border: "1px solid #E5E7EB",
-                          borderRadius: "8px",
+                          padding: "11px 14px",
+                          fontSize: "13.5px",
+                          border: "1.5px solid #E2E8F0",
+                          borderRadius: "10px",
                           outline: "none",
                           color: "#111827",
-                          background: "#FFFFFF",
+                          background: "#F8FAFC",
+                          transition: "all 0.2s ease",
+                        }}
+                        onFocus={(e) => {
+                          e.target.style.borderColor = "#2563EB";
+                          e.target.style.background = "#FFFFFF";
+                          e.target.style.boxShadow = "0 0 0 3px rgba(37, 99, 235, 0.12)";
+                        }}
+                        onBlur={(e) => {
+                          e.target.style.borderColor = "#E2E8F0";
+                          e.target.style.background = "#F8FAFC";
+                          e.target.style.boxShadow = "none";
                         }}
                       />
                     </div>
 
-                    <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-                      <label style={{ fontSize: "12px", fontWeight: 600, color: "#374151" }}>Hospital / Clinic Name *</label>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
+                      <label style={{ fontSize: "12.5px", fontWeight: 600, color: "#374151" }}>Hospital / Clinic Name *</label>
                       <input
                         type="text"
                         placeholder="e.g. City Care Hospital, Mumbai"
@@ -388,19 +399,30 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
                         value={hospitalName}
                         onChange={(e) => setHospitalName(e.target.value)}
                         style={{
-                          padding: "10px 12px",
-                          fontSize: "13px",
-                          border: "1px solid #E5E7EB",
-                          borderRadius: "8px",
+                          padding: "11px 14px",
+                          fontSize: "13.5px",
+                          border: "1.5px solid #E2E8F0",
+                          borderRadius: "10px",
                           outline: "none",
                           color: "#111827",
-                          background: "#FFFFFF",
+                          background: "#F8FAFC",
+                          transition: "all 0.2s ease",
+                        }}
+                        onFocus={(e) => {
+                          e.target.style.borderColor = "#2563EB";
+                          e.target.style.background = "#FFFFFF";
+                          e.target.style.boxShadow = "0 0 0 3px rgba(37, 99, 235, 0.12)";
+                        }}
+                        onBlur={(e) => {
+                          e.target.style.borderColor = "#E2E8F0";
+                          e.target.style.background = "#F8FAFC";
+                          e.target.style.boxShadow = "none";
                         }}
                       />
                     </div>
 
-                    <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-                      <label style={{ fontSize: "12px", fontWeight: 600, color: "#374151" }}>Contact Number (Calling / WhatsApp) *</label>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
+                      <label style={{ fontSize: "12.5px", fontWeight: 600, color: "#374151" }}>Contact Number (Calling / WhatsApp) *</label>
                       <input
                         type="tel"
                         placeholder="+91 98765 43210"
@@ -408,21 +430,32 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
                         style={{
-                          padding: "10px 12px",
-                          fontSize: "13px",
-                          border: "1px solid #E5E7EB",
-                          borderRadius: "8px",
+                          padding: "11px 14px",
+                          fontSize: "13.5px",
+                          border: "1.5px solid #E2E8F0",
+                          borderRadius: "10px",
                           outline: "none",
                           color: "#111827",
-                          background: "#FFFFFF",
+                          background: "#F8FAFC",
+                          transition: "all 0.2s ease",
+                        }}
+                        onFocus={(e) => {
+                          e.target.style.borderColor = "#2563EB";
+                          e.target.style.background = "#FFFFFF";
+                          e.target.style.boxShadow = "0 0 0 3px rgba(37, 99, 235, 0.12)";
+                        }}
+                        onBlur={(e) => {
+                          e.target.style.borderColor = "#E2E8F0";
+                          e.target.style.background = "#F8FAFC";
+                          e.target.style.boxShadow = "none";
                         }}
                       />
                     </div>
 
                     <div style={{
                       background: "#EFF6FF",
-                      borderRadius: "8px",
-                      padding: "8px 12px",
+                      borderRadius: "10px",
+                      padding: "9px 12px",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -430,50 +463,68 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
                       color: "#1E40AF",
                       fontSize: "12px",
                       fontWeight: 600,
-                      border: "1px solid rgba(37,99,235,0.1)",
+                      border: "1px solid rgba(37, 99, 235, 0.12)",
+                      textAlign: "center",
                     }}>
                       <span>✨</span> Personalized 1-on-1 walkthrough — tailored to your workflow
                     </div>
 
-                    <motion.button
-                      type="submit"
-                      disabled={isSubmitting}
-                      whileHover={{ scale: 1.02, backgroundColor: "#111827" }}
-                      whileTap={{ scale: 0.98 }}
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        gap: "8px",
-                        background: "#1E293B",
-                        color: "#FFFFFF",
-                        border: "none",
-                        borderRadius: "8px",
-                        padding: "12px",
-                        fontWeight: 700,
-                        fontSize: "14px",
-                        cursor: "pointer",
-                        marginTop: "4px",
-                        boxShadow: "0 4px 10px rgba(0, 0, 0, 0.15)",
-                      }}
-                    >
-                      <Calendar size={15} />
-                      {isSubmitting ? "Submitting..." : "Schedule Free Demo"}
-                    </motion.button>
+                    {/* Centered Button (Matching Site Design System) */}
+                    <div style={{ display: "flex", justifyContent: "center", width: "100%", marginTop: "4px" }}>
+                      <motion.button
+                        type="submit"
+                        disabled={isSubmitting}
+                        whileHover={{ scale: 1.02, boxShadow: "0 10px 28px -4px rgba(37, 99, 235, 0.7)" }}
+                        whileTap={{ scale: 0.97 }}
+                        style={{
+                          width: "100%",
+                          padding: "13px 22px",
+                          borderRadius: "12px",
+                          border: "1px solid rgba(255, 255, 255, 0.25)",
+                          background: "linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%)",
+                          color: "#FFFFFF",
+                          fontWeight: 700,
+                          fontSize: "14.5px",
+                          letterSpacing: "0.01em",
+                          cursor: "pointer",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          gap: "10px",
+                          boxShadow: "0 8px 25px -4px rgba(37, 99, 235, 0.6), 0 0 16px rgba(59, 130, 246, 0.35)",
+                          position: "relative",
+                        }}
+                      >
+                        <div style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          width: "26px",
+                          height: "26px",
+                          borderRadius: "8px",
+                          background: "rgba(255, 255, 255, 0.2)",
+                        }}>
+                          <Calendar size={15} />
+                        </div>
+                        <span>{isSubmitting ? "Scheduling Demo..." : "Book a Free Demo"}</span>
+                        <ArrowRight size={16} strokeWidth={2.5} />
+                      </motion.button>
+                    </div>
 
                     <div style={{
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
                       gap: "6px",
-                      background: "rgba(16, 185, 129, 0.04)",
-                      border: "1px solid rgba(16, 185, 129, 0.1)",
-                      borderRadius: "20px",
-                      padding: "6px 12px",
+                      background: "rgba(16, 185, 129, 0.05)",
+                      border: "1px solid rgba(16, 185, 129, 0.15)",
+                      borderRadius: "9999px",
+                      padding: "6px 14px",
                       fontSize: "11px",
-                      color: "#1F2937",
-                      fontWeight: 500,
+                      color: "#166534",
+                      fontWeight: 600,
                       marginTop: "2px",
+                      textAlign: "center",
                     }}>
                       <div style={{ color: "#10B981", display: "flex" }}>
                         <CheckCircle size={12} fill="#10B981" color="#FFFFFF" />
