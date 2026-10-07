@@ -307,4 +307,193 @@ p  { font-size: clamp(0.8rem, 1.5vw, 0.9rem); line-height: 1.65; }
   }
 }
 
+/* ─── HERO & NAVBAR RESPONSIVE STYLES (Pure CSS - Eliminates Mobile Refresh Layout Shift) ─── */
+.hero-main-section {
+  padding-top: 130px;
+  padding-bottom: 0px;
+}
+
+.hero-container-inner {
+  width: 100%;
+  z-index: 2;
+  padding: 40px 20px 60px;
+}
+
+.hero-content-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.hero-capsule-badge {
+  font-size: 11px;
+}
+
+.hero-main-heading {
+  font-size: 42px;
+}
+
+.hero-main-desc {
+  font-size: 15px;
+}
+
+.hero-numbers-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 28px;
+  width: 100%;
+  padding: 0 10px;
+}
+
+.hero-stat-num {
+  font-size: 28px;
+}
+
+.hero-stat-lbl {
+  font-size: 12px;
+}
+
+.hero-cloud-badge {
+  font-size: 12px;
+}
+
+.hero-dashboard-btn-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 32px;
+}
+
+.hero-stethoscope-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 580px;
+  height: 190px;
+}
+
+.hero-mobile-cta-wrapper {
+  display: none;
+}
+
+.hero-desktop-form-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.hero-features-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+/* ─── NAVBAR RESPONSIVE BAR ─── */
+.navbar-nav-bar {
+  padding: 16px 0;
+}
+.navbar-nav-bar.scrolled {
+  padding: 10px 0;
+}
+.navbar-desktop-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 46px;
+}
+.navbar-mobile-row {
+  display: none;
+}
+
+.hero-mobile-sticky-bar {
+  display: none;
+}
+
+/* ─── MOBILE BREAKPOINT (<= 960px) ─── */
+@media (max-width: 960px) {
+  .hero-mobile-sticky-bar {
+    display: block !important;
+  }
+  .hero-main-section {
+    padding-top: 110px !important;
+    padding-bottom: 80px !important;
+  }
+
+  .hero-container-inner {
+    padding: 16px 14px 40px !important;
+  }
+
+  .hero-content-grid {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+
+  .hero-capsule-badge {
+    font-size: 10px !important;
+  }
+
+  .hero-main-heading {
+    font-size: 26px !important;
+  }
+
+  .hero-main-desc {
+    font-size: 13px !important;
+  }
+
+  .hero-numbers-row {
+    gap: 10px !important;
+  }
+
+  .hero-stat-num {
+    font-size: 20px !important;
+  }
+
+  .hero-stat-lbl {
+    font-size: 10px !important;
+  }
+
+  .hero-cloud-badge {
+    font-size: 11px !important;
+  }
+
+  .hero-dashboard-btn-wrapper {
+    display: none !important;
+  }
+
+  .hero-stethoscope-wrapper {
+    height: 130px !important;
+  }
+
+  .hero-mobile-cta-wrapper {
+    display: flex !important;
+  }
+
+  .hero-desktop-form-wrapper {
+    display: none !important;
+  }
+
+  .hero-features-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  .navbar-nav-bar {
+    padding: 12px 0 !important;
+  }
+  .navbar-nav-bar.scrolled {
+    padding: 8px 0 !important;
+  }
+  .navbar-desktop-row {
+    display: none !important;
+  }
+  .navbar-mobile-row {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    height: 36px;
+  }
+}
+
+
 

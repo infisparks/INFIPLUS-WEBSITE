@@ -2,8 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ArrowUpRight, Phone } from "lucide-react";
+import { motion } from "framer-motion";
 
 interface NavbarProps {
   onBookDemo: () => void;
@@ -11,16 +10,8 @@ interface NavbarProps {
 
 export default function Navbar({ onBookDemo }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   const [visible, setVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
-
-  useEffect(() => {
-    const updateMobile = () => setIsMobile(window.innerWidth <= 960);
-    updateMobile();
-    window.addEventListener("resize", updateMobile);
-    return () => window.removeEventListener("resize", updateMobile);
-  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -53,11 +44,7 @@ export default function Navbar({ onBookDemo }: NavbarProps) {
     { title: "Contact", href: "/#contact" },
   ];
 
-  const handleActionClick = () => {
-    if (isMobile) {
-      onBookDemo();
-      return;
-    }
+  const handleDesktopActionClick = () => {
     const el = document.getElementById("trial-form-card") || document.getElementById("demo-form-card");
     if (el) {
       el.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -79,10 +66,8 @@ export default function Navbar({ onBookDemo }: NavbarProps) {
       }}
     >
       <nav
+        className={`navbar-nav-bar ${scrolled ? "scrolled" : ""}`}
         style={{
-          padding: isMobile
-            ? (scrolled ? "8px 0" : "12px 0")
-            : (scrolled ? "10px 0" : "16px 0"),
           background: scrolled
             ? "rgba(6, 11, 36, 0.92)"
             : "transparent",
@@ -95,105 +80,103 @@ export default function Navbar({ onBookDemo }: NavbarProps) {
       >
         <div className="container-main">
           {/* Desktop Nav Layout */}
-          {!isMobile ? (
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: 46 }}>
-              {/* Logo */}
-              <div
-                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                role="button"
-                aria-label="Scroll to top"
-                style={{ cursor: "pointer", position: "relative", width: 130, height: 36 }}
-              >
-                <Image
-                  src="/logo.png"
-                  alt="INFIPLUS Logo"
-                  fill
-                  style={{ objectFit: "contain", objectPosition: "left", filter: "brightness(0) invert(1)" }}
-                  priority
-                />
-              </div>
-
-              {/* Desktop Links */}
-              <div style={{ display: "flex", alignItems: "center", gap: 32 }}>
-                {navLinks.map((link) => (
-                  <a
-                    key={link.title}
-                    href={link.href}
-                    style={{
-                      fontSize: "14px",
-                      fontWeight: 500,
-                      color: "rgba(255, 255, 255, 0.85)",
-                      textDecoration: "none",
-                      position: "relative",
-                      transition: "color 0.2s ease",
-                      letterSpacing: "0.01em",
-                    }}
-                    onMouseEnter={(e) => e.currentTarget.style.color = "#FFFFFF"}
-                    onMouseLeave={(e) => e.currentTarget.style.color = "rgba(255, 255, 255, 0.85)"}
-                  >
-                    {link.title}
-                  </a>
-                ))}
-              </div>
-
-              {/* CTA Button */}
-              <motion.button
-                onClick={handleActionClick}
-                whileHover={{ scale: 1.03, backgroundColor: "#1D4ED8" }}
-                whileTap={{ scale: 0.97 }}
-                style={{
-                  padding: "10px 20px",
-                  borderRadius: "8px",
-                  border: "none",
-                  background: "#2563EB",
-                  color: "#FFFFFF",
-                  fontWeight: 600,
-                  fontSize: "13px",
-                  cursor: "pointer",
-                  letterSpacing: "0.01em",
-                  boxShadow: "0 4px 14px rgba(37, 99, 235, 0.3)",
-                }}
-              >
-                Book Free Demo
-              </motion.button>
+          <div className="navbar-desktop-row">
+            {/* Logo */}
+            <div
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              role="button"
+              aria-label="Scroll to top"
+              style={{ cursor: "pointer", position: "relative", width: 130, height: 36 }}
+            >
+              <Image
+                src="/logo.png"
+                alt="INFIPLUS Logo"
+                fill
+                style={{ objectFit: "contain", objectPosition: "left", filter: "brightness(0) invert(1)" }}
+                priority
+              />
             </div>
-          ) : (
-            /* Mobile Nav Layout - Compact single row header */
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: 36 }}>
-              {/* Logo */}
-              <div
-                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                role="button"
-                aria-label="Scroll to top"
-                style={{ cursor: "pointer", position: "relative", width: 110, height: 28 }}
-              >
-                <Image
-                  src="/logo.png"
-                  alt="INFIPLUS Logo"
-                  fill
-                  style={{ objectFit: "contain", objectPosition: "left", filter: "brightness(0) invert(1)" }}
-                  priority
-                />
-              </div>
 
-              <motion.button
-                onClick={handleActionClick}
-                whileTap={{ scale: 0.97 }}
-                style={{
-                  padding: "7px 14px",
-                  borderRadius: "6px",
-                  border: "none",
-                  background: "#2563EB",
-                  color: "#FFFFFF",
-                  fontWeight: 600,
-                  fontSize: "12px",
-                  cursor: "pointer",
-                }}
-              >
-                Book Free Demo
-              </motion.button>
+            {/* Desktop Links */}
+            <div style={{ display: "flex", alignItems: "center", gap: 32 }}>
+              {navLinks.map((link) => (
+                <a
+                  key={link.title}
+                  href={link.href}
+                  style={{
+                    fontSize: "14px",
+                    fontWeight: 500,
+                    color: "rgba(255, 255, 255, 0.85)",
+                    textDecoration: "none",
+                    position: "relative",
+                    transition: "color 0.2s ease",
+                    letterSpacing: "0.01em",
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = "#FFFFFF")}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255, 255, 255, 0.85)")}
+                >
+                  {link.title}
+                </a>
+              ))}
             </div>
-          )}
+
+            {/* CTA Button */}
+            <motion.button
+              onClick={handleDesktopActionClick}
+              whileHover={{ scale: 1.03, backgroundColor: "#1D4ED8" }}
+              whileTap={{ scale: 0.97 }}
+              style={{
+                padding: "10px 20px",
+                borderRadius: "8px",
+                border: "none",
+                background: "#2563EB",
+                color: "#FFFFFF",
+                fontWeight: 600,
+                fontSize: "13px",
+                cursor: "pointer",
+                letterSpacing: "0.01em",
+                boxShadow: "0 4px 14px rgba(37, 99, 235, 0.3)",
+              }}
+            >
+              Book Free Demo
+            </motion.button>
+          </div>
+
+          {/* Mobile Nav Layout - Compact single row header */}
+          <div className="navbar-mobile-row">
+            {/* Logo */}
+            <div
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              role="button"
+              aria-label="Scroll to top"
+              style={{ cursor: "pointer", position: "relative", width: 110, height: 28 }}
+            >
+              <Image
+                src="/logo.png"
+                alt="INFIPLUS Logo"
+                fill
+                style={{ objectFit: "contain", objectPosition: "left", filter: "brightness(0) invert(1)" }}
+                priority
+              />
+            </div>
+
+            <motion.button
+              onClick={onBookDemo}
+              whileTap={{ scale: 0.97 }}
+              style={{
+                padding: "7px 14px",
+                borderRadius: "6px",
+                border: "none",
+                background: "#2563EB",
+                color: "#FFFFFF",
+                fontWeight: 600,
+                fontSize: "12px",
+                cursor: "pointer",
+              }}
+            >
+              Book Free Demo
+            </motion.button>
+          </div>
         </div>
       </nav>
     </header>

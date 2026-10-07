@@ -16,7 +16,6 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection({ onBookDemo }: HeroSectionProps) {
-  const [isMobile, setIsMobile] = useState(false);
   const [scrolledPastHero, setScrolledPastHero] = useState(false);
   
   // Form states - The 3 questions only
@@ -26,15 +25,6 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 960);
-    };
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -90,6 +80,7 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
       {/* ── MAIN HERO SECTION ── */}
       <section
         id="hero"
+        className="hero-main-section"
         style={{
           position: "relative",
           minHeight: "100vh",
@@ -97,105 +88,87 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
           flexDirection: "column",
           justifyContent: "space-between",
           overflow: "hidden",
-                  background: `
+          background: `
             radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.22) 0%, transparent 60%),
             linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
             linear-gradient(180deg, #060B27 0%, #0B1340 100%)
           `,
           backgroundSize: "100% 100%, 35px 100%, 100% 100%",
-          paddingTop: isMobile ? "68px" : "130px",
-          paddingBottom: isMobile ? "80px" : "0px", // space for mobile sticky bar
         }}
       >
-        <div 
-          className="container-main"
-          style={{
-            width: "100%",
-            zIndex: 2,
-            padding: isMobile ? "10px 14px 40px" : "40px 20px 60px",
-          }}
-        >
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: isMobile ? "1fr" : "1.3fr 1fr",
-              gap: isMobile ? "32px" : "40px",
-              alignItems: "center",
-            }}
-          >
+        <div className="container-main hero-container-inner">
+          <div className="hero-content-grid">
             {/* Left Column: Content */}
             <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
               {/* Blue Capsule Badge */}
               <div style={{ display: "flex", justifyContent: "center", marginBottom: "18px" }}>
-                <div style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  padding: "5px 14px",
-                  background: "#2563EB",
-                  borderRadius: "9999px",
-                  color: "#FFFFFF",
-                  fontSize: isMobile ? "10px" : "11px",
-                  fontWeight: 700,
-                  letterSpacing: "0.02em",
-                  textTransform: "uppercase",
-                  boxShadow: "0 4px 12px rgba(37, 99, 235, 0.2)",
-                  textAlign: "center",
-                }}>
+                <div
+                  className="hero-capsule-badge"
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "8px",
+                    padding: "5px 14px",
+                    background: "#2563EB",
+                    borderRadius: "9999px",
+                    color: "#FFFFFF",
+                    fontWeight: 700,
+                    letterSpacing: "0.02em",
+                    textTransform: "uppercase",
+                    boxShadow: "0 4px 12px rgba(37, 99, 235, 0.2)",
+                    textAlign: "center",
+                  }}
+                >
                   <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: "#10B981" }} />
                   HOSPITAL ERP SOFTWARE- BUILD FOR INDIAN HOSPITALS
                 </div>
               </div>
 
               {/* Main Headline */}
-              <h1 style={{
-                fontSize: isMobile ? "26px" : "42px",
-                fontWeight: 900,
-                lineHeight: 1.15,
-                letterSpacing: "-0.02em",
-                color: "#FFFFFF",
-                textAlign: "center",
-                marginBottom: "16px",
-              }}>
+              <h1
+                className="hero-main-heading"
+                style={{
+                  fontWeight: 900,
+                  lineHeight: 1.15,
+                  letterSpacing: "-0.02em",
+                  color: "#FFFFFF",
+                  textAlign: "center",
+                  marginBottom: "16px",
+                }}
+              >
                 India&apos;s #1 Hospital Management<br />ERP Software.
               </h1>
 
               {/* Paragraph Description */}
-              <p style={{
-                fontSize: isMobile ? "13px" : "15px",
-                color: "rgba(255, 255, 255, 0.75)",
-                lineHeight: 1.6,
-                maxWidth: "580px",
-                margin: "0 auto 24px",
-                textAlign: "center",
-                fontWeight: 400,
-              }}>
+              <p
+                className="hero-main-desc"
+                style={{
+                  color: "rgba(255, 255, 255, 0.75)",
+                  lineHeight: 1.6,
+                  maxWidth: "580px",
+                  margin: "0 auto 24px",
+                  textAlign: "center",
+                  fontWeight: 400,
+                }}
+              >
                 Manage OPD, IPD, EMR, billing, pharmacy, lab and patient records through one cloud-based Hospital Management Software built for modern Indian hospitals.
               </p>
 
               {/* Numbers Row */}
-              <div style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: isMobile ? "10px" : "24px",
-                marginBottom: "28px",
-                width: "100%",
-                padding: "0 10px",
-              }}>
+              <div className="hero-numbers-row">
                 <div style={{ textAlign: "center", flex: 1 }}>
-                  <div style={{ fontSize: isMobile ? "20px" : "28px", fontWeight: 800, color: "#FFFFFF", lineHeight: 1.1 }}>15+</div>
-                  <div style={{ fontSize: isMobile ? "10px" : "12px", color: "rgba(255,255,255,0.6)", marginTop: "4px", lineHeight: 1.2 }}>Integrated Modules</div>
+                  <div className="hero-stat-num" style={{ fontWeight: 800, color: "#FFFFFF", lineHeight: 1.1 }}>15+</div>
+                  <div className="hero-stat-lbl" style={{ color: "rgba(255,255,255,0.6)", marginTop: "4px", lineHeight: 1.2 }}>Integrated Modules</div>
                 </div>
                 <div style={{ width: "1px", height: "36px", background: "rgba(255,255,255,0.15)" }} />
                 <div style={{ textAlign: "center", flex: 1 }}>
-                  <div style={{ fontSize: isMobile ? "20px" : "28px", fontWeight: 800, color: "#FFFFFF", lineHeight: 1.1 }}>24×7</div>
-                  <div style={{ fontSize: isMobile ? "10px" : "12px", color: "rgba(255,255,255,0.6)", marginTop: "4px", lineHeight: 1.2 }}>Dedicated Support</div>
+                  <div className="hero-stat-num" style={{ fontWeight: 800, color: "#FFFFFF", lineHeight: 1.1 }}>24×7</div>
+                  <div className="hero-stat-lbl" style={{ color: "rgba(255,255,255,0.6)", marginTop: "4px", lineHeight: 1.2 }}>Dedicated Support</div>
                 </div>
                 <div style={{ width: "1px", height: "36px", background: "rgba(255,255,255,0.15)" }} />
                 <div style={{ textAlign: "center", flex: 1 }}>
-                  <div style={{ fontSize: isMobile ? "20px" : "28px", fontWeight: 800, color: "#FFFFFF", lineHeight: 1.1 }}>100%</div>
-                  <div style={{ fontSize: isMobile ? "10px" : "12px", color: "rgba(255,255,255,0.6)", marginTop: "4px", lineHeight: 1.2 }}>Cloud-Based ERP</div>
+                  <div className="hero-stat-num" style={{ fontWeight: 800, color: "#FFFFFF", lineHeight: 1.1 }}>100%</div>
+                  <div className="hero-stat-lbl" style={{ color: "rgba(255,255,255,0.6)", marginTop: "4px", lineHeight: 1.2 }}>Cloud-Based ERP</div>
                 </div>
               </div>
 
@@ -214,13 +187,13 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
                 ].map((module) => (
                   <span
                     key={module}
+                    className="hero-cloud-badge"
                     style={{
                       padding: "5px 12px",
                       background: "rgba(255, 255, 255, 0.05)",
                       border: "1px solid rgba(255, 255, 255, 0.12)",
                       borderRadius: "9999px",
                       color: "#FFFFFF",
-                      fontSize: isMobile ? "11px" : "12px",
                       fontWeight: 500,
                     }}
                   >
@@ -230,32 +203,30 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
               </div>
 
               {/* Watch Dashboard Button */}
-              {!isMobile && (
-                <div style={{ display: "flex", justifyContent: "center", marginBottom: "32px" }}>
-                  <motion.button
-                    onClick={onBookDemo}
-                    whileHover={{ scale: 1.03, borderColor: "#3B82F6", background: "rgba(59, 130, 246, 0.08)" }}
-                    whileTap={{ scale: 0.97 }}
-                    style={{
-                      padding: "10px 24px",
-                      borderRadius: "8px",
-                      border: "2px solid #2563EB",
-                      background: "transparent",
-                      color: "#FFFFFF",
-                      fontWeight: 600,
-                      fontSize: "14px",
-                      cursor: "pointer",
-                      transition: "all 0.2s ease",
-                    }}
-                  >
-                    Watch How Dashboard Looks
-                  </motion.button>
-                </div>
-              )}
+              <div className="hero-dashboard-btn-wrapper">
+                <motion.button
+                  onClick={onBookDemo}
+                  whileHover={{ scale: 1.03, borderColor: "#3B82F6", background: "rgba(59, 130, 246, 0.08)" }}
+                  whileTap={{ scale: 0.97 }}
+                  style={{
+                    padding: "10px 24px",
+                    borderRadius: "8px",
+                    border: "2px solid #2563EB",
+                    background: "transparent",
+                    color: "#FFFFFF",
+                    fontWeight: 600,
+                    fontSize: "14px",
+                    cursor: "pointer",
+                    transition: "all 0.2s ease",
+                  }}
+                >
+                  Watch How Dashboard Looks
+                </motion.button>
+              </div>
 
               {/* Stethoscope Graphic */}
               <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
-                <div style={{ position: "relative", width: "100%", maxWidth: "580px", height: isMobile ? "130px" : "190px" }}>
+                <div className="hero-stethoscope-wrapper">
                   <Image
                     src="/herosectino/heroicon.png"
                     alt="Stethoscope clinical workflows"
@@ -267,57 +238,54 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
               </div>
 
               {/* Mobile CTA Button (Attractive single button, replaces form on mobile) */}
-              {isMobile && (
-                <div style={{ display: "flex", justifyContent: "center", width: "100%", marginTop: "20px" }}>
-                  <motion.button
-                    onClick={onBookDemo}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.96 }}
-                    style={{
-                      width: "100%",
-                      maxWidth: "360px",
-                      padding: "14px 22px",
-                      borderRadius: "12px",
-                      border: "1px solid rgba(255, 255, 255, 0.25)",
-                      background: "linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%)",
-                      color: "#FFFFFF",
-                      fontWeight: 700,
-                      fontSize: "15px",
-                      letterSpacing: "0.01em",
-                      cursor: "pointer",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      gap: "10px",
-                      boxShadow: "0 8px 25px -4px rgba(37, 99, 235, 0.6), 0 0 16px rgba(59, 130, 246, 0.35)",
-                      position: "relative",
-                    }}
-                  >
-                    <div style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      width: "26px",
-                      height: "26px",
-                      borderRadius: "8px",
-                      background: "rgba(255, 255, 255, 0.2)",
-                    }}>
-                      <Calendar size={15} />
-                    </div>
-                    <span>Book a Free Demo</span>
-                    <ArrowRight size={16} strokeWidth={2.5} />
-                  </motion.button>
-                </div>
-              )}
+              <div className="hero-mobile-cta-wrapper">
+                <motion.button
+                  onClick={onBookDemo}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.96 }}
+                  style={{
+                    width: "100%",
+                    maxWidth: "360px",
+                    padding: "14px 22px",
+                    borderRadius: "12px",
+                    border: "1px solid rgba(255, 255, 255, 0.25)",
+                    background: "linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%)",
+                    color: "#FFFFFF",
+                    fontWeight: 700,
+                    fontSize: "15px",
+                    letterSpacing: "0.01em",
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "10px",
+                    boxShadow: "0 8px 25px -4px rgba(37, 99, 235, 0.6), 0 0 16px rgba(59, 130, 246, 0.35)",
+                    position: "relative",
+                  }}
+                >
+                  <div style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    width: "26px",
+                    height: "26px",
+                    borderRadius: "8px",
+                    background: "rgba(255, 255, 255, 0.2)",
+                  }}>
+                    <Calendar size={15} />
+                  </div>
+                  <span>Book a Free Demo</span>
+                  <ArrowRight size={16} strokeWidth={2.5} />
+                </motion.button>
+              </div>
             </div>
 
-            {/* Right Column: Form Card (Desktop only, hidden on mobile) */}
-            {!isMobile && (
-              <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
-                <div
-                  id="trial-form-card"
-                  style={{
-                    background: "#FFFFFF",
+            {/* Right Column: Form Card (Desktop only, hidden on mobile via pure CSS) */}
+            <div className="hero-desktop-form-wrapper">
+              <div
+                id="trial-form-card"
+                style={{
+                  background: "#FFFFFF",
                     borderRadius: "16px",
                     padding: "24px",
                     boxShadow: "0 20px 40px -10px rgba(0, 0, 0, 0.4), 0 0 0 2px rgba(37, 99, 235, 0.4)",
@@ -516,7 +484,6 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
                 )}
               </div>
             </div>
-            )}
           </div>
         </div>
 
@@ -531,11 +498,7 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
           width: "100%",
         }}>
           <div className="container-main">
-            <div style={{
-              display: "grid",
-              gridTemplateColumns: isMobile ? "1fr" : "repeat(4, 1fr)",
-              gap: isMobile ? "16px" : "20px",
-            }}>
+            <div className="hero-features-grid">
               {[
                 {
                   icon: <Cloud size={22} />,
@@ -594,8 +557,9 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
 
       {/* ── MOBILE STICKY BOTTOM BAR (Shown only after scrolling past Hero) ── */}
       <AnimatePresence>
-        {isMobile && scrolledPastHero && (
+        {scrolledPastHero && (
           <motion.div
+            className="hero-mobile-sticky-bar"
             initial={{ opacity: 0, y: 35, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 35, scale: 0.95 }}
