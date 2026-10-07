@@ -4,8 +4,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   Star, CheckCircle, TrendingUp, Users, Activity,
   Download, Zap, Shield, Clock, Fingerprint, Calendar, Check,
-  Send, MessageCircle, Cloud, LayoutDashboard, Smartphone, ArrowRight
+  Send, MessageCircle, Cloud, LayoutDashboard, Smartphone, ArrowRight, Play
 } from "lucide-react";
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import { db } from "../lib/firebase";
 import { ref, push } from "firebase/database";
@@ -16,6 +17,7 @@ interface HeroSectionProps {
 
 export default function HeroSection({ onBookDemo }: HeroSectionProps) {
   const [scrolledPastHero, setScrolledPastHero] = useState(false);
+  const [isPlayingVideo, setIsPlayingVideo] = useState(false);
   
   // Form states - The 3 questions only
   const [name, setName] = useState("");
@@ -131,17 +133,64 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
                 Manage OPD, IPD, EMR, billing, pharmacy, lab and patient records through one cloud-based Hospital Management Software built for modern Indian hospitals.
               </p>
 
-              {/* YouTube Video Player */}
+              {/* YouTube Video Player with Custom Thumbnail Facade */}
               <div style={{ display: "flex", justifyContent: "center", width: "100%", marginBottom: "22px" }}>
-                <div className="hero-video-wrapper">
-                  <iframe
-                    key="infiplus-yt-player"
-                    src="https://www.youtube-nocookie.com/embed/jmJCWnpNRfk?rel=0&modestbranding=1&enablejsapi=1"
-                    title="Infiplus Hospital Management ERP Software Demo"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerPolicy="no-referrer-when-downgrade"
-                    allowFullScreen
-                  />
+                <div
+                  className={`hero-video-wrapper ${isPlayingVideo ? "is-playing" : ""}`}
+                  style={{ cursor: isPlayingVideo ? "default" : "pointer" }}
+                  onClick={() => !isPlayingVideo && setIsPlayingVideo(true)}
+                >
+                  {isPlayingVideo ? (
+                    <iframe
+                      key="infiplus-yt-player"
+                      src="https://www.youtube-nocookie.com/embed/jmJCWnpNRfk?autoplay=1&rel=0&modestbranding=1&enablejsapi=1"
+                      title="Infiplus Hospital Management ERP Software Demo"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      referrerPolicy="no-referrer-when-downgrade"
+                      allowFullScreen
+                    />
+                  ) : (
+                    <div style={{ position: "relative", width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      <Image
+                        src="/thumbnail.png"
+                        alt="Infiplus Hospital Management ERP Software Demo"
+                        fill
+                        style={{ objectFit: "cover" }}
+                        priority
+                      />
+                      {/* Subtle Dark Gradient Overlay */}
+                      <div style={{
+                        position: "absolute",
+                        inset: 0,
+                        background: "linear-gradient(180deg, rgba(6, 11, 39, 0.1) 0%, rgba(6, 11, 39, 0.45) 100%)",
+                      }} />
+
+                      {/* Glowing Modern Play Button */}
+                      <motion.div
+                        whileHover={{ scale: 1.12 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="hero-play-btn-glow"
+                        style={{
+                          position: "relative",
+                          zIndex: 2,
+                          width: "56px",
+                          height: "56px",
+                          borderRadius: "50%",
+                          background: "rgba(37, 99, 235, 0.92)",
+                          backdropFilter: "blur(8px)",
+                          border: "2px solid rgba(255, 255, 255, 0.8)",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          boxShadow: "0 0 30px rgba(37, 99, 235, 0.8), 0 8px 25px rgba(0, 0, 0, 0.5)",
+                          color: "#FFFFFF",
+                          cursor: "pointer",
+                        }}
+                      >
+                        <Play size={24} fill="#FFFFFF" style={{ marginLeft: "3px" }} />
+                      </motion.div>
+                    </div>
+                  )}
                 </div>
               </div>
 
