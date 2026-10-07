@@ -156,7 +156,7 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
               </p>
 
               {/* YouTube Video Player */}
-              <div style={{ display: "flex", justifyContent: "center", width: "100%", marginBottom: "28px" }}>
+              <div style={{ display: "flex", justifyContent: "center", width: "100%", marginBottom: "22px" }}>
                 <div className="hero-video-wrapper">
                   <iframe
                     src="https://www.youtube.com/embed/jmJCWnpNRfk?rel=0"
@@ -247,6 +247,7 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
               >
                 <motion.button
                   onClick={onBookDemo}
+                  className="animated-demo-btn"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.96 }}
                   style={{
@@ -266,7 +267,6 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
                     alignItems: "center",
                     justifyContent: "center",
                     gap: "10px",
-                    boxShadow: "0 8px 25px -4px rgba(37, 99, 235, 0.6), 0 0 16px rgba(59, 130, 246, 0.35)",
                     position: "relative",
                   }}
                 >
@@ -282,7 +282,9 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
                     <Calendar size={15} />
                   </div>
                   <span>Book a Free Demo</span>
-                  <ArrowRight size={16} strokeWidth={2.5} />
+                  <span className="btn-arrow-icon">
+                    <ArrowRight size={16} strokeWidth={2.5} />
+                  </span>
                 </motion.button>
               </div>
             </div>
@@ -481,7 +483,8 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
                       <motion.button
                         type="submit"
                         disabled={isSubmitting}
-                        whileHover={{ scale: 1.02, boxShadow: "0 10px 28px -4px rgba(37, 99, 235, 0.7)" }}
+                        className="animated-demo-btn"
+                        whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.97 }}
                         style={{
                           width: "100%",
@@ -498,7 +501,6 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
                           alignItems: "center",
                           justifyContent: "center",
                           gap: "10px",
-                          boxShadow: "0 8px 25px -4px rgba(37, 99, 235, 0.6), 0 0 16px rgba(59, 130, 246, 0.35)",
                           position: "relative",
                         }}
                       >
@@ -514,7 +516,9 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
                           <Calendar size={15} />
                         </div>
                         <span>{isSubmitting ? "Scheduling Demo..." : "Book a Free Demo"}</span>
-                        <ArrowRight size={16} strokeWidth={2.5} />
+                        <span className="btn-arrow-icon">
+                          <ArrowRight size={16} strokeWidth={2.5} />
+                        </span>
                       </motion.button>
                     </div>
 
@@ -641,6 +645,7 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
           >
             <motion.button
               onClick={onBookDemo}
+              className="animated-demo-btn"
               whileTap={{ scale: 0.97 }}
               style={{
                 width: "100%",
@@ -657,12 +662,13 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
                 justifyContent: "center",
                 gap: "8px",
                 cursor: "pointer",
-                boxShadow: "0 4px 15px rgba(37, 99, 235, 0.4)",
               }}
             >
               <Calendar size={16} />
               Book a Free Demo
-              <ArrowRight size={15} strokeWidth={2.5} />
+              <span className="btn-arrow-icon">
+                <ArrowRight size={15} strokeWidth={2.5} />
+              </span>
             </motion.button>
           </motion.div>
         )}
