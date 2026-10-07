@@ -99,7 +99,7 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
         <div className="container-main hero-container-inner">
           <div className="hero-content-grid">
             {/* Left Column: Content */}
-            <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
+            <div style={{ display: "flex", flexDirection: "column", width: "100%", alignItems: "center" }}>
               {/* Blue Capsule Badge */}
               <div style={{ display: "flex", justifyContent: "center", marginBottom: "18px" }}>
                 <div
@@ -129,14 +129,16 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
                 className="hero-main-heading"
                 style={{
                   fontWeight: 900,
-                  lineHeight: 1.15,
                   letterSpacing: "-0.02em",
                   color: "#FFFFFF",
                   textAlign: "center",
                   marginBottom: "16px",
+                  lineHeight: 1.2,
                 }}
               >
-                India&apos;s #1 Hospital Management<br />ERP Software.
+                <span style={{ display: "inline-block", maxWidth: "100%" }}>India&apos;s #1 Hospital Management</span>
+                <br />
+                <span>ERP Software.</span>
               </h1>
 
               {/* Paragraph Description */}
@@ -238,14 +240,24 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
               </div>
 
               {/* Mobile CTA Button (Attractive single button, replaces form on mobile) */}
-              <div className="hero-mobile-cta-wrapper">
+              <div
+                className="hero-mobile-cta-wrapper"
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  width: "100%",
+                  marginTop: "20px",
+                }}
+              >
                 <motion.button
                   onClick={onBookDemo}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.96 }}
                   style={{
                     width: "100%",
-                    maxWidth: "360px",
+                    maxWidth: "340px",
+                    margin: "0 auto",
                     padding: "14px 22px",
                     borderRadius: "12px",
                     border: "1px solid rgba(255, 255, 255, 0.25)",
