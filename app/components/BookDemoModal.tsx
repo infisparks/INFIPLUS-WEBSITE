@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Calendar, User, Mail, Building, ArrowRight, CheckCircle2 } from "lucide-react";
+import { X, Calendar, User, Phone, Building, ArrowRight, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
 import { db } from "../lib/firebase";
 import { ref, push } from "firebase/database";
@@ -14,7 +14,7 @@ interface BookDemoModalProps {
 export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
   const [focused, setFocused] = useState<string | null>(null);
   
-  // Form states
+  // Form states - Only Name, Hospital, Phone (no email)
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
@@ -33,7 +33,7 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
     try {
       await push(ref(db, "submissions"), {
         name,
-        address,
+        hospitalName: address,
         phone,
         type: "Book Demo Modal",
         timestamp: Date.now(),
@@ -48,7 +48,7 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
         onClose();
       }, 2000);
     } catch (err: any) {
-      setError(err.message || "Failed to book. Please try again.");
+      setError(err.message || "Failed to book demo. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -81,37 +81,37 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
             onClick={(e: React.MouseEvent) => e.stopPropagation()}
             style={{
               position: "relative",
               width: "100%",
               maxWidth: "920px",
               background: "#FFFFFF",
-              borderRadius: "40px",
+              borderRadius: "32px",
               border: "1px solid rgba(0, 0, 0, 0.05)",
               boxShadow: "0 60px 150px -20px rgba(0,0,0,0.15)",
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))",
+              gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
               overflow: "hidden",
             }}
             className="modal-container"
           >
             {/* Left Side: Info */}
-            <div className="modal-left" style={{ padding: "clamp(32px, 5vw, 52px)", background: "linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, transparent 100%)", position: "relative" }}>
-               <div className="section-badge" style={{ marginBottom: 24, fontSize: "0.7rem", backgroundColor: 'rgba(37, 99, 235, 0.08)' }}>PRIVATE ACCESS</div>
-               <h2 style={{ fontSize: "clamp(1.5rem, 4vw, 2.2rem)", fontWeight: 800, color: "var(--text-main)", marginBottom: 14, letterSpacing: "-0.04em", lineHeight: 1.1 }}>Step into the <br /> <span className="gradient-text-teal">Future of Healthcare</span></h2>
-               <p style={{ color: "var(--text-dim)", fontSize: "clamp(0.78rem, 1.5vw, 0.9rem)", marginBottom: 36, maxWidth: 340, lineHeight: 1.6, fontWeight: 500 }}>
-                 Discover how INFIPLUS can automate your hospital, eliminate paperwork, and improve your patient outcomes in one visit.
+            <div className="modal-left" style={{ padding: "clamp(28px, 4vw, 48px)", background: "linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, transparent 100%)", position: "relative" }}>
+               <div className="section-badge" style={{ marginBottom: 20, fontSize: "0.7rem", backgroundColor: 'rgba(37, 99, 235, 0.08)' }}>FREE LIVE DEMO</div>
+               <h2 style={{ fontSize: "clamp(1.5rem, 3.5vw, 2.1rem)", fontWeight: 800, color: "var(--text-main)", marginBottom: 14, letterSpacing: "-0.04em", lineHeight: 1.15 }}>Experience the <br /> <span className="gradient-text-teal">Future of Healthcare</span></h2>
+               <p style={{ color: "var(--text-dim)", fontSize: "clamp(0.8rem, 1.4vw, 0.9rem)", marginBottom: 32, maxWidth: 340, lineHeight: 1.6, fontWeight: 500 }}>
+                 Discover how INFIPLUS can automate your hospital, eliminate paperwork, and streamline operations in a 1-on-1 personalized live demo.
                </p>
 
-               <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+               <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
                  {stats.map(stat => (
                    <div key={stat.label} style={{ display: "flex", alignItems: "center", gap: 16 }}>
                       <div style={{ width: 10, height: 10, borderRadius: "50%", background: "var(--color-primary)" }} />
                       <div>
-                        <div style={{ color: "var(--text-main)", fontSize: "1.1rem", fontWeight: 700 }}>{stat.value}</div>
-                        <div style={{ color: "var(--text-dim)", fontSize: "0.8rem", fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase" }}>{stat.label}</div>
+                        <div style={{ color: "var(--text-main)", fontSize: "1.05rem", fontWeight: 700 }}>{stat.value}</div>
+                        <div style={{ color: "var(--text-dim)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase" }}>{stat.label}</div>
                       </div>
                    </div>
                  ))}
@@ -119,14 +119,15 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
             </div>
 
             {/* Right Side: Form */}
-            <div className="modal-right" style={{ padding: "clamp(28px, 4.5vw, 52px)", borderLeft: "1px solid rgba(0, 0, 0, 0.03)", position: "relative" }}>
+            <div className="modal-right" style={{ padding: "clamp(24px, 4vw, 44px)", borderLeft: "1px solid rgba(0, 0, 0, 0.03)", position: "relative" }}>
                <button 
                  onClick={onClose}
-                 style={{ position: "absolute", top: 24, right: 30, color: "var(--text-muted)", background: "transparent", border: "none", cursor: "pointer", transition: "color 0.3s" }}
+                 aria-label="Close modal"
+                 style={{ position: "absolute", top: 20, right: 24, color: "var(--text-muted)", background: "transparent", border: "none", cursor: "pointer", transition: "color 0.3s" }}
                  onMouseEnter={(e) => e.currentTarget.style.color = "var(--color-primary)"}
                  onMouseLeave={(e) => e.currentTarget.style.color = "var(--text-muted)"}
                >
-                 <X size={28} />
+                 <X size={26} />
                </button>
 
                {isSubmitted ? (
@@ -144,14 +145,19 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
                      <CheckCircle2 size={30} strokeWidth={3} />
                    </div>
                    <h3 style={{ fontSize: "20px", fontWeight: 800, color: "#111827", margin: 0 }}>
-                     Demo Booked!
+                     Demo Booked Successfully!
                    </h3>
                    <p style={{ fontSize: "14px", color: "#4B5563", lineHeight: 1.5, margin: 0 }}>
-                     Thank you! Your request has been saved. We will contact you shortly to schedule your demo.
+                     Thank you! Our healthcare specialist will contact you shortly to schedule your personalized live demo.
                    </p>
                  </div>
                ) : (
-                 <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+                 <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 18 }}>
+                   <div>
+                     <h3 style={{ fontSize: "20px", fontWeight: 800, color: "#111827", margin: "0 0 6px" }}>Book a Free Demo</h3>
+                     <p style={{ fontSize: "13px", color: "#6B7280", margin: 0 }}>Fill out this quick form and our team will get in touch.</p>
+                   </div>
+
                    {error && (
                      <div style={{
                        padding: "10px 12px",
@@ -165,31 +171,33 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
                        {error}
                      </div>
                    )}
-                   <ModalInput label="Full Name" icon={<User size={18} />} type="text" id="name" placeholder="John Doe" focused={focused==="name"} onFocus={()=>setFocused("name")} onBlur={()=>setFocused(null)} value={name} onChange={(e: any)=>setName(e.target.value)} />
-                   <ModalInput label="Hospital Address" icon={<Building size={18} />} type="text" id="address" placeholder="Mumbai, MH" focused={focused==="address"} onFocus={()=>setFocused("address")} onBlur={()=>setFocused(null)} value={address} onChange={(e: any)=>setAddress(e.target.value)} />
-                   <ModalInput label="Contact Number" icon={<Mail size={18} />} type="text" id="phone" placeholder="+91 XXXX XXXX XXX" focused={focused==="phone"} onFocus={()=>setFocused("phone")} onBlur={()=>setFocused(null)} value={phone} onChange={(e: any)=>setPhone(e.target.value)} />
+                   <ModalInput label="Full Name" icon={<User size={18} />} type="text" id="name" placeholder="Dr. / Mr. / Ms. Name" focused={focused==="name"} onFocus={()=>setFocused("name")} onBlur={()=>setFocused(null)} value={name} onChange={(e: any)=>setName(e.target.value)} />
+                   <ModalInput label="Hospital / Clinic Name" icon={<Building size={18} />} type="text" id="address" placeholder="e.g. City Hospital, Mumbai" focused={focused==="address"} onFocus={()=>setFocused("address")} onBlur={()=>setFocused(null)} value={address} onChange={(e: any)=>setAddress(e.target.value)} />
+                   <ModalInput label="Contact Number (Calling / WhatsApp)" icon={<Phone size={18} />} type="tel" id="phone" placeholder="+91 98765 43210" focused={focused==="phone"} onFocus={()=>setFocused("phone")} onBlur={()=>setFocused(null)} value={phone} onChange={(e: any)=>setPhone(e.target.value)} />
 
                    <button
                      type="submit"
                      disabled={isSubmitting}
                      className="glow-btn-primary"
                      style={{ 
-                       padding: "clamp(12px, 2vw, 16px)", 
-                       borderRadius: "50px", 
+                       padding: "14px 24px", 
+                       borderRadius: "12px", 
                        border: "none", 
+                       background: "#2563EB",
                        color: "#fff", 
-                       fontSize: "clamp(0.8rem, 1.5vw, 0.9rem)", 
+                       fontSize: "14px", 
                        fontWeight: 700, 
                        display: "flex", 
                        alignItems: "center", 
                        justifyContent: "center", 
                        gap: 10,
-                       marginTop: 12,
-                       cursor: "pointer"
+                       marginTop: 8,
+                       cursor: "pointer",
+                       boxShadow: "0 4px 14px rgba(37, 99, 235, 0.35)",
                      }}
                    >
-                     {isSubmitting ? "Booking..." : "Get My Private Tour"}
-                     <ArrowRight size={20} strokeWidth={2.5} />
+                     {isSubmitting ? "Booking..." : "Book Free Demo"}
+                     <ArrowRight size={18} strokeWidth={2.5} />
                    </button>
                  </form>
                )}
@@ -202,16 +210,15 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
         @media (max-width: 900px) {
           .modal-container {
              grid-template-columns: 1fr !important;
-             max-height: 85vh !important;
+             max-height: 90vh !important;
              overflow-y: auto !important;
-             border-radius: 32px !important;
+             border-radius: 24px !important;
           }
           .modal-left {
-             padding: 40px !important;
              display: none !important;
           }
           .modal-right {
-             padding: 40px !important;
+             padding: 28px 20px !important;
              border-left: none !important;
           }
         }
@@ -222,10 +229,10 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
 
 function ModalInput({ label, icon, type, id, placeholder, focused, onFocus, onBlur, value, onChange }: any) {
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-      <label htmlFor={id} style={{ fontSize: "0.85rem", fontWeight: 700, color: focused ? "var(--color-primary)" : "var(--text-dim)", transition: "all 0.3s ease" }}>{label}</label>
+    <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+      <label htmlFor={id} style={{ fontSize: "0.82rem", fontWeight: 600, color: focused ? "#2563EB" : "#374151", transition: "all 0.2s ease" }}>{label}</label>
       <div style={{ position: "relative" }}>
-        <div style={{ position: "absolute", left: 24, top: "50%", transform: "translateY(-50%)", color: focused ? "var(--color-primary)" : "var(--text-muted)", transition: "all 0.3s ease" }}>{icon}</div>
+        <div style={{ position: "absolute", left: 16, top: "50%", transform: "translateY(-50%)", color: focused ? "#2563EB" : "#9CA3AF", transition: "all 0.2s ease", display: "flex", alignItems: "center" }}>{icon}</div>
         <input 
           type={type} 
           id={id} 
@@ -237,16 +244,16 @@ function ModalInput({ label, icon, type, id, placeholder, focused, onFocus, onBl
           required
           style={{ 
             width: "100%",
-            padding: "0 24px 0 60px", 
-            height: "64px", 
-            borderRadius: "20px", 
+            padding: "0 18px 0 46px", 
+            height: "50px", 
+            borderRadius: "10px", 
             background: "#F8FAFC", 
-            border: `1px solid ${focused ? "var(--color-primary)" : "rgba(0,0,0,0.05)"}`, 
-            color: "var(--text-main)", 
-            fontSize: "1.05rem", 
+            border: `1.5px solid ${focused ? "#2563EB" : "#E2E8F0"}`, 
+            color: "#111827", 
+            fontSize: "0.95rem", 
             outline: "none", 
-            transition: "all 0.3s ease",
-            boxShadow: focused ? "0 10px 20px rgba(37, 99, 235, 0.05)" : "none"
+            transition: "all 0.2s ease",
+            boxShadow: focused ? "0 0 0 3px rgba(37, 99, 235, 0.12)" : "none"
           }} 
         />
       </div>

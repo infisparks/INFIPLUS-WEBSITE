@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import {
-  Building2, Star, CheckCircle, TrendingUp, Users, Activity,
+  Star, CheckCircle, TrendingUp, Users, Activity,
   Download, Zap, Shield, Clock, Fingerprint, Calendar, Check,
   Send, MessageCircle, Cloud, LayoutDashboard, Smartphone
 } from "lucide-react";
@@ -54,7 +54,7 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
         phone,
         hospitalName,
         beds,
-        type: "Free Trial",
+        type: "Book Demo",
         timestamp: Date.now(),
         dateString: new Date().toLocaleString()
       });
@@ -90,7 +90,7 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
             linear-gradient(180deg, #060B27 0%, #0B1340 100%)
           `,
           backgroundSize: "100% 100%, 35px 100%, 100% 100%",
-          paddingTop: isMobile ? "90px" : "130px",
+          paddingTop: isMobile ? "68px" : "130px",
           paddingBottom: isMobile ? "80px" : "0px", // space for mobile sticky bar
         }}
       >
@@ -99,7 +99,7 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
           style={{
             width: "100%",
             zIndex: 2,
-            padding: isMobile ? "16px 14px 40px" : "40px 20px 60px",
+            padding: isMobile ? "10px 14px 40px" : "40px 20px 60px",
           }}
         >
           <div
@@ -112,24 +112,6 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
           >
             {/* Left Column: Content */}
             <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
-              {/* Building Icon */}
-              <div style={{ display: "flex", justifyContent: "center", marginBottom: "16px" }}>
-                <div style={{
-                  width: "52px",
-                  height: "52px",
-                  borderRadius: "12px",
-                  background: "rgba(255, 255, 255, 0.07)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: "#FFFFFF",
-                  boxShadow: "0 0 20px rgba(255, 255, 255, 0.15)",
-                  border: "1px solid rgba(255, 255, 255, 0.1)",
-                }}>
-                  <Building2 size={26} />
-                </div>
-              </div>
-
               {/* Blue Capsule Badge */}
               <div style={{ display: "flex", justifyContent: "center", marginBottom: "18px" }}>
                 <div style={{
@@ -270,71 +252,126 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
                   />
                 </div>
               </div>
+
+              {/* Mobile CTA Buttons (Replaces form in mobile version) */}
+              {isMobile && (
+                <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "10px", width: "100%", marginTop: "18px" }}>
+                  <motion.button
+                    onClick={onBookDemo}
+                    whileTap={{ scale: 0.97 }}
+                    style={{
+                      width: "100%",
+                      maxWidth: "380px",
+                      padding: "13px 20px",
+                      borderRadius: "10px",
+                      border: "none",
+                      background: "linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)",
+                      color: "#FFFFFF",
+                      fontWeight: 700,
+                      fontSize: "14.5px",
+                      cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "8px",
+                      boxShadow: "0 6px 18px rgba(37, 99, 235, 0.4)",
+                    }}
+                  >
+                    <Calendar size={17} />
+                    Book a Free Demo
+                  </motion.button>
+
+                  <motion.button
+                    onClick={handleWhatsAppClick}
+                    whileTap={{ scale: 0.97 }}
+                    style={{
+                      width: "100%",
+                      maxWidth: "380px",
+                      padding: "11px 20px",
+                      borderRadius: "10px",
+                      border: "1px solid rgba(34, 197, 94, 0.4)",
+                      background: "rgba(34, 197, 94, 0.1)",
+                      color: "#22C55E",
+                      fontWeight: 600,
+                      fontSize: "13.5px",
+                      cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "8px",
+                    }}
+                  >
+                    <MessageCircle size={17} />
+                    Chat on WhatsApp
+                  </motion.button>
+                </div>
+              )}
             </div>
 
-            {/* Right Column: Form Card */}
-            <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
-              <div
-                id="trial-form-card"
-                style={{
-                  background: "#FFFFFF",
-                  borderRadius: "16px",
-                  padding: isMobile ? "20px" : "24px",
-                  boxShadow: "0 20px 40px -10px rgba(0, 0, 0, 0.4), 0 0 0 2px rgba(37, 99, 235, 0.4)",
-                  border: "1px solid rgba(255, 255, 255, 0.8)",
-                  width: "100%",
-                  maxWidth: "460px",
-                }}
-              >
-                 {isSubmitted ? (
-                   <div style={{ textAlign: "center", padding: "40px 10px" }}>
-                     <div style={{
-                       width: "56px",
-                       height: "56px",
-                       borderRadius: "50%",
-                       background: "rgba(16, 185, 129, 0.1)",
-                       color: "#10B981",
-                       display: "flex",
-                       alignItems: "center",
-                       justifyContent: "center",
-                       margin: "0 auto 20px",
-                     }}>
-                       <Check size={30} strokeWidth={3} />
+            {/* Right Column: Form Card (Desktop only, hidden on mobile) */}
+            {!isMobile && (
+              <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
+                <div
+                  id="trial-form-card"
+                  style={{
+                    background: "#FFFFFF",
+                    borderRadius: "16px",
+                    padding: "24px",
+                    boxShadow: "0 20px 40px -10px rgba(0, 0, 0, 0.4), 0 0 0 2px rgba(37, 99, 235, 0.4)",
+                    border: "1px solid rgba(255, 255, 255, 0.8)",
+                    width: "100%",
+                    maxWidth: "460px",
+                  }}
+                >
+                   {isSubmitted ? (
+                     <div style={{ textAlign: "center", padding: "40px 10px" }}>
+                       <div style={{
+                         width: "56px",
+                         height: "56px",
+                         borderRadius: "50%",
+                         background: "rgba(16, 185, 129, 0.1)",
+                         color: "#10B981",
+                         display: "flex",
+                         alignItems: "center",
+                         justifyContent: "center",
+                         margin: "0 auto 20px",
+                       }}>
+                         <Check size={30} strokeWidth={3} />
+                       </div>
+                       <h3 style={{ fontSize: "20px", fontWeight: 800, color: "#111827", marginBottom: "10px" }}>
+                         Demo Request Received!
+                       </h3>
+                       <p style={{ fontSize: "14px", color: "#4B5563", lineHeight: 1.5 }}>
+                         Thank you, <strong>{name}</strong>! Your demo request has been submitted. Our healthcare specialist will contact you soon to schedule your personalized live demo.
+                       </p>
                      </div>
-                     <h3 style={{ fontSize: "20px", fontWeight: 800, color: "#111827", marginBottom: "10px" }}>
-                       Trial Request Received!
-                     </h3>
-                     <p style={{ fontSize: "14px", color: "#4B5563", lineHeight: 1.5 }}>
-                       Thank you, <strong>{name}</strong>! Your free trial request has been submitted. Our team will contact you soon to configure everything for your hospital.
-                     </p>
-                   </div>
-                 ) : (
-                  <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
-                    {/* Badge */}
-                    <div style={{ display: "inline-flex", alignSelf: "flex-start" }}>
-                      <div style={{
-                        background: "rgba(16, 185, 129, 0.08)",
-                        border: "1px solid rgba(16, 185, 129, 0.2)",
-                        borderRadius: "9999px",
-                        padding: "4px 10px",
-                        color: "#047857",
-                        fontSize: "10px",
-                        fontWeight: 700,
-                        letterSpacing: "0.03em",
-                        textTransform: "uppercase",
-                      }}>
-                        ✦ 7-DAY FREE TRIAL — NO CREDIT CARD
+                   ) : (
+                    <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+                      {/* Badge */}
+                      <div style={{ display: "inline-flex", alignSelf: "flex-start" }}>
+                        <div style={{
+                          background: "rgba(37, 99, 235, 0.08)",
+                          border: "1px solid rgba(37, 99, 235, 0.2)",
+                          borderRadius: "9999px",
+                          padding: "4px 10px",
+                          color: "#2563EB",
+                          fontSize: "10px",
+                          fontWeight: 700,
+                          letterSpacing: "0.03em",
+                          textTransform: "uppercase",
+                        }}>
+                          ✦ 100% FREE CLINIC & HOSPITAL DEMO
+                        </div>
                       </div>
-                    </div>
 
-                    <div>
-                      <h3 style={{ fontSize: "20px", fontWeight: 800, color: "#111827", marginBottom: "4px", letterSpacing: "-0.01em" }}>
-                        Start Your Free Trial
-                      </h3>
-                      <p style={{ fontSize: "12px", color: "#6B7280" }}>
-                        2 minutes to fill. We configure everything for your hospital.
-                      </p>
-                    </div>
+                      <div>
+                        <h3 style={{ fontSize: "20px", fontWeight: 800, color: "#111827", marginBottom: "4px", letterSpacing: "-0.01em" }}>
+                          Book a Free Demo
+                        </h3>
+                        <p style={{ fontSize: "12px", color: "#6B7280" }}>
+                          Takes 2 minutes. See Infiplus live in action customized for your hospital.
+                        </p>
+                      </div>
 
                     {error && (
                       <div style={{
@@ -471,10 +508,8 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
                       fontWeight: 600,
                       border: "1px solid rgba(37,99,235,0.1)",
                     }}>
-                      <span>🎁</span> Full access for 7 days — all modules, no restrictions
+                      <span>✨</span> Personalized 1-on-1 walkthrough — tailored to your workflow
                     </div>
-
-
 
                     <motion.button
                       type="submit"
@@ -499,7 +534,7 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
                       }}
                     >
                       <Calendar size={15} />
-                      {isSubmitting ? "Activating..." : "Activate My Free Trial"}
+                      {isSubmitting ? "Submitting..." : "Schedule Free Demo"}
                     </motion.button>
 
                     <div style={{
@@ -525,6 +560,7 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
                 )}
               </div>
             </div>
+            )}
           </div>
         </div>
 
@@ -621,10 +657,7 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
           margin: "0 auto",
         }}>
           <motion.button
-            onClick={() => {
-              const el = document.getElementById("trial-form-card");
-              if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
-            }}
+            onClick={onBookDemo}
             whileTap={{ scale: 0.96 }}
             style={{
               flex: 1.15,

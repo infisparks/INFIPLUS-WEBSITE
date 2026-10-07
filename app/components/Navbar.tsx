@@ -54,7 +54,11 @@ export default function Navbar({ onBookDemo }: NavbarProps) {
   ];
 
   const handleActionClick = () => {
-    const el = document.getElementById("trial-form-card");
+    if (isMobile) {
+      onBookDemo();
+      return;
+    }
+    const el = document.getElementById("trial-form-card") || document.getElementById("demo-form-card");
     if (el) {
       el.scrollIntoView({ behavior: "smooth", block: "center" });
     } else {
@@ -76,7 +80,9 @@ export default function Navbar({ onBookDemo }: NavbarProps) {
     >
       <nav
         style={{
-          padding: scrolled ? "10px 0" : "16px 0",
+          padding: isMobile
+            ? (scrolled ? "8px 0" : "12px 0")
+            : (scrolled ? "10px 0" : "16px 0"),
           background: scrolled
             ? "rgba(6, 11, 36, 0.92)"
             : "transparent",
@@ -148,82 +154,44 @@ export default function Navbar({ onBookDemo }: NavbarProps) {
                   boxShadow: "0 4px 14px rgba(37, 99, 235, 0.3)",
                 }}
               >
-                Get Free Trial
+                Book Free Demo
               </motion.button>
             </div>
           ) : (
-            /* Mobile Nav Layout - Two row header matching mobile screenshot */
-            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-              {/* Row 1: Logo and Button */}
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                <div
-                  onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                  role="button"
-                  style={{ cursor: "pointer", position: "relative", width: 105, height: 28 }}
-                >
-                  <Image
-                    src="/logo.png"
-                    alt="INFIPLUS Logo"
-                    fill
-                    style={{ objectFit: "contain", objectPosition: "left", filter: "brightness(0) invert(1)" }}
-                    priority
-                  />
-                </div>
-
-                <motion.button
-                  onClick={handleActionClick}
-                  whileTap={{ scale: 0.97 }}
-                  style={{
-                    padding: "6px 14px",
-                    borderRadius: "6px",
-                    border: "none",
-                    background: "#2563EB",
-                    color: "#FFFFFF",
-                    fontWeight: 600,
-                    fontSize: "12px",
-                    cursor: "pointer",
-                  }}
-                >
-                  Get Free Trial
-                </motion.button>
+            /* Mobile Nav Layout - Compact single row header */
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: 36 }}>
+              {/* Logo */}
+              <div
+                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                role="button"
+                aria-label="Scroll to top"
+                style={{ cursor: "pointer", position: "relative", width: 110, height: 28 }}
+              >
+                <Image
+                  src="/logo.png"
+                  alt="INFIPLUS Logo"
+                  fill
+                  style={{ objectFit: "contain", objectPosition: "left", filter: "brightness(0) invert(1)" }}
+                  priority
+                />
               </div>
 
-              {/* Row 2: Navigation links aligned in center */}
-              <div style={{ display: "flex", justifyContent: "center", gap: 24, paddingTop: 4 }}>
-                <a
-                  href="/modules"
-                  style={{
-                    fontSize: "13px",
-                    fontWeight: 500,
-                    color: "#FFFFFF",
-                    textDecoration: "none",
-                  }}
-                >
-                  Modules
-                </a>
-                <a
-                  href="#why-info"
-                  style={{
-                    fontSize: "13px",
-                    fontWeight: 500,
-                    color: "#FFFFFF",
-                    textDecoration: "none",
-                  }}
-                >
-                  Why Infiplus
-                </a>
-                <a
-                  href="#contact"
-                  style={{
-                    fontSize: "13px",
-                    fontWeight: 500,
-                    color: "#FFFFFF",
-                    textDecoration: "none",
-                  }}
-                >
-                  Contact
-                </a>
-              </div>
+              <motion.button
+                onClick={handleActionClick}
+                whileTap={{ scale: 0.97 }}
+                style={{
+                  padding: "7px 14px",
+                  borderRadius: "6px",
+                  border: "none",
+                  background: "#2563EB",
+                  color: "#FFFFFF",
+                  fontWeight: 600,
+                  fontSize: "12px",
+                  cursor: "pointer",
+                }}
+              >
+                Book Free Demo
+              </motion.button>
             </div>
           )}
         </div>
