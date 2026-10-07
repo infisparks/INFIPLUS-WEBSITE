@@ -188,8 +188,8 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
                 padding: "0 10px",
               }}>
                 <div style={{ textAlign: "center", flex: 1 }}>
-                  <div style={{ fontSize: isMobile ? "16px" : "24px", fontWeight: 800, color: "#FFFFFF", lineHeight: 1.1 }}>ABDM & NABH</div>
-                  <div style={{ fontSize: isMobile ? "10px" : "12px", color: "rgba(255,255,255,0.6)", marginTop: "4px", lineHeight: 1.2 }}>Ready & Compliant</div>
+                  <div style={{ fontSize: isMobile ? "20px" : "28px", fontWeight: 800, color: "#FFFFFF", lineHeight: 1.1 }}>15+</div>
+                  <div style={{ fontSize: isMobile ? "10px" : "12px", color: "rgba(255,255,255,0.6)", marginTop: "4px", lineHeight: 1.2 }}>Integrated Modules</div>
                 </div>
                 <div style={{ width: "1px", height: "36px", background: "rgba(255,255,255,0.15)" }} />
                 <div style={{ textAlign: "center", flex: 1 }}>
