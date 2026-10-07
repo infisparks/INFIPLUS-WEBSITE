@@ -643,74 +643,59 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
         </div>
       </section>
 
-      {/* ── MOBILE STICKY BOTTOM BAR ─asdf─ */}
-      {isMobile && (
-        <div style={{
-          position: "fixed",
-          bottom: "14px",
-          left: "14px",
-          right: "14px",
-          background: "rgba(255, 255, 255, 0.85)",
-          backdropFilter: "blur(16px)",
-          WebkitBackdropFilter: "blur(16px)",
-          border: "1px solid rgba(226, 232, 240, 0.85)",
-          padding: "5px 6px",
-          display: "flex",
-          gap: "8px",
-          zIndex: 1100,
-          borderRadius: "100px",
-          boxShadow: "0 10px 30px -5px rgba(0, 0, 0, 0.1), 0 4px 12px -2px rgba(0, 0, 0, 0.05)",
-          maxWidth: "480px",
-          margin: "0 auto",
-        }}>
-          <motion.button
-            onClick={onBookDemo}
-            whileTap={{ scale: 0.96 }}
+      {/* ── MOBILE STICKY BOTTOM BAR (Shown only after scrolling past Hero) ── */}
+      <AnimatePresence>
+        {isMobile && scrolledPastHero && (
+          <motion.div
+            initial={{ opacity: 0, y: 35, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 35, scale: 0.95 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
             style={{
-              flex: 1.15,
-              height: "36px",
-              background: "linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)",
-              color: "#FFFFFF",
-              border: "none",
+              position: "fixed",
+              bottom: "16px",
+              left: "16px",
+              right: "16px",
+              background: "rgba(10, 15, 40, 0.92)",
+              backdropFilter: "blur(20px)",
+              WebkitBackdropFilter: "blur(20px)",
+              border: "1px solid rgba(255, 255, 255, 0.15)",
+              padding: "6px",
+              zIndex: 1100,
               borderRadius: "100px",
-              fontWeight: 700,
-              fontSize: "12.5px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "5px",
-              cursor: "pointer",
-              boxShadow: "0 4px 10px rgba(37, 99, 235, 0.2)",
+              boxShadow: "0 12px 35px rgba(0, 0, 0, 0.4), 0 0 20px rgba(37, 99, 235, 0.3)",
+              maxWidth: "420px",
+              margin: "0 auto",
             }}
           >
-            <Send size={13} style={{ transform: "rotate(-45deg)" }} />
-            Book Free Demo
-          </motion.button>
-          
-          <motion.button
-            onClick={handleWhatsAppClick}
-            whileTap={{ scale: 0.96 }}
-            style={{
-              flex: 0.85,
-              height: "36px",
-              background: "rgba(37, 211, 102, 0.08)",
-              color: "#16A34A",
-              border: "1px solid rgba(37, 211, 102, 0.35)",
-              borderRadius: "100px",
-              fontWeight: 700,
-              fontSize: "12.5px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "5px",
-              cursor: "pointer",
-            }}
-          >
-            <MessageCircle size={14} fill="#16A34A" color="#16A34A" />
-            WhatsApp
-          </motion.button>
-        </div>
-      )}
+            <motion.button
+              onClick={onBookDemo}
+              whileTap={{ scale: 0.97 }}
+              style={{
+                width: "100%",
+                height: "44px",
+                background: "linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%)",
+                color: "#FFFFFF",
+                border: "1px solid rgba(255, 255, 255, 0.2)",
+                borderRadius: "100px",
+                fontWeight: 700,
+                fontSize: "14px",
+                letterSpacing: "0.01em",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "8px",
+                cursor: "pointer",
+                boxShadow: "0 4px 15px rgba(37, 99, 235, 0.4)",
+              }}
+            >
+              <Calendar size={16} />
+              Book a Free Demo
+              <ArrowRight size={15} strokeWidth={2.5} />
+            </motion.button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }
