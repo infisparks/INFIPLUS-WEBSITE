@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   Star, CheckCircle, TrendingUp, Users, Activity,
   Download, Zap, Shield, Clock, Fingerprint, Calendar, Check,
-  Send, MessageCircle, Cloud, LayoutDashboard, Smartphone, ArrowRight, Play
+  Send, MessageCircle, Cloud, LayoutDashboard, Smartphone, ArrowRight
 } from "lucide-react";
 import Image from "next/image";
 import { useState, useEffect } from "react";
@@ -150,44 +150,48 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
                       allowFullScreen
                     />
                   ) : (
-                    <div style={{ position: "relative", width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <div style={{ position: "relative", width: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
                       <Image
                         src="/thumbnail.png"
                         alt="Infiplus Hospital Management ERP Software Demo"
-                        fill
-                        style={{ objectFit: "cover" }}
+                        width={1983}
+                        height={793}
+                        style={{ width: "100%", height: "auto", display: "block" }}
                         priority
                       />
-                      {/* Subtle Dark Gradient Overlay */}
-                      <div style={{
-                        position: "absolute",
-                        inset: 0,
-                        background: "linear-gradient(180deg, rgba(6, 11, 39, 0.1) 0%, rgba(6, 11, 39, 0.45) 100%)",
-                      }} />
 
-                      {/* Glowing Modern Play Button */}
+                      {/* Official YouTube Play Logo in the Center */}
                       <motion.div
-                        whileHover={{ scale: 1.12 }}
+                        whileHover={{ scale: 1.15, filter: "drop-shadow(0 0 24px rgba(255, 0, 0, 0.85))" }}
                         whileTap={{ scale: 0.95 }}
-                        className="hero-play-btn-glow"
                         style={{
-                          position: "relative",
+                          position: "absolute",
+                          top: "50%",
+                          left: "50%",
+                          transform: "translate(-50%, -50%)",
                           zIndex: 2,
-                          width: "56px",
-                          height: "56px",
-                          borderRadius: "50%",
-                          background: "rgba(37, 99, 235, 0.92)",
-                          backdropFilter: "blur(8px)",
-                          border: "2px solid rgba(255, 255, 255, 0.8)",
+                          cursor: "pointer",
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
-                          boxShadow: "0 0 30px rgba(37, 99, 235, 0.8), 0 8px 25px rgba(0, 0, 0, 0.5)",
-                          color: "#FFFFFF",
-                          cursor: "pointer",
+                          filter: "drop-shadow(0 6px 18px rgba(0, 0, 0, 0.65))",
+                          transition: "filter 0.25s ease",
                         }}
                       >
-                        <Play size={24} fill="#FFFFFF" style={{ marginLeft: "3px" }} />
+                        <svg
+                          width="68"
+                          height="48"
+                          viewBox="0 0 68 48"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          style={{ display: "block" }}
+                        >
+                          <path
+                            d="M66.52 7.74C65.74 4.83 63.46 2.54 60.55 1.76C55.28 0.33 34 0.33 34 0.33C34 0.33 12.72 0.33 7.45 1.76C4.54 2.54 2.26 4.83 1.48 7.74C0.05 13.01 0 24 0 24C0 24 0.05 34.99 1.48 40.26C2.26 43.17 4.54 45.46 7.45 46.24C12.72 47.67 34 47.67 34 47.67C34 47.67 55.28 47.67 60.55 46.24C63.46 45.46 65.74 43.17 66.52 40.26C67.95 34.99 68 24 68 24C68 24 67.95 13.01 66.52 7.74Z"
+                            fill="#FF0000"
+                          />
+                          <polygon points="27,33 44,24 27,15" fill="#FFFFFF" />
+                        </svg>
                       </motion.div>
                     </div>
                   )}
