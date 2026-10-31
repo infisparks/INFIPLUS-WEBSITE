@@ -9,6 +9,7 @@ import Image from "next/image";
 import { useRef, useState } from "react";
 import { db } from "../lib/firebase";
 import { ref, push } from "firebase/database";
+import { trackEvent } from "../lib/fpixel";
 
 const EASE = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
@@ -42,6 +43,16 @@ export default function ContactFooter() {
         timestamp: Date.now(),
         dateString: new Date().toLocaleString()
       });
+
+      // Track Meta Pixel Lead event
+      trackEvent("Lead", {
+        content_name: "Contact Footer Demo Request",
+        hospital_name: hospitalName.trim(),
+        lead_source: "Contact Footer Form",
+        currency: "INR",
+        value: 0,
+      });
+
       setIsSubmitted(true);
       setName("");
       setHospitalName("");

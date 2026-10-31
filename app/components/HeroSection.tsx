@@ -10,6 +10,7 @@ import {
 import { useState, useEffect } from "react";
 import { db } from "../lib/firebase";
 import { ref, push } from "firebase/database";
+import { trackEvent } from "../lib/fpixel";
 
 interface HeroSectionProps {
   onBookDemo: () => void;
@@ -87,6 +88,15 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
         type: "Book Demo",
         timestamp: Date.now(),
         dateString: new Date().toLocaleString()
+      });
+
+      // Track Meta Pixel Lead event
+      trackEvent("Lead", {
+        content_name: "Hero Section Demo Request",
+        hospital_name: hospitalName.trim(),
+        lead_source: "Hero Section Form",
+        currency: "INR",
+        value: 0,
       });
       
       setIsSubmitting(false);

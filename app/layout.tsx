@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import Script from "next/script";
+import MetaPixel from "./components/MetaPixel";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -114,6 +115,7 @@ export default function RootLayout({
         </Script>
       </head>
       <body>
+        <MetaPixel />
         {children}
         <Analytics />
       </body>

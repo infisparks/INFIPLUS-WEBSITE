@@ -11,6 +11,7 @@ import { useState, useMemo } from "react";
 import { db } from "../lib/firebase";
 import { ref, push, update } from "firebase/database";
 import { sendBookingWhatsAppNotification } from "../lib/whatsapp";
+import { trackEvent, trackCustomEvent } from "../lib/fpixel";
 
 interface BookDemoModalProps {
   isOpen: boolean;
@@ -117,6 +118,15 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
         dateString: new Date().toLocaleString(),
       });
 
+      // Track Meta Pixel Lead event when user fills the first form
+      trackEvent("Lead", {
+        content_name: "Book Demo Modal Step 1 Lead",
+        hospital_name: hospitalName.trim(),
+        lead_source: "Book Demo Modal",
+        currency: "INR",
+        value: 0,
+      });
+
       setSubmissionId(newRef.key);
       setIsSubmitting(false);
       setStep(2); // Proceed to slot picker
@@ -167,7 +177,25 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
         dateString: new Date().toLocaleString(),
       }).catch((err) => console.warn("Push meeting warning:", err));
 
-      // 3. Send automated WhatsApp confirmation directly from client
+      // 3. Track Meta Pixel standard 'Schedule' and custom 'MeetingScheduled' events
+      trackEvent("Schedule", {
+        content_name: "Book Demo Meeting Scheduled",
+        meeting_date: selectedDay.label,
+        meeting_time: selectedTime,
+        hospital_name: hospitalName.trim(),
+        currency: "INR",
+        value: 0,
+        status: "Meeting Scheduled",
+      });
+
+      trackCustomEvent("MeetingScheduled", {
+        meeting_date: selectedDay.label,
+        meeting_time: selectedTime,
+        hospital_name: hospitalName.trim(),
+        status: "Meeting Scheduled",
+      });
+
+      // 4. Send automated WhatsApp confirmation directly from client
       const waRes = await sendBookingWhatsAppNotification({
         name: name.trim(),
         hospitalName: hospitalName.trim(),
