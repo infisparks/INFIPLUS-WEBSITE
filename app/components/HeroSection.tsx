@@ -4,7 +4,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   Star, CheckCircle, TrendingUp, Users, Activity,
   Download, Zap, Shield, Clock, Fingerprint, Calendar, Check,
-  Send, MessageCircle, Cloud, LayoutDashboard, Smartphone, ArrowRight
+  Send, MessageCircle, Cloud, LayoutDashboard, Smartphone, ArrowRight,
+  Play, Sparkles, FileText
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { db } from "../lib/firebase";
@@ -40,6 +41,33 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const handlePrimaryAction = () => {
+    const formCard = document.getElementById("trial-form-card");
+    const nameInput = document.getElementById("hero-name-input");
+    if (typeof window !== "undefined" && window.innerWidth > 960 && formCard) {
+      formCard.scrollIntoView({ behavior: "smooth", block: "center" });
+      nameInput?.focus();
+    } else {
+      onBookDemo();
+    }
+  };
+
+  const handleSeeLiveSystem = () => {
+    const videoEl = document.getElementById("hero-system-video");
+    if (videoEl) {
+      videoEl.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  };
+
+  const handleExploreRequirements = () => {
+    const featEl = document.getElementById("features") || document.getElementById("why-info");
+    if (featEl) {
+      featEl.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else {
+      onBookDemo();
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -100,40 +128,55 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
             {/* Left Column: Content */}
             <div style={{ display: "flex", flexDirection: "column", width: "100%", alignItems: "center" }}>
               {/* Main Headline */}
-              <h1
-                className="hero-main-heading"
-                style={{
-                  fontWeight: 900,
-                  letterSpacing: "-0.02em",
-                  color: "#FFFFFF",
-                  textAlign: "center",
-                  marginBottom: "18px",
-                  lineHeight: 1.18,
-                }}
-              >
-                <span style={{ display: "inline-block", maxWidth: "100%" }}>India&apos;s #1 Hospital Management</span>
-                <br />
-                <span>ERP Software.</span>
+              <h1 className="hero-main-heading">
+                <span className="hero-heading-lead">
+                  <span className="hero-heading-line">Stop Managing </span>
+                  <span className="hero-heading-line">Your Hospital on Paper.</span>
+                </span>
+                <span className="hero-heading-accent">
+                  <span className="hero-heading-line">Move Towards a Smarter, </span>
+                  <span className="hero-heading-line">Paperless Hospital.</span>
+                </span>
               </h1>
 
               {/* Paragraph Description */}
               <p
                 className="hero-main-desc"
                 style={{
-                  color: "rgba(255, 255, 255, 0.8)",
+                  color: "rgba(255, 255, 255, 0.82)",
                   lineHeight: 1.6,
                   maxWidth: "600px",
-                  margin: "0 auto 26px",
+                  margin: "0 auto 20px",
                   textAlign: "center",
                   fontWeight: 400,
                 }}
               >
-                Manage OPD, IPD, EMR, billing, pharmacy, lab and patient records through one cloud-based Hospital Management Software built for modern Indian hospitals.
+                Eliminate paper registers with one integrated HMS — unified OPD/IPD, digital records &amp; fast billing.
               </p>
 
-              {/* YouTube Video Player */}
-              <div style={{ display: "flex", justifyContent: "center", width: "100%", marginBottom: "22px" }}>
-                <div className="hero-video-wrapper">
+              {/* 4 Feature Pills */}
+              <div className="hero-pills-row">
+                <div className="hero-feature-pill">
+                  <span className="pill-dot" />
+                  <span>OPD &amp; IPD</span>
+                </div>
+                <div className="hero-feature-pill">
+                  <span className="pill-dot" />
+                  <span>Digital Records</span>
+                </div>
+                <div className="hero-feature-pill">
+                  <span className="pill-dot" />
+                  <span>Fast Billing</span>
+                </div>
+                <div className="hero-feature-pill">
+                  <span className="pill-dot" />
+                  <span>Live Reports</span>
+                </div>
+              </div>
+
+              {/* ── VIDEO IN THE CENTER (with running glow in full border) ── */}
+              <div style={{ display: "flex", justifyContent: "center", width: "100%", margin: "0 auto 22px" }}>
+                <div id="hero-system-video" className="hero-video-wrapper">
                   <iframe
                     key="infiplus-yt-player"
                     src="https://www.youtube-nocookie.com/embed/eEO-k5gQeJ8?rel=0&modestbranding=1&enablejsapi=1"
@@ -142,6 +185,57 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
                     referrerPolicy="no-referrer-when-downgrade"
                     allowFullScreen
                   />
+                  {/* Full perimeter running glow beam */}
+                  <div className="running-border-beam video-beam" />
+                </div>
+              </div>
+
+              {/* ── BUTTON DOWN (Below the Video) ── */}
+              <div className="hero-actions-container">
+                <motion.button
+                  type="button"
+                  onClick={handlePrimaryAction}
+                  className="animated-demo-btn"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.97 }}
+                  style={{
+                    width: "100%",
+                    maxWidth: "340px",
+                  }}
+                >
+                  <span className="btn-content-inner">
+                    <span className="btn-icon-box">
+                      <Calendar size={15} />
+                    </span>
+                    <span className="btn-text">Book My Personalised Demo</span>
+                    <span className="btn-arrow-icon">
+                      <ArrowRight size={15} strokeWidth={2.5} />
+                    </span>
+                    <span className="btn-shine" />
+                  </span>
+                  {/* Full perimeter running glow beam on button */}
+                  <span className="running-border-beam btn-beam" />
+                </motion.button>
+
+                {/* Secondary Links: See live system • Explore requirements */}
+                <div className="hero-secondary-links">
+                  <button
+                    type="button"
+                    onClick={handleSeeLiveSystem}
+                    className="hero-sublink"
+                  >
+                    <Play size={12} fill="currentColor" />
+                    <span>See live system</span>
+                  </button>
+                  <span className="hero-sublink-divider">•</span>
+                  <button
+                    type="button"
+                    onClick={handleExploreRequirements}
+                    className="hero-sublink"
+                  >
+                    <Sparkles size={12} />
+                    <span>Explore requirements</span>
+                  </button>
                 </div>
               </div>
 
@@ -161,78 +255,6 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
                   <div className="hero-stat-num" style={{ fontWeight: 800, color: "#FFFFFF", lineHeight: 1.1 }}>100%</div>
                   <div className="hero-stat-lbl" style={{ color: "rgba(255,255,255,0.6)", marginTop: "4px", lineHeight: 1.2 }}>Cloud-Based ERP</div>
                 </div>
-              </div>
-
-              {/* Badge Cloud (Strict 2-Row Layout on Desktop & Mobile) */}
-              <div className="hero-badge-cloud-container">
-                <div className="hero-badge-cloud-row">
-                  {["OPD Management", "IPD & Ward", "Laboratory"].map((module) => (
-                    <span key={module} className="hero-cloud-badge">
-                      {module}
-                    </span>
-                  ))}
-                </div>
-                <div className="hero-badge-cloud-row">
-                  {["Billing & TPA", "Complete Paperless", "WhatsApp Integration"].map((module) => (
-                    <span key={module} className="hero-cloud-badge">
-                      {module}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              {/* Mobile CTA Button (Attractive single button, replaces form on mobile) */}
-              <div
-                className="hero-mobile-cta-wrapper"
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  width: "100%",
-                  marginTop: "20px",
-                }}
-              >
-                <motion.button
-                  onClick={onBookDemo}
-                  className="animated-demo-btn"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.96 }}
-                  style={{
-                    width: "100%",
-                    maxWidth: "340px",
-                    margin: "0 auto",
-                    padding: "14px 22px",
-                    borderRadius: "12px",
-                    border: "1px solid rgba(255, 255, 255, 0.25)",
-                    background: "linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%)",
-                    color: "#FFFFFF",
-                    fontWeight: 700,
-                    fontSize: "15px",
-                    letterSpacing: "0.01em",
-                    cursor: "pointer",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: "10px",
-                    position: "relative",
-                  }}
-                >
-                  <div style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    width: "26px",
-                    height: "26px",
-                    borderRadius: "8px",
-                    background: "rgba(255, 255, 255, 0.2)",
-                  }}>
-                    <Calendar size={15} />
-                  </div>
-                  <span>Book a Free Demo</span>
-                  <span className="btn-arrow-icon">
-                    <ArrowRight size={16} strokeWidth={2.5} />
-                  </span>
-                </motion.button>
               </div>
             </div>
 
@@ -293,7 +315,7 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
 
                       <div>
                         <h3 style={{ fontSize: "20px", fontWeight: 800, color: "#111827", marginBottom: "4px", letterSpacing: "-0.01em" }}>
-                          Book a Free Demo
+                          Book My Personalised Demo
                         </h3>
                         <p style={{ fontSize: "12px", color: "#6B7280" }}>
                           Takes 2 minutes. See Infiplus live in action customized for your hospital.
@@ -318,6 +340,7 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
                     <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
                       <label style={{ fontSize: "12.5px", fontWeight: 600, color: "#374151" }}>Full Name *</label>
                       <input
+                        id="hero-name-input"
                         type="text"
                         placeholder="Dr. / Mr. / Ms. Name"
                         required
@@ -435,37 +458,21 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
                         whileTap={{ scale: 0.97 }}
                         style={{
                           width: "100%",
-                          padding: "13px 22px",
-                          borderRadius: "12px",
-                          border: "1px solid rgba(255, 255, 255, 0.25)",
-                          background: "linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%)",
-                          color: "#FFFFFF",
-                          fontWeight: 700,
-                          fontSize: "14.5px",
-                          letterSpacing: "0.01em",
-                          cursor: "pointer",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          gap: "10px",
-                          position: "relative",
                         }}
                       >
-                        <div style={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          width: "26px",
-                          height: "26px",
-                          borderRadius: "8px",
-                          background: "rgba(255, 255, 255, 0.2)",
-                        }}>
-                          <Calendar size={15} />
-                        </div>
-                        <span>{isSubmitting ? "Scheduling Demo..." : "Book a Free Demo"}</span>
-                        <span className="btn-arrow-icon">
-                          <ArrowRight size={16} strokeWidth={2.5} />
+                        <span className="btn-content-inner">
+                          <span className="btn-icon-box">
+                            <Calendar size={15} />
+                          </span>
+                          <span className="btn-text">
+                            {isSubmitting ? "Scheduling Demo..." : "Book My Personalised Demo"}
+                          </span>
+                          <span className="btn-arrow-icon">
+                            <ArrowRight size={16} strokeWidth={2.5} />
+                          </span>
+                          <span className="btn-shine" />
                         </span>
+                        <span className="running-border-beam btn-beam" />
                       </motion.button>
                     </div>
 
@@ -596,26 +603,25 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
               whileTap={{ scale: 0.97 }}
               style={{
                 width: "100%",
-                height: "44px",
-                background: "linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%)",
-                color: "#FFFFFF",
-                border: "1px solid rgba(255, 255, 255, 0.2)",
                 borderRadius: "100px",
-                fontWeight: 700,
-                fontSize: "14px",
-                letterSpacing: "0.01em",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "8px",
-                cursor: "pointer",
               }}
             >
-              <Calendar size={16} />
-              Book a Free Demo
-              <span className="btn-arrow-icon">
-                <ArrowRight size={15} strokeWidth={2.5} />
+              <span
+                className="btn-content-inner"
+                style={{
+                  borderRadius: "100px",
+                  padding: "10px 18px",
+                  fontSize: "13.5px",
+                }}
+              >
+                <Calendar size={15} />
+                <span>Book My Personalised Demo</span>
+                <span className="btn-arrow-icon">
+                  <ArrowRight size={15} strokeWidth={2.5} />
+                </span>
+                <span className="btn-shine" />
               </span>
+              <span className="running-border-beam btn-beam" style={{ borderRadius: "100px" }} />
             </motion.button>
           </motion.div>
         )}
