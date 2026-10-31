@@ -57,16 +57,44 @@ export default function AdminDashboard() {
     return () => unsubscribe();
   }, []);
 
-  const handleDelete = async (id: string) => {
-    if (confirm("Are you sure you want to delete this submission?")) {
-      try {
-        await remove(ref(db, `submissions/${id}`));
-        if (selectedSub?.id === id) {
-          setSelectedSub(null);
-        }
-      } catch (err) {
-        alert("Failed to delete submission.");
+  // Delete Confirmation Modal State (Requires typing "delete" to confirm)
+  const [deleteModalSub, setDeleteModalSub] = useState<Submission | null>(null);
+  const [deleteInputText, setDeleteInputText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
+
+  const openDeleteModal = (sub: Submission) => {
+    setDeleteModalSub(sub);
+    setDeleteInputText("");
+    setDeleteError(null);
+  };
+
+  const closeDeleteModal = () => {
+    setDeleteModalSub(null);
+    setDeleteInputText("");
+    setDeleteError(null);
+    setIsDeleting(false);
+  };
+
+  const confirmDelete = async () => {
+    if (!deleteModalSub) return;
+    if (deleteInputText.trim().toLowerCase() !== "delete") {
+      setDeleteError('Please type "delete" to confirm deletion.');
+      return;
+    }
+
+    setIsDeleting(true);
+    setDeleteError(null);
+    try {
+      await remove(ref(db, `submissions/${deleteModalSub.id}`));
+      if (selectedSub?.id === deleteModalSub.id) {
+        setSelectedSub(null);
       }
+      closeDeleteModal();
+    } catch (err: any) {
+      console.error("Delete lead error:", err);
+      setDeleteError(err.message || "Failed to delete submission.");
+      setIsDeleting(false);
     }
   };
 
@@ -569,7 +597,7 @@ export default function AdminDashboard() {
                               <Eye size={15} />
                             </button>
                             <button
-                              onClick={() => handleDelete(sub.id)}
+                              onClick={() => openDeleteModal(sub)}
                               title="Delete lead"
                               style={{
                                 border: "none",
@@ -764,7 +792,7 @@ export default function AdminDashboard() {
                           <span>Details</span>
                         </button>
                         <button
-                          onClick={() => handleDelete(sub.id)}
+                          onClick={() => openDeleteModal(sub)}
                           style={{
                             border: "none",
                             background: "#FEF2F2",
@@ -804,7 +832,7 @@ export default function AdminDashboard() {
           justifyContent: "center",
           padding: "16px",
           zIndex: 1000,
-          fontFamily: "Inter, sans-serif"
+          fontFamily: "'Poppins', sans-serif"
         }}
         onClick={() => setSelectedSub(null)}
         >
@@ -1064,7 +1092,7 @@ export default function AdminDashboard() {
               alignItems: "center"
             }}>
               <button
-                onClick={() => handleDelete(selectedSub.id)}
+                onClick={() => openDeleteModal(selectedSub)}
                 style={{
                   background: "transparent",
                   border: "none",
@@ -1100,6 +1128,241 @@ export default function AdminDashboard() {
                 }}
               >
                 Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ─────────────────────────────────────────────────────────────
+          TYPE "delete" CONFIRMATION MODAL
+         ───────────────────────────────────────────────────────────── */}
+      {deleteModalSub && (
+        <div
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(15, 23, 42, 0.55)",
+            backdropFilter: "blur(5px)",
+            WebkitBackdropFilter: "blur(5px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "16px",
+            zIndex: 1100,
+            fontFamily: "'Poppins', sans-serif",
+          }}
+          onClick={closeDeleteModal}
+        >
+          <div
+            style={{
+              background: "#FFFFFF",
+              borderRadius: "16px",
+              border: "1px solid #E5E7EB",
+              boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
+              width: "100%",
+              maxWidth: "460px",
+              overflow: "hidden",
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header */}
+            <div
+              style={{
+                padding: "20px 22px 14px",
+                display: "flex",
+                alignItems: "flex-start",
+                gap: "14px",
+              }}
+            >
+              <div
+                style={{
+                  width: "44px",
+                  height: "44px",
+                  borderRadius: "12px",
+                  background: "#FEF2F2",
+                  border: "1px solid #FEE2E2",
+                  color: "#DC2626",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flexShrink: 0,
+                }}
+              >
+                <Trash2 size={22} />
+              </div>
+              <div style={{ flex: 1 }}>
+                <h3
+                  style={{
+                    fontSize: "17px",
+                    fontWeight: 700,
+                    color: "#111827",
+                    margin: 0,
+                  }}
+                >
+                  Delete Lead Record
+                </h3>
+                <p style={{ fontSize: "12.5px", color: "#6B7280", margin: "4px 0 0", lineHeight: 1.45 }}>
+                  This action cannot be undone. All data for this lead will be permanently deleted from Firebase.
+                </p>
+              </div>
+              <button
+                onClick={closeDeleteModal}
+                style={{
+                  background: "transparent",
+                  border: "none",
+                  color: "#9CA3AF",
+                  cursor: "pointer",
+                  padding: "4px",
+                  display: "flex",
+                }}
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            {/* Content & Lead preview */}
+            <div style={{ padding: "0 22px 18px", display: "flex", flexDirection: "column", gap: "14px" }}>
+              <div
+                style={{
+                  padding: "10px 14px",
+                  background: "#F9FAFB",
+                  borderRadius: "10px",
+                  border: "1px solid #E5E7EB",
+                  fontSize: "12.5px",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "3px",
+                }}
+              >
+                <div style={{ color: "#111827", fontWeight: 700, fontSize: "13.5px" }}>
+                  {deleteModalSub.name}
+                </div>
+                <div style={{ color: "#4B5563" }}>
+                  Hospital: <strong>{deleteModalSub.hospitalName || "Not specified"}</strong>
+                </div>
+                {deleteModalSub.phone && (
+                  <div style={{ color: "#6B7280" }}>Contact: {deleteModalSub.phone}</div>
+                )}
+                {deleteModalSub.meetingSlot && (
+                  <div style={{ color: "#2563EB", fontWeight: 600 }}>
+                    Booked Slot: {deleteModalSub.meetingSlot}
+                  </div>
+                )}
+              </div>
+
+              {deleteError && (
+                <div
+                  style={{
+                    padding: "8px 12px",
+                    background: "#FEF2F2",
+                    border: "1px solid #FCA5A5",
+                    borderRadius: "8px",
+                    color: "#991B1B",
+                    fontSize: "12px",
+                    fontWeight: 500,
+                  }}
+                >
+                  {deleteError}
+                </div>
+              )}
+
+              <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+                <label style={{ fontSize: "12.5px", fontWeight: 600, color: "#374151" }}>
+                  To confirm deletion, type <span style={{ color: "#DC2626", fontWeight: 700, background: "#FEE2E2", padding: "2px 6px", borderRadius: "4px" }}>delete</span> in the box below:
+                </label>
+                <input
+                  type="text"
+                  autoFocus
+                  placeholder='Type "delete" to confirm'
+                  value={deleteInputText}
+                  onChange={(e) => setDeleteInputText(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && deleteInputText.trim().toLowerCase() === "delete") {
+                      confirmDelete();
+                    }
+                  }}
+                  style={{
+                    width: "100%",
+                    padding: "10px 14px",
+                    fontSize: "13.5px",
+                    border: deleteInputText.trim().toLowerCase() === "delete" ? "1.5px solid #DC2626" : "1.5px solid #E5E7EB",
+                    borderRadius: "8px",
+                    outline: "none",
+                    color: "#111827",
+                    background: "#FFFFFF",
+                    boxSizing: "border-box",
+                    fontFamily: "'Poppins', sans-serif",
+                    transition: "border-color 0.2s",
+                  }}
+                />
+              </div>
+            </div>
+
+            {/* Footer Buttons */}
+            <div
+              style={{
+                padding: "12px 22px",
+                background: "#F9FAFB",
+                borderTop: "1px solid #E5E7EB",
+                display: "flex",
+                justifyContent: "flex-end",
+                gap: "10px",
+              }}
+            >
+              <button
+                type="button"
+                onClick={closeDeleteModal}
+                style={{
+                  padding: "9px 16px",
+                  borderRadius: "8px",
+                  border: "1px solid #E5E7EB",
+                  background: "#FFFFFF",
+                  color: "#4B5563",
+                  fontSize: "13px",
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  fontFamily: "'Poppins', sans-serif",
+                }}
+              >
+                Cancel
+              </button>
+
+              <button
+                type="button"
+                disabled={deleteInputText.trim().toLowerCase() !== "delete" || isDeleting}
+                onClick={confirmDelete}
+                style={{
+                  padding: "9px 18px",
+                  borderRadius: "8px",
+                  border: "none",
+                  background:
+                    deleteInputText.trim().toLowerCase() === "delete"
+                      ? "#DC2626"
+                      : "#F3F4F6",
+                  color:
+                    deleteInputText.trim().toLowerCase() === "delete"
+                      ? "#FFFFFF"
+                      : "#9CA3AF",
+                  fontSize: "13px",
+                  fontWeight: 700,
+                  cursor:
+                    deleteInputText.trim().toLowerCase() === "delete"
+                      ? "pointer"
+                      : "not-allowed",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  boxShadow:
+                    deleteInputText.trim().toLowerCase() === "delete"
+                      ? "0 2px 8px rgba(220, 38, 38, 0.35)"
+                      : "none",
+                  transition: "all 0.2s ease",
+                  fontFamily: "'Poppins', sans-serif",
+                }}
+              >
+                <Trash2 size={14} />
+                <span>{isDeleting ? "Deleting..." : "Delete Lead"}</span>
               </button>
             </div>
           </div>

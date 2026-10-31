@@ -98,8 +98,9 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
   };
 
   const handleWhatsAppClick = () => {
+    const supportPhone = (process.env.NEXT_PUBLIC_SUPPORT_PHONE || "").replace(/\D/g, "");
     const message = encodeURIComponent("Hi, I'm interested in the Infiplus Hospital Management Software. Can you please share more details?");
-    window.open(`https://wa.me/919958399157?text=${message}`, "_blank");
+    window.open(`https://wa.me/${supportPhone}?text=${message}`, "_blank");
   };
 
   return (

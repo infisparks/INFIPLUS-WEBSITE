@@ -78,7 +78,7 @@ export default function LoginPage() {
       alignItems: "center",
       justifyContent: "center",
       background: "#F5F6F8",
-      fontFamily: "Inter, sans-serif",
+      fontFamily: "'Poppins', sans-serif",
       padding: "16px",
       boxSizing: "border-box"
     }}>

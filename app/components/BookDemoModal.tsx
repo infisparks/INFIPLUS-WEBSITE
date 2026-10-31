@@ -187,17 +187,21 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
     }
   };
 
+  // Environment-driven meeting and support configurations
+  const meetingUrl = process.env.NEXT_PUBLIC_GOOGLE_MEET_URL || "";
+  const supportPhone = process.env.NEXT_PUBLIC_SUPPORT_PHONE || "";
+
   // Google Calendar Link generator
   const googleCalendarUrl = useMemo(() => {
     const title = encodeURIComponent(
       `Infiplus Hospital Management ERP Demo - ${hospitalName || "Hospital"}`
     );
     const details = encodeURIComponent(
-      `Personalized 1-on-1 Infiplus Hospital Management ERP Software Demo for ${name} (${hospitalName}).\n\nModules covered:\n- Unified OPD & IPD\n- Digital Records & EMR\n- Fast Billing & TPA\n- Real-time Reports & WhatsApp Patient Integration\n\nSpecialist Contact: +91 99583 99157\nWebsite: https://infiplus.in`
+      `Personalized 1-on-1 Infiplus Hospital Management ERP Software Demo for ${name} (${hospitalName}).${meetingUrl ? `\n\nMeeting Link: ${meetingUrl}` : ""}\n\nModules covered:\n- Unified OPD & IPD\n- Digital Records & EMR\n- Fast Billing & TPA\n- Real-time Reports & WhatsApp Patient Integration\n\n${supportPhone ? `Specialist Contact: +${supportPhone}\n` : ""}Website: https://infiplus.in`
     );
-    const location = encodeURIComponent("Google Meet (Link sent to WhatsApp)");
+    const location = encodeURIComponent(meetingUrl || "Google Meet");
     return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}&location=${location}`;
-  }, [name, hospitalName]);
+  }, [name, hospitalName, meetingUrl, supportPhone]);
 
   return (
     <AnimatePresence>
@@ -947,6 +951,20 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
                       <span style={{ color: "#64748B", fontWeight: 500 }}>Hospital:</span>
                       <strong style={{ color: "#0F172A" }}>{hospitalName}</strong>
                     </div>
+                    {meetingUrl && (
+                      <div style={{ display: "flex", justifyContent: "space-between", fontSize: "12px", alignItems: "center" }}>
+                        <span style={{ color: "#64748B", fontWeight: 500 }}>Meeting URL:</span>
+                        <a
+                          href={meetingUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={{ color: "#4F46E5", fontWeight: 700, textDecoration: "underline", display: "inline-flex", alignItems: "center", gap: "3px" }}
+                        >
+                          <span>{meetingUrl.replace(/^https?:\/\//, "")}</span>
+                          <ExternalLink size={11} />
+                        </a>
+                      </div>
+                    )}
                     <div style={{ display: "flex", justifyContent: "space-between", fontSize: "12px" }}>
                       <span style={{ color: "#64748B", fontWeight: 500 }}>Mode:</span>
                       <strong style={{ color: "#2563EB" }}>Google Meet Screen-Share</strong>
@@ -971,14 +989,45 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
                       <MessageCircle size={13} color="#059669" />
                       <span>
                         {whatsappSent === false
-                          ? "Booking saved! Specialist will connect shortly."
-                          : `Confirmation & details sent to WhatsApp (${phone})`}
+                          ? "Booking saved! Meeting URL sent to WhatsApp."
+                          : `Meeting link sent to WhatsApp (${phone})`}
                       </span>
                     </div>
                   </div>
 
                   {/* Quick Action Buttons */}
                   <div style={{ display: "flex", flexDirection: "column", gap: "8px", width: "100%", marginTop: "4px" }}>
+                    {/* Join Google Meet Directly */}
+                    {meetingUrl && (
+                      <a
+                        href={meetingUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          width: "100%",
+                          padding: "11px 16px",
+                          borderRadius: "10px",
+                          border: "1.5px solid #C7D2FE",
+                          background: "#EEF2FF",
+                          color: "#4338CA",
+                          fontWeight: 700,
+                          fontSize: "13px",
+                          cursor: "pointer",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          gap: "8px",
+                          transition: "all 0.2s ease",
+                          textDecoration: "none",
+                        }}
+                        className="modal-secondary-btn"
+                      >
+                        <Video size={15} color="#4F46E5" />
+                        <span>Open Google Meet Room</span>
+                        <ExternalLink size={12} color="#6366F1" />
+                      </a>
+                    )}
+
                     {/* Add to Google Calendar */}
                     <a
                       href={googleCalendarUrl}
@@ -1009,32 +1058,34 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
                     </a>
 
                     {/* Chat directly on WhatsApp */}
-                    <a
-                      href={`https://wa.me/919958399157?text=${encodeURIComponent(`Hi, I just booked a demo slot for ${hospitalName} on ${selectedDay.label} at ${selectedTime}. Please confirm.`)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{
-                        width: "100%",
-                        padding: "11px 16px",
-                        borderRadius: "10px",
-                        border: "1.5px solid #A7F3D0",
-                        background: "#ECFDF5",
-                        color: "#065F46",
-                        fontWeight: 600,
-                        fontSize: "13px",
-                        cursor: "pointer",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        gap: "8px",
-                        transition: "all 0.2s ease",
-                        textDecoration: "none",
-                      }}
-                      className="modal-secondary-btn"
-                    >
-                      <MessageCircle size={14} color="#10B981" />
-                      <span>Connect with Specialist on WhatsApp</span>
-                    </a>
+                    {supportPhone && (
+                      <a
+                        href={`https://wa.me/${supportPhone.replace(/\D/g, "")}?text=${encodeURIComponent(`Hi, I just booked a demo slot for ${hospitalName} on ${selectedDay.label} at ${selectedTime}. Please confirm.`)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          width: "100%",
+                          padding: "11px 16px",
+                          borderRadius: "10px",
+                          border: "1.5px solid #A7F3D0",
+                          background: "#ECFDF5",
+                          color: "#065F46",
+                          fontWeight: 600,
+                          fontSize: "13px",
+                          cursor: "pointer",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          gap: "8px",
+                          transition: "all 0.2s ease",
+                          textDecoration: "none",
+                        }}
+                        className="modal-secondary-btn"
+                      >
+                        <MessageCircle size={14} color="#10B981" />
+                        <span>Connect with Specialist on WhatsApp</span>
+                      </a>
+                    )}
 
                     {/* Close Done */}
                     <button

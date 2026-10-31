@@ -42,7 +42,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         alignItems: "center",
         justifyContent: "center",
         background: "#F5F6F8",
-        fontFamily: "Inter, sans-serif"
+        fontFamily: "'Poppins', sans-serif"
       }}>
         <div style={{ textAlign: "center" }}>
           <div style={{
@@ -60,7 +60,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               100% { transform: rotate(360deg); }
             }
           `}</style>
-          <p style={{ color: "#6B7280", fontSize: "14px" }}>Loading administration...</p>
+          <p style={{ color: "#6B7280", fontSize: "14px", fontFamily: "'Poppins', sans-serif" }}>Loading administration...</p>
         </div>
       </div>
     );
@@ -91,21 +91,27 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   };
 
   return (
-    <div style={{ display: "flex", height: "100vh", background: "#F5F6F8", overflow: "hidden", fontFamily: "Inter, sans-serif", position: "relative" }}>
-      {/* Mobile Backdrop */}
-      {sidebarOpen && (
-        <div 
-          className="sidebar-backdrop"
-          onClick={() => setSidebarOpen(false)}
-          style={{
-            display: "none",
-            position: "fixed",
-            inset: 0,
-            background: "rgba(15, 23, 42, 0.4)",
-            zIndex: 95
-          }}
-        />
-      )}
+    <>
+      {/* Poppins Google Font */}
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+      <div className="admin-root-container" style={{ display: "flex", height: "100vh", background: "#F5F6F8", overflow: "hidden", fontFamily: "'Poppins', sans-serif", position: "relative" }}>
+        {/* Mobile Backdrop */}
+        {sidebarOpen && (
+          <div 
+            className="sidebar-backdrop"
+            onClick={() => setSidebarOpen(false)}
+            style={{
+              display: "none",
+              position: "fixed",
+              inset: 0,
+              background: "rgba(15, 23, 42, 0.4)",
+              zIndex: 95
+            }}
+          />
+        )}
 
       {/* Sidebar */}
       <aside className={`admin-sidebar ${sidebarOpen ? "open" : "closed"}`} style={{
@@ -254,7 +260,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             display: flex !important;
           }
         }
+        .admin-root-container,
+        .admin-root-container * {
+          font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+        }
       `}</style>
-    </div>
+      </div>
+    </>
   );
 }
