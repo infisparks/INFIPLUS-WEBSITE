@@ -154,7 +154,23 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
                 Eliminate paper registers with one integrated HMS — unified OPD/IPD, digital records &amp; fast billing.
               </p>
 
-              {/* 4 Feature Pills */}
+              {/* ── VIDEO IN THE CENTER (with running glow in full border) ── */}
+              <div style={{ display: "flex", justifyContent: "center", width: "100%", margin: "0 auto 16px" }}>
+                <div id="hero-system-video" className="hero-video-wrapper">
+                  <iframe
+                    key="infiplus-yt-player"
+                    src="https://www.youtube-nocookie.com/embed/eEO-k5gQeJ8?rel=0&modestbranding=1&enablejsapi=1"
+                    title="Infiplus Hospital Management ERP Software Demo"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    allowFullScreen
+                  />
+                  {/* Full perimeter running glow beam */}
+                  <div className="running-border-beam video-beam" />
+                </div>
+              </div>
+
+              {/* 4 Feature Pills (Adjusted below video with decreased height) */}
               <div className="hero-pills-row">
                 <div className="hero-feature-pill">
                   <span className="pill-dot" />
@@ -174,23 +190,7 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
                 </div>
               </div>
 
-              {/* ── VIDEO IN THE CENTER (with running glow in full border) ── */}
-              <div style={{ display: "flex", justifyContent: "center", width: "100%", margin: "0 auto 22px" }}>
-                <div id="hero-system-video" className="hero-video-wrapper">
-                  <iframe
-                    key="infiplus-yt-player"
-                    src="https://www.youtube-nocookie.com/embed/eEO-k5gQeJ8?rel=0&modestbranding=1&enablejsapi=1"
-                    title="Infiplus Hospital Management ERP Software Demo"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerPolicy="no-referrer-when-downgrade"
-                    allowFullScreen
-                  />
-                  {/* Full perimeter running glow beam */}
-                  <div className="running-border-beam video-beam" />
-                </div>
-              </div>
-
-              {/* ── BUTTON DOWN (Below the Video) ── */}
+              {/* ── BUTTON DOWN (Below the Video & Pills) ── */}
               <div className="hero-actions-container">
                 <motion.button
                   type="button"

@@ -485,13 +485,13 @@ p  { font-size: clamp(0.8rem, 1.5vw, 0.9rem); line-height: 1.65; }
 }
 
 .hero-main-heading {
-  font-size: clamp(34px, 3.4vw, 44px);
-  line-height: 1.18;
+  font-size: clamp(38px, 4.4vw, 54px);
+  line-height: 1.14;
   font-weight: 900;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.03em;
   color: #FFFFFF;
   text-align: center;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 }
 
 .hero-heading-lead {
@@ -522,8 +522,8 @@ p  { font-size: clamp(0.8rem, 1.5vw, 0.9rem); line-height: 1.65; }
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  margin: 0 auto 24px;
+  gap: 8px;
+  margin: 0 auto 18px;
   max-width: 640px;
   width: 100%;
 }
@@ -531,13 +531,15 @@ p  { font-size: clamp(0.8rem, 1.5vw, 0.9rem); line-height: 1.65; }
 .hero-feature-pill {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  padding: 7px 15px;
+  gap: 6px;
+  padding: 4px 12px;
+  height: 28px;
+  min-height: 28px;
   background: rgba(255, 255, 255, 0.07);
   border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 9999px;
   color: #F8FAFC;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.01em;
   backdrop-filter: blur(10px);
@@ -553,8 +555,8 @@ p  { font-size: clamp(0.8rem, 1.5vw, 0.9rem); line-height: 1.65; }
 }
 
 .hero-feature-pill .pill-dot {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
   background: #38BDF8;
   box-shadow: 0 0 8px rgba(56, 189, 248, 0.8);
@@ -755,36 +757,43 @@ p  { font-size: clamp(0.8rem, 1.5vw, 0.9rem); line-height: 1.65; }
   }
 
   .hero-main-heading {
-    font-size: clamp(21px, 5.8vw, 27px) !important;
-    line-height: 1.25 !important;
-    margin-bottom: 12px !important;
+    font-size: clamp(26px, 7.2vw, 34px) !important;
+    line-height: 1.2 !important;
+    margin-bottom: 14px !important;
     padding: 0 4px !important;
   }
 
   .hero-main-desc {
     font-size: 14px !important;
     line-height: 1.55 !important;
-    margin-bottom: 18px !important;
+    margin-bottom: 16px !important;
     padding: 0 4px !important;
   }
 
-  /* 4 Pillars in a balanced 2x2 grid on mobile */
+  /* 4 Pillars in a balanced 2x2 grid on mobile (decreased card height) */
   .hero-pills-row {
     display: grid !important;
     grid-template-columns: repeat(2, 1fr) !important;
-    gap: 8px !important;
-    max-width: 360px !important;
-    margin: 0 auto 20px !important;
+    gap: 7px !important;
+    max-width: 330px !important;
+    margin: 0 auto 16px !important;
     width: 100% !important;
     padding: 0 4px !important;
   }
 
   .hero-feature-pill {
-    padding: 8px 8px !important;
-    font-size: 12px !important;
+    padding: 3px 8px !important;
+    height: 28px !important;
+    min-height: 28px !important;
+    font-size: 11px !important;
     justify-content: center !important;
     text-align: center !important;
     width: 100% !important;
+  }
+
+  .hero-feature-pill .pill-dot {
+    width: 5px !important;
+    height: 5px !important;
   }
 
   .hero-actions-container {
