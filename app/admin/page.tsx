@@ -18,6 +18,10 @@ interface Submission {
   phone?: string;
   message?: string;
   type: string;
+  status?: string;
+  meetingDate?: string;
+  meetingTime?: string;
+  meetingSlot?: string;
   timestamp: number;
   dateString: string;
 }
@@ -73,9 +77,11 @@ export default function AdminDashboard() {
     const headers = [
       "Date", 
       "Source Form", 
+      "Status",
       "Lead Name", 
       "Hospital / Clinic Name", 
       "Phone / WhatsApp", 
+      "Meeting Slot",
       "Email", 
       "Message / Query", 
       "Beds (Legacy)", 
@@ -85,9 +91,11 @@ export default function AdminDashboard() {
     const rows = filteredSubmissions.map(sub => [
       sub.dateString || new Date(sub.timestamp).toLocaleString(),
       sub.type,
+      sub.status || "Submitted",
       sub.name,
       sub.hospitalName || "",
       sub.phone || "",
+      sub.meetingSlot || (sub.meetingDate ? `${sub.meetingDate} ${sub.meetingTime || ''}` : "Not Scheduled"),
       sub.email || "",
       (sub.message || "").replace(/,/g, " ").replace(/\n/g, " "),
       sub.beds || "",
@@ -979,6 +987,22 @@ export default function AdminDashboard() {
                           {selectedSub.dateString || new Date(selectedSub.timestamp).toLocaleString()}
                         </span>
                       </div>
+
+                      {(selectedSub.meetingSlot || selectedSub.meetingDate) && (
+                        <div style={{ display: "flex", flexDirection: "column", gap: "4px", background: "#EFF6FF", padding: "8px 10px", borderRadius: "8px", border: "1px solid #BFDBFE" }}>
+                          <span style={{ fontSize: "11px", color: "#1D4ED8", fontWeight: 700, textTransform: "uppercase" }}>📅 Booked Demo Slot</span>
+                          <span style={{ fontSize: "13.5px", color: "#1E3A8A", fontWeight: 700 }}>
+                            {selectedSub.meetingSlot || `${selectedSub.meetingDate} at ${selectedSub.meetingTime || ""}`}
+                          </span>
+                        </div>
+                      )}
+
+                      {selectedSub.status && (
+                        <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+                          <span style={{ fontSize: "11px", color: "#6B7280", fontWeight: 600, textTransform: "uppercase" }}>Lead Status</span>
+                          <span style={{ fontSize: "13px", color: "#059669", fontWeight: 600 }}>{selectedSub.status}</span>
+                        </div>
+                      )}
 
                       {selectedSub.email && (
                         <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
