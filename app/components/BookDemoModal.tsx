@@ -233,10 +233,10 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
                   alignItems: "center",
                   gap: "6px",
                   padding: "4px 12px",
-                  background: "rgba(59, 130, 246, 0.15)",
-                  border: "1px solid rgba(59, 130, 246, 0.3)",
+                  background: "rgba(99, 102, 241, 0.18)",
+                  border: "1px solid rgba(129, 140, 248, 0.35)",
                   borderRadius: "9999px",
-                  color: "#60A5FA",
+                  color: "#A5B4FC",
                   fontSize: "10.5px",
                   fontWeight: 700,
                   letterSpacing: "0.03em",
@@ -245,7 +245,7 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
                   alignSelf: "flex-start",
                 }}
               >
-                <Sparkles size={13} color="#60A5FA" />
+                <Sparkles size={13} color="#A5B4FC" />
                 <span>Live Hospital ERP Demo</span>
               </div>
 
@@ -284,7 +284,7 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
                   overflow: "hidden",
                   border: "1px solid rgba(255, 255, 255, 0.15)",
                   boxShadow:
-                    "0 15px 35px -5px rgba(0, 0, 0, 0.5), 0 0 20px rgba(37, 99, 235, 0.2)",
+                    "0 15px 35px -5px rgba(0, 0, 0, 0.5), 0 0 20px rgba(99, 102, 241, 0.25)",
                   marginBottom: "16px",
                 }}
               >
@@ -301,7 +301,7 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
               <div style={{ display: "flex", flexDirection: "column", gap: "9px" }}>
                 {[
                   {
-                    icon: <Zap size={14} color="#60A5FA" />,
+                    icon: <Zap size={14} color="#818CF8" />,
                     text: "Unified OPD, IPD, Lab & Pharmacy",
                   },
                   {
@@ -357,20 +357,117 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
               </button>
 
               {/* Progress Stepper Bar */}
-              <div className="modal-stepper-header">
-                <div className={`step-item ${step >= 1 ? "active" : ""}`}>
-                  <div className="step-circle">{step > 1 ? <Check size={12} strokeWidth={3} /> : "1"}</div>
-                  <span className="step-label">Your Details</span>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  marginBottom: "14px",
+                  paddingBottom: "12px",
+                  borderBottom: "1px solid #F1F5F9",
+                  width: "100%",
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                  <div
+                    style={{
+                      width: "24px",
+                      height: "24px",
+                      borderRadius: "50%",
+                      background: step >= 1 ? "linear-gradient(135deg, #6366F1 0%, #4F46E5 100%)" : "#F1F5F9",
+                      color: step >= 1 ? "#FFFFFF" : "#64748B",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: "11px",
+                      fontWeight: 700,
+                    }}
+                  >
+                    {step > 1 ? <Check size={12} strokeWidth={3} /> : "1"}
+                  </div>
+                  <span
+                    style={{
+                      fontSize: "12px",
+                      fontWeight: 600,
+                      color: step >= 1 ? "#4F46E5" : "#94A3B8",
+                    }}
+                  >
+                    Your Details
+                  </span>
                 </div>
-                <div className={`step-line ${step >= 2 ? "active" : ""}`} />
-                <div className={`step-item ${step >= 2 ? "active" : ""}`}>
-                  <div className="step-circle">{step > 2 ? <Check size={12} strokeWidth={3} /> : "2"}</div>
-                  <span className="step-label">Pick Slot</span>
+
+                <div
+                  style={{
+                    flex: 1,
+                    height: "2px",
+                    background: step >= 2 ? "#4F46E5" : "#E2E8F0",
+                    margin: "0 8px",
+                  }}
+                />
+
+                <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                  <div
+                    style={{
+                      width: "24px",
+                      height: "24px",
+                      borderRadius: "50%",
+                      background: step >= 2 ? "linear-gradient(135deg, #6366F1 0%, #4F46E5 100%)" : "#F1F5F9",
+                      color: step >= 2 ? "#FFFFFF" : "#64748B",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: "11px",
+                      fontWeight: 700,
+                    }}
+                  >
+                    {step > 2 ? <Check size={12} strokeWidth={3} /> : "2"}
+                  </div>
+                  <span
+                    style={{
+                      fontSize: "12px",
+                      fontWeight: 600,
+                      color: step >= 2 ? "#4F46E5" : "#94A3B8",
+                    }}
+                  >
+                    Pick Slot
+                  </span>
                 </div>
-                <div className={`step-line ${step >= 3 ? "active" : ""}`} />
-                <div className={`step-item ${step === 3 ? "active" : ""}`}>
-                  <div className="step-circle">{step === 3 ? <Check size={12} strokeWidth={3} /> : "3"}</div>
-                  <span className="step-label">Confirmed</span>
+
+                <div
+                  style={{
+                    flex: 1,
+                    height: "2px",
+                    background: step >= 3 ? "#4F46E5" : "#E2E8F0",
+                    margin: "0 8px",
+                  }}
+                />
+
+                <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                  <div
+                    style={{
+                      width: "24px",
+                      height: "24px",
+                      borderRadius: "50%",
+                      background: step === 3 ? "linear-gradient(135deg, #6366F1 0%, #4F46E5 100%)" : "#F1F5F9",
+                      color: step === 3 ? "#FFFFFF" : "#64748B",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: "11px",
+                      fontWeight: 700,
+                    }}
+                  >
+                    {step === 3 ? <Check size={12} strokeWidth={3} /> : "3"}
+                  </div>
+                  <span
+                    style={{
+                      fontSize: "12px",
+                      fontWeight: 600,
+                      color: step === 3 ? "#4F46E5" : "#94A3B8",
+                    }}
+                  >
+                    Confirmed
+                  </span>
                 </div>
               </div>
 
@@ -420,15 +517,25 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
                     <label style={{ fontSize: "12px", fontWeight: 600, color: "#374151" }}>
                       Full Name *
                     </label>
-                    <div className="modal-input-wrapper">
-                      <User size={15} className="input-icon" />
+                    <div style={{ position: "relative", display: "flex", alignItems: "center", width: "100%" }}>
+                      <User size={15} style={{ position: "absolute", left: "12px", color: "#94A3B8", pointerEvents: "none" }} />
                       <input
                         type="text"
                         placeholder="Dr. / Mr. / Ms. Name"
                         required
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        className="modal-text-input"
+                        style={{
+                          width: "100%",
+                          padding: "11px 14px 11px 38px",
+                          fontSize: "13.5px",
+                          border: "1.5px solid #E2E8F0",
+                          borderRadius: "10px",
+                          outline: "none",
+                          color: "#111827",
+                          background: "#F8FAFC",
+                          boxSizing: "border-box",
+                        }}
                       />
                     </div>
                   </div>
@@ -438,15 +545,25 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
                     <label style={{ fontSize: "12px", fontWeight: 600, color: "#374151" }}>
                       Hospital / Clinic Name *
                     </label>
-                    <div className="modal-input-wrapper">
-                      <Building2 size={15} className="input-icon" />
+                    <div style={{ position: "relative", display: "flex", alignItems: "center", width: "100%" }}>
+                      <Building2 size={15} style={{ position: "absolute", left: "12px", color: "#94A3B8", pointerEvents: "none" }} />
                       <input
                         type="text"
                         placeholder="e.g. City Care Hospital, Mumbai"
                         required
                         value={hospitalName}
                         onChange={(e) => setHospitalName(e.target.value)}
-                        className="modal-text-input"
+                        style={{
+                          width: "100%",
+                          padding: "11px 14px 11px 38px",
+                          fontSize: "13.5px",
+                          border: "1.5px solid #E2E8F0",
+                          borderRadius: "10px",
+                          outline: "none",
+                          color: "#111827",
+                          background: "#F8FAFC",
+                          boxSizing: "border-box",
+                        }}
                       />
                     </div>
                   </div>
@@ -456,15 +573,25 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
                     <label style={{ fontSize: "12px", fontWeight: 600, color: "#374151" }}>
                       Contact Number (WhatsApp) *
                     </label>
-                    <div className="modal-input-wrapper">
-                      <Phone size={15} className="input-icon" />
+                    <div style={{ position: "relative", display: "flex", alignItems: "center", width: "100%" }}>
+                      <Phone size={15} style={{ position: "absolute", left: "12px", color: "#94A3B8", pointerEvents: "none" }} />
                       <input
                         type="tel"
                         placeholder="+91 98765 43210"
                         required
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
-                        className="modal-text-input"
+                        style={{
+                          width: "100%",
+                          padding: "11px 14px 11px 38px",
+                          fontSize: "13.5px",
+                          border: "1.5px solid #E2E8F0",
+                          borderRadius: "10px",
+                          outline: "none",
+                          color: "#111827",
+                          background: "#F8FAFC",
+                          boxSizing: "border-box",
+                        }}
                       />
                     </div>
                   </div>
@@ -490,16 +617,37 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
                     <span>✨</span> Personalized 1-on-1 walkthrough — tailored to your workflow
                   </div>
 
-                  {/* Continue Button */}
+                  {/* Continue Button with Rich Solid Purple/Indigo Color */}
                   <motion.button
                     type="submit"
                     disabled={isSubmitting}
-                    whileHover={{ scale: 1.01 }}
-                    whileTap={{ scale: 0.98 }}
+                    whileHover={{ scale: 1.015 }}
+                    whileTap={{ scale: 0.985 }}
+                    style={{
+                      width: "100%",
+                      padding: "13px 20px",
+                      borderRadius: "10px",
+                      border: "none",
+                      background: "linear-gradient(135deg, #6366F1 0%, #4F46E5 100%)",
+                      color: "#FFFFFF",
+                      fontWeight: 700,
+                      fontSize: "14.5px",
+                      letterSpacing: "0.01em",
+                      cursor: isSubmitting ? "not-allowed" : "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "8px",
+                      boxShadow: "0 6px 18px rgba(79, 70, 229, 0.38)",
+                      transition: "all 0.2s ease",
+                      marginTop: "4px",
+                    }}
                     className="modal-primary-btn"
                   >
-                    <span>{isSubmitting ? "Saving Details..." : "Continue to Select Slot"}</span>
-                    <ArrowRight size={15} strokeWidth={2.5} />
+                    <span style={{ color: "#FFFFFF", fontWeight: 700 }}>
+                      {isSubmitting ? "Saving Details..." : "Continue to Select Slot"}
+                    </span>
+                    <ArrowRight size={16} strokeWidth={2.5} color="#FFFFFF" />
                   </motion.button>
 
                   {/* Guarantee Note */}
@@ -530,7 +678,19 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
                     <button
                       type="button"
                       onClick={() => setStep(1)}
-                      className="modal-back-btn"
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: "4px",
+                        padding: "5px 8px",
+                        borderRadius: "8px",
+                        border: "1px solid #E2E8F0",
+                        background: "#F8FAFC",
+                        fontSize: "11.5px",
+                        fontWeight: 600,
+                        color: "#475569",
+                        cursor: "pointer",
+                      }}
                       title="Back to contact info"
                     >
                       <ArrowLeft size={14} />
@@ -582,11 +742,31 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
                             key={d.dateStr}
                             type="button"
                             onClick={() => setSelectedDay(d)}
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              padding: "8px 4px",
+                              borderRadius: "10px",
+                              border: isSelected ? "1.5px solid #4F46E5" : "1.5px solid #E2E8F0",
+                              background: isSelected ? "linear-gradient(135deg, #6366F1 0%, #4F46E5 100%)" : "#F8FAFC",
+                              color: isSelected ? "#FFFFFF" : "#0F172A",
+                              cursor: "pointer",
+                              boxShadow: isSelected ? "0 4px 12px rgba(79, 70, 229, 0.28)" : "none",
+                              transition: "all 0.2s ease",
+                            }}
                             className={`date-chip ${isSelected ? "selected" : ""}`}
                           >
-                            <span className="date-chip-day">{d.dayName}</span>
-                            <span className="date-chip-num">{d.dateNum}</span>
-                            <span className="date-chip-month">{d.monthName}</span>
+                            <span style={{ fontSize: "10px", fontWeight: 600, color: isSelected ? "rgba(255, 255, 255, 0.9)" : "#64748B", textTransform: "uppercase" }}>
+                              {d.dayName}
+                            </span>
+                            <span style={{ fontSize: "15px", fontWeight: 800, color: isSelected ? "#FFFFFF" : "#0F172A", lineHeight: 1.1, margin: "2px 0" }}>
+                              {d.dateNum}
+                            </span>
+                            <span style={{ fontSize: "9.5px", fontWeight: 600, color: isSelected ? "rgba(255, 255, 255, 0.9)" : "#64748B" }}>
+                              {d.monthName}
+                            </span>
                           </button>
                         );
                       })}
@@ -598,7 +778,7 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
                     <label style={{ fontSize: "12px", fontWeight: 700, color: "#374151" }}>
                       Select Time Slot (IST)
                     </label>
-                    <div className="time-slots-container">
+                    <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
                       {TIME_SLOTS.map((group) => (
                         <div key={group.group} style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
                           <span style={{ fontSize: "10.5px", fontWeight: 700, color: "#9CA3AF", textTransform: "uppercase" }}>
@@ -612,9 +792,25 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
                                   key={slot}
                                   type="button"
                                   onClick={() => setSelectedTime(slot)}
+                                  style={{
+                                    display: "inline-flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    gap: "5px",
+                                    padding: "8px 8px",
+                                    borderRadius: "8px",
+                                    border: isSelected ? "1.5px solid #4F46E5" : "1.5px solid #E2E8F0",
+                                    background: isSelected ? "#4F46E5" : "#F8FAFC",
+                                    color: isSelected ? "#FFFFFF" : "#334155",
+                                    fontSize: "12px",
+                                    fontWeight: 600,
+                                    cursor: "pointer",
+                                    boxShadow: isSelected ? "0 2px 8px rgba(79, 70, 229, 0.25)" : "none",
+                                    transition: "all 0.2s ease",
+                                  }}
                                   className={`time-chip ${isSelected ? "selected" : ""}`}
                                 >
-                                  <Clock size={11} />
+                                  <Clock size={11} color={isSelected ? "#FFFFFF" : "#64748B"} />
                                   <span>{slot}</span>
                                 </button>
                               );
@@ -626,9 +822,27 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
                   </div>
 
                   {/* Selected Slot Summary Card */}
-                  <div className="modal-slot-summary-box">
+                  <div
+                    style={{
+                      background: "#EFF6FF",
+                      border: "1px solid #BFDBFE",
+                      borderRadius: "10px",
+                      padding: "9px 12px",
+                    }}
+                  >
                     <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                      <div className="summary-icon-box">
+                      <div
+                        style={{
+                          width: "28px",
+                          height: "28px",
+                          borderRadius: "7px",
+                          background: "#DBEAFE",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          flexShrink: 0,
+                        }}
+                      >
                         <Video size={15} color="#2563EB" />
                       </div>
                       <div>
@@ -642,17 +856,38 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
                     </div>
                   </div>
 
-                  {/* Confirm Button */}
+                  {/* Confirm Button with Rich Solid Purple/Indigo Color */}
                   <motion.button
                     type="button"
                     disabled={isBookingSlot}
                     onClick={handleConfirmMeeting}
-                    whileHover={{ scale: 1.01 }}
-                    whileTap={{ scale: 0.98 }}
+                    whileHover={{ scale: 1.015 }}
+                    whileTap={{ scale: 0.985 }}
+                    style={{
+                      width: "100%",
+                      padding: "13px 20px",
+                      borderRadius: "10px",
+                      border: "none",
+                      background: "linear-gradient(135deg, #6366F1 0%, #4F46E5 100%)",
+                      color: "#FFFFFF",
+                      fontWeight: 700,
+                      fontSize: "14.5px",
+                      letterSpacing: "0.01em",
+                      cursor: isBookingSlot ? "not-allowed" : "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "8px",
+                      boxShadow: "0 6px 18px rgba(79, 70, 229, 0.38)",
+                      transition: "all 0.2s ease",
+                      marginTop: "2px",
+                    }}
                     className="modal-primary-btn"
                   >
-                    <span>{isBookingSlot ? "Securing Your Demo Slot..." : "Confirm & Book Slot"}</span>
-                    <ArrowRight size={15} strokeWidth={2.5} />
+                    <span style={{ color: "#FFFFFF", fontWeight: 700 }}>
+                      {isBookingSlot ? "Securing Your Demo Slot..." : "Confirm & Book Slot"}
+                    </span>
+                    <ArrowRight size={16} strokeWidth={2.5} color="#FFFFFF" />
                   </motion.button>
                 </div>
               )}
@@ -749,10 +984,26 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
                       href={googleCalendarUrl}
                       target="_blank"
                       rel="noopener noreferrer"
+                      style={{
+                        width: "100%",
+                        padding: "11px 16px",
+                        borderRadius: "10px",
+                        border: "1.5px solid #E2E8F0",
+                        background: "#FFFFFF",
+                        color: "#1E293B",
+                        fontWeight: 600,
+                        fontSize: "13px",
+                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: "8px",
+                        transition: "all 0.2s ease",
+                        textDecoration: "none",
+                      }}
                       className="modal-secondary-btn"
-                      style={{ textDecoration: "none" }}
                     >
-                      <Calendar size={14} color="#2563EB" />
+                      <Calendar size={14} color="#4F46E5" />
                       <span>Add to Google Calendar</span>
                       <ExternalLink size={12} color="#64748B" />
                     </a>
@@ -762,8 +1013,24 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
                       href={`https://wa.me/919958399157?text=${encodeURIComponent(`Hi, I just booked a demo slot for ${hospitalName} on ${selectedDay.label} at ${selectedTime}. Please confirm.`)}`}
                       target="_blank"
                       rel="noopener noreferrer"
+                      style={{
+                        width: "100%",
+                        padding: "11px 16px",
+                        borderRadius: "10px",
+                        border: "1.5px solid #A7F3D0",
+                        background: "#ECFDF5",
+                        color: "#065F46",
+                        fontWeight: 600,
+                        fontSize: "13px",
+                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: "8px",
+                        transition: "all 0.2s ease",
+                        textDecoration: "none",
+                      }}
                       className="modal-secondary-btn"
-                      style={{ textDecoration: "none" }}
                     >
                       <MessageCircle size={14} color="#10B981" />
                       <span>Connect with Specialist on WhatsApp</span>
@@ -773,10 +1040,26 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
                     <button
                       type="button"
                       onClick={handleModalClose}
+                      style={{
+                        width: "100%",
+                        padding: "12px 20px",
+                        borderRadius: "10px",
+                        border: "none",
+                        background: "linear-gradient(135deg, #6366F1 0%, #4F46E5 100%)",
+                        color: "#FFFFFF",
+                        fontWeight: 700,
+                        fontSize: "14px",
+                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: "8px",
+                        boxShadow: "0 4px 14px rgba(79, 70, 229, 0.35)",
+                        marginTop: "4px",
+                      }}
                       className="modal-primary-btn"
-                      style={{ marginTop: "4px" }}
                     >
-                      <span>Done</span>
+                      <span style={{ color: "#FFFFFF", fontWeight: 700 }}>Done</span>
                     </button>
                   </div>
                 </div>
@@ -785,344 +1068,6 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
           </motion.div>
         </div>
       )}
-
-      <style jsx>{`
-        .book-demo-modal-card {
-          position: relative;
-          width: 100%;
-          max-width: 890px;
-          background: #FFFFFF;
-          border-radius: 22px;
-          border: 1px solid rgba(0, 0, 0, 0.08);
-          box-shadow: 0 30px 80px -15px rgba(0, 0, 0, 0.45);
-          display: grid;
-          grid-template-columns: 1fr 1.25fr;
-          overflow: hidden;
-          max-height: 94vh;
-        }
-
-        .modal-visual-column {
-          padding: 30px 26px;
-          background: linear-gradient(180deg, #060B27 0%, #0B1340 100%);
-          position: relative;
-          display: flex;
-          flex-direction: column;
-          justifyContent: center;
-        }
-
-        .modal-form-column {
-          padding: 26px 26px;
-          position: relative;
-          background: #FFFFFF;
-          display: flex;
-          flex-direction: column;
-          justifyContent: flex-start;
-          overflow-y: auto;
-          max-height: 94vh;
-        }
-
-        .modal-close-btn {
-          position: absolute;
-          top: 14px;
-          right: 14px;
-          width: 32px;
-          height: 32px;
-          border-radius: 50%;
-          background: #F3F4F6;
-          border: 1px solid #E5E7EB;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: #4B5563;
-          cursor: pointer;
-          transition: all 0.2s ease;
-          z-index: 10;
-        }
-        .modal-close-btn:hover {
-          background: #E5E7EB;
-          color: #111827;
-        }
-
-        /* Stepper header */
-        .modal-stepper-header {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          margin-bottom: 14px;
-          padding-bottom: 12px;
-          border-bottom: 1px solid #F1F5F9;
-        }
-
-        .step-item {
-          display: flex;
-          align-items: center;
-          gap: 6px;
-          color: #94A3B8;
-          font-size: 11.5px;
-          font-weight: 600;
-        }
-        .step-item.active {
-          color: #2563EB;
-        }
-
-        .step-circle {
-          width: 22px;
-          height: 22px;
-          border-radius: 50%;
-          background: #F1F5F9;
-          color: #64748B;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 11px;
-          font-weight: 700;
-          transition: all 0.2s ease;
-        }
-        .step-item.active .step-circle {
-          background: #2563EB;
-          color: #FFFFFF;
-        }
-
-        .step-line {
-          flex: 1;
-          height: 2px;
-          background: #E2E8F0;
-          margin: 0 8px;
-          transition: all 0.2s ease;
-        }
-        .step-line.active {
-          background: #2563EB;
-        }
-
-        /* Form Inputs */
-        .modal-input-wrapper {
-          position: relative;
-          display: flex;
-          align-items: center;
-        }
-        .input-icon {
-          position: absolute;
-          left: 12px;
-          color: #94A3B8;
-          pointer-events: none;
-        }
-
-        .modal-text-input {
-          width: 100%;
-          padding: 10px 14px 10px 36px;
-          font-size: 13.5px;
-          border: 1.5px solid #E2E8F0;
-          border-radius: 10px;
-          outline: none;
-          color: #111827;
-          background: #F8FAFC;
-          transition: all 0.2s ease;
-        }
-        .modal-text-input:focus {
-          border-color: #2563EB;
-          background: #FFFFFF;
-          box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
-        }
-
-        /* Date Picker Grid */
-        .modal-date-picker-grid {
-          display: grid;
-          grid-template-columns: repeat(6, 1fr);
-          gap: 6px;
-          width: 100%;
-        }
-
-        .date-chip {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          padding: 8px 4px;
-          border-radius: 10px;
-          border: 1.5px solid #E2E8F0;
-          background: #F8FAFC;
-          cursor: pointer;
-          transition: all 0.2s ease;
-        }
-        .date-chip:hover {
-          border-color: #93C5FD;
-          background: #EFF6FF;
-        }
-        .date-chip.selected {
-          border-color: #2563EB;
-          background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
-          color: #FFFFFF;
-          box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
-        }
-
-        .date-chip-day {
-          font-size: 10px;
-          font-weight: 600;
-          color: #64748B;
-          text-transform: uppercase;
-        }
-        .date-chip.selected .date-chip-day {
-          color: rgba(255, 255, 255, 0.85);
-        }
-
-        .date-chip-num {
-          font-size: 15px;
-          font-weight: 800;
-          color: #0F172A;
-          line-height: 1.1;
-          margin: 2px 0;
-        }
-        .date-chip.selected .date-chip-num {
-          color: #FFFFFF;
-        }
-
-        .date-chip-month {
-          font-size: 9.5px;
-          font-weight: 600;
-          color: #64748B;
-        }
-        .date-chip.selected .date-chip-month {
-          color: rgba(255, 255, 255, 0.85);
-        }
-
-        /* Time Slots */
-        .time-slots-container {
-          display: flex;
-          flex-direction: column;
-          gap: 6px;
-        }
-
-        .time-chip {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          gap: 5px;
-          padding: 7px 8px;
-          border-radius: 8px;
-          border: 1.5px solid #E2E8F0;
-          background: #F8FAFC;
-          font-size: 11.5px;
-          font-weight: 600;
-          color: #334155;
-          cursor: pointer;
-          transition: all 0.2s ease;
-        }
-        .time-chip:hover {
-          border-color: #93C5FD;
-          background: #EFF6FF;
-          color: #1D4ED8;
-        }
-        .time-chip.selected {
-          border-color: #2563EB;
-          background: #2563EB;
-          color: #FFFFFF;
-          box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
-        }
-
-        /* Slot Summary Box */
-        .modal-slot-summary-box {
-          background: #EFF6FF;
-          border: 1px solid #BFDBFE;
-          border-radius: 10px;
-          padding: 9px 12px;
-        }
-        .summary-icon-box {
-          width: 28px;
-          height: 28px;
-          border-radius: 7px;
-          background: #DBEAFE;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-shrink: 0;
-        }
-
-        /* Back Button */
-        .modal-back-btn {
-          display: inline-flex;
-          align-items: center;
-          gap: 4px;
-          padding: 5px 8px;
-          border-radius: 8px;
-          border: 1px solid #E2E8F0;
-          background: #F8FAFC;
-          font-size: 11.5px;
-          font-weight: 600;
-          color: #475569;
-          cursor: pointer;
-          transition: all 0.2s ease;
-        }
-        .modal-back-btn:hover {
-          background: #F1F5F9;
-          color: #0F172A;
-        }
-
-        /* Buttons */
-        .modal-primary-btn {
-          width: 100%;
-          padding: 12px 20px;
-          border-radius: 11px;
-          border: 1px solid rgba(255, 255, 255, 0.2);
-          background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
-          color: #FFFFFF;
-          font-weight: 700;
-          font-size: 14px;
-          letter-spacing: 0.01em;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 8px;
-          box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
-          transition: all 0.2s ease;
-        }
-        .modal-primary-btn:hover:not(:disabled) {
-          box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
-        }
-
-        .modal-secondary-btn {
-          width: 100%;
-          padding: 10px 14px;
-          border-radius: 10px;
-          border: 1.5px solid #E2E8F0;
-          background: #FFFFFF;
-          color: #1E293B;
-          font-weight: 600;
-          font-size: 12.5px;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 8px;
-          transition: all 0.2s ease;
-        }
-        .modal-secondary-btn:hover {
-          background: #F8FAFC;
-          border-color: #CBD5E1;
-        }
-
-        /* ── MOBILE RESPONSIVENESS ── */
-        @media (max-width: 860px) {
-          .book-demo-modal-card {
-            grid-template-columns: 1fr !important;
-            max-width: 440px !important;
-            border-radius: 18px !important;
-          }
-          .modal-visual-column {
-            display: none !important;
-          }
-          .modal-form-column {
-            padding: 20px 16px 22px !important;
-          }
-          .step-label {
-            display: none !important;
-          }
-          .modal-date-picker-grid {
-            grid-template-columns: repeat(3, 1fr) !important;
-            gap: 6px !important;
-          }
-        }
-      `}</style>
     </AnimatePresence>
   );
 }
