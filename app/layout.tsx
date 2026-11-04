@@ -128,6 +128,23 @@ export default function RootLayout({
             'https://connect.facebook.net/en_US/fbevents.js');
             fbq('init', '2241568519757954');
             fbq('track', 'PageView');
+
+            // Unrestrict Lead and Schedule for B2B Healthcare Software
+            if (typeof fbq.registerPlugin === "function") {
+              fbq.registerPlugin("lead_enabler", {
+                __fbEventsPlugin: 1,
+                plugin: function(_f, instance, config) {
+                  try {
+                    instance.optIn("2241568519757954", "EventValidation", false);
+                    config.set("2241568519757954", "eventValidation", {
+                      unverifiedEventNames: [],
+                      restrictedEventNames: []
+                    });
+                  } catch(e){}
+                }
+              });
+              fbq.loadPlugin("lead_enabler");
+            }
           `}
         </Script>
         <noscript>

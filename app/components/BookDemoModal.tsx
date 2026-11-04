@@ -187,28 +187,9 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
         dateString: new Date().toLocaleString(),
       }).catch((err) => console.warn("Push meeting warning:", err));
 
-      // 3. Track Meta Pixel standard 'Schedule', 'Contact', and custom events
+      // 3. Track Meta Pixel standard 'Schedule' event
       trackEvent("Schedule", {
         content_name: "Book Demo Meeting Scheduled",
-        meeting_date: selectedDay.label,
-        meeting_time: selectedTime,
-        hospital_name: hospitalName.trim(),
-        status: "Meeting Scheduled",
-      });
-
-      trackEvent("Contact", {
-        content_name: "Book Demo Meeting Scheduled",
-        hospital_name: hospitalName.trim(),
-      });
-
-      trackCustomEvent("Schedule", {
-        content_name: "Book Demo Meeting Scheduled",
-        meeting_date: selectedDay.label,
-        meeting_time: selectedTime,
-        hospital: hospitalName.trim(),
-      });
-
-      trackCustomEvent("MeetingScheduled", {
         meeting_date: selectedDay.label,
         meeting_time: selectedTime,
         hospital_name: hospitalName.trim(),
