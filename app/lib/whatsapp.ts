@@ -90,3 +90,107 @@ Best regards,
     return { success: false, error: error.message || "Failed to dispatch WhatsApp message" };
   }
 }
+
+export interface SendLeadAlertParams {
+  name: string;
+  hospitalName: string;
+  phone: string;
+  source: string;
+}
+
+/**
+ * Automated WhatsApp Lead Alert
+ * 1. Sends an instant confirmation WhatsApp message to the prospect acknowledging their request.
+ * 2. Sends an instant alert to the Admin/Support WhatsApp number with lead details.
+ */
+export async function sendLeadWhatsAppAlert({
+  name,
+  hospitalName,
+  phone,
+  source,
+}: SendLeadAlertParams): Promise<{ success: boolean; data?: any; error?: string }> {
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_WHATSAPP_API_BASE_URL;
+    const instance = process.env.NEXT_PUBLIC_WHATSAPP_INSTANCE;
+    const apiKey = process.env.NEXT_PUBLIC_WHATSAPP_API_KEY;
+    const supportPhone = process.env.NEXT_PUBLIC_SUPPORT_PHONE || "";
+
+    if (!baseUrl || !instance || !apiKey) {
+      return { success: false, error: "WhatsApp API environment configuration missing." };
+    }
+
+    const endpoint = `${baseUrl.replace(/\/+$/, "")}/${instance}`;
+
+    // Sanitize user phone
+    let cleanPhone = String(phone).replace(/\D/g, "");
+    if (cleanPhone.length === 10) {
+      cleanPhone = `91${cleanPhone}`;
+    } else if (cleanPhone.length === 11 && cleanPhone.startsWith("0")) {
+      cleanPhone = `91${cleanPhone.slice(1)}`;
+    }
+
+    // 1. Prospect Acknowledgment Message
+    const userMessage = `🏥 *INFIPLUS HOSPITAL MANAGEMENT ERP*
+*Demo Request Received!*
+
+Dear *${name.trim()}*,
+Thank you for your demo request for *${hospitalName.trim() || "your hospital/clinic"}*.
+
+Our healthcare ERP consultant has received your inquiry and will contact you at this number shortly to arrange your live 1-on-1 walkthrough.
+
+Modules covered:
+• Unified OPD & IPD
+• Digital EMR & AI Prescriptions
+• Lab (LIS) & Pharmacy Inventory
+• Fast Billing & WhatsApp Patient Notifications
+
+🌐 https://infiplus.in
+Best regards,
+*Infiplus Healthcare Team*`;
+
+    await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        apikey: apiKey,
+      },
+      body: JSON.stringify({
+        number: cleanPhone,
+        text: userMessage,
+      }),
+    }).catch((err) => console.warn("WhatsApp prospect message warning:", err));
+
+    // 2. Admin Alert Notification
+    if (supportPhone) {
+      let cleanSupport = supportPhone.replace(/\D/g, "");
+      if (cleanSupport.length === 10) cleanSupport = `91${cleanSupport}`;
+
+      const adminAlertMessage = `🚨 *NEW WEBSITE LEAD ALERT!*
+
+👤 *Doctor/Client:* ${name.trim()}
+🏥 *Hospital/Clinic:* ${hospitalName.trim()}
+📞 *Phone Number:* ${cleanPhone}
+📍 *Source:* ${source}
+⏰ *Time:* ${new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}
+
+Please reach out to the lead promptly!`;
+
+      fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          apikey: apiKey,
+        },
+        body: JSON.stringify({
+          number: cleanSupport,
+          text: adminAlertMessage,
+        }),
+      }).catch((err) => console.warn("Admin WhatsApp alert warning:", err));
+    }
+
+    return { success: true };
+  } catch (error: any) {
+    console.warn("sendLeadWhatsAppAlert exception:", error);
+    return { success: false, error: error.message };
+  }
+}

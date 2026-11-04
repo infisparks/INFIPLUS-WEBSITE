@@ -10,8 +10,8 @@ import Image from "next/image";
 import { useState, useMemo } from "react";
 import { db } from "../lib/firebase";
 import { ref, push, update } from "firebase/database";
-import { sendBookingWhatsAppNotification } from "../lib/whatsapp";
-import { trackEvent, trackCustomEvent } from "../lib/fpixel";
+import { sendBookingWhatsAppNotification, sendLeadWhatsAppAlert } from "../lib/whatsapp";
+import { trackEvent, trackCustomEvent, trackLeadEvent } from "../lib/fpixel";
 
 interface BookDemoModalProps {
   isOpen: boolean;
@@ -107,7 +107,15 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
     setIsSubmitting(true);
 
     try {
-      // 1. Immediately save lead to Firebase RTDB
+      // 1. Immediately track Meta Pixel Lead & Contact events
+      trackLeadEvent({
+        name: name.trim(),
+        hospitalName: hospitalName.trim(),
+        phone: phone.trim(),
+        source: "Book Demo Modal - Step 1",
+      });
+
+      // 2. Immediately save lead to Firebase RTDB
       const newRef = await push(ref(db, "submissions"), {
         name: name.trim(),
         hospitalName: hospitalName.trim(),
@@ -118,18 +126,20 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
         dateString: new Date().toLocaleString(),
       });
 
-      // Track Meta Pixel Lead event when user fills the first form
-      trackEvent("Lead", {
-        content_name: "Book Demo Modal Step 1 Lead",
-        hospital_name: hospitalName.trim(),
-        lead_source: "Book Demo Modal",
-        currency: "INR",
-        value: 0,
-      });
+      // 3. Dispatch automated WhatsApp lead alert
+      sendLeadWhatsAppAlert({
+        name: name.trim(),
+        hospitalName: hospitalName.trim(),
+        phone: phone.trim(),
+        source: "Book Demo Modal - Step 1",
+      }).catch((err) => console.warn("WhatsApp alert error:", err));
 
       setSubmissionId(newRef.key);
       setIsSubmitting(false);
       setStep(2); // Proceed to slot picker
+
+      // 4. Alert user confirmation
+      alert("Thank you! Your details have been submitted. Please select a date and time slot for your personalized demo.");
     } catch (err: any) {
       console.error("Firebase lead save error:", err);
       setError(err.message || "Failed to submit. Please check connection.");
@@ -177,15 +187,25 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
         dateString: new Date().toLocaleString(),
       }).catch((err) => console.warn("Push meeting warning:", err));
 
-      // 3. Track Meta Pixel standard 'Schedule' and custom 'MeetingScheduled' events
+      // 3. Track Meta Pixel standard 'Schedule', 'Contact', and custom events
       trackEvent("Schedule", {
         content_name: "Book Demo Meeting Scheduled",
         meeting_date: selectedDay.label,
         meeting_time: selectedTime,
         hospital_name: hospitalName.trim(),
-        currency: "INR",
-        value: 0,
         status: "Meeting Scheduled",
+      });
+
+      trackEvent("Contact", {
+        content_name: "Book Demo Meeting Scheduled",
+        hospital_name: hospitalName.trim(),
+      });
+
+      trackCustomEvent("Schedule", {
+        content_name: "Book Demo Meeting Scheduled",
+        meeting_date: selectedDay.label,
+        meeting_time: selectedTime,
+        hospital: hospitalName.trim(),
       });
 
       trackCustomEvent("MeetingScheduled", {
@@ -207,11 +227,15 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
       setWhatsappSent(waRes.success);
       setIsBookingSlot(false);
       setStep(3); // Success confirmation
+
+      // Alert user meeting booked
+      alert("Demo meeting scheduled successfully! A confirmation message has been sent to your WhatsApp.");
     } catch (err: any) {
       console.error("Meeting booking error:", err);
       // Still show confirmation even if network fails
       setIsBookingSlot(false);
       setStep(3);
+      alert("Demo meeting scheduled successfully!");
     }
   };
 

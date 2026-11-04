@@ -10,7 +10,8 @@ import {
 import { useState, useEffect } from "react";
 import { db } from "../lib/firebase";
 import { ref, push } from "firebase/database";
-import { trackEvent } from "../lib/fpixel";
+import { trackLeadEvent } from "../lib/fpixel";
+import { sendLeadWhatsAppAlert } from "../lib/whatsapp";
 
 interface HeroSectionProps {
   onBookDemo: () => void;
@@ -80,27 +81,38 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
     setIsSubmitting(true);
 
     try {
-      // Save details to Firebase
+      // 1. Immediately track Meta Pixel Lead & Contact events
+      trackLeadEvent({
+        name: name.trim(),
+        hospitalName: hospitalName.trim(),
+        phone: phone.trim(),
+        source: "Hero Section Form",
+      });
+
+      // 2. Save lead details to Firebase Realtime Database
       await push(ref(db, "submissions"), {
-        name,
-        hospitalName,
-        phone,
+        name: name.trim(),
+        hospitalName: hospitalName.trim(),
+        phone: phone.trim(),
         type: "Book Demo",
+        status: "New Lead",
         timestamp: Date.now(),
         dateString: new Date().toLocaleString()
       });
 
-      // Track Meta Pixel Lead event
-      trackEvent("Lead", {
-        content_name: "Hero Section Demo Request",
-        hospital_name: hospitalName.trim(),
-        lead_source: "Hero Section Form",
-        currency: "INR",
-        value: 0,
-      });
+      // 3. Dispatch automated WhatsApp lead alert
+      sendLeadWhatsAppAlert({
+        name: name.trim(),
+        hospitalName: hospitalName.trim(),
+        phone: phone.trim(),
+        source: "Hero Section Form",
+      }).catch((err) => console.warn("WhatsApp alert error:", err));
       
       setIsSubmitting(false);
       setIsSubmitted(true);
+
+      // 4. Alert user confirmation
+      alert("Thank you! Your demo request has been submitted successfully. Our healthcare specialist will contact you shortly.");
     } catch (err: any) {
       setError(err.message || "Failed to submit. Please try again.");
       setIsSubmitting(false);

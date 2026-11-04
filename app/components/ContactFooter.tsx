@@ -9,7 +9,8 @@ import Image from "next/image";
 import { useRef, useState } from "react";
 import { db } from "../lib/firebase";
 import { ref, push } from "firebase/database";
-import { trackEvent } from "../lib/fpixel";
+import { trackLeadEvent } from "../lib/fpixel";
+import { sendLeadWhatsAppAlert } from "../lib/whatsapp";
 
 const EASE = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
@@ -35,28 +36,40 @@ export default function ContactFooter() {
     setError(null);
     setIsSubmitting(true);
     try {
+      // 1. Immediately track Meta Pixel Lead & Contact events
+      trackLeadEvent({
+        name: name.trim(),
+        hospitalName: hospitalName.trim(),
+        phone: phone.trim(),
+        source: "Contact Footer Form",
+      });
+
+      // 2. Save lead to Firebase Realtime Database
       await push(ref(db, "submissions"), {
-        name,
-        hospitalName,
-        phone,
+        name: name.trim(),
+        hospitalName: hospitalName.trim(),
+        phone: phone.trim(),
         type: "Contact Footer",
+        status: "New Lead",
         timestamp: Date.now(),
         dateString: new Date().toLocaleString()
       });
 
-      // Track Meta Pixel Lead event
-      trackEvent("Lead", {
-        content_name: "Contact Footer Demo Request",
-        hospital_name: hospitalName.trim(),
-        lead_source: "Contact Footer Form",
-        currency: "INR",
-        value: 0,
-      });
+      // 3. Dispatch automated WhatsApp lead alert
+      sendLeadWhatsAppAlert({
+        name: name.trim(),
+        hospitalName: hospitalName.trim(),
+        phone: phone.trim(),
+        source: "Contact Footer Form",
+      }).catch((err) => console.warn("WhatsApp alert error:", err));
 
       setIsSubmitted(true);
       setName("");
       setHospitalName("");
       setPhone("");
+
+      // 4. Alert user confirmation
+      alert("Thank you! Your demo request has been submitted successfully. Our healthcare specialist will contact you shortly.");
     } catch (err: any) {
       setError(err.message || "Failed to schedule demo. Please try again.");
     } finally {
