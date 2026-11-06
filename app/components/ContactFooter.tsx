@@ -9,7 +9,7 @@ import Image from "next/image";
 import { useRef, useState } from "react";
 import { db } from "../lib/firebase";
 import { ref, push } from "firebase/database";
-import { trackLeadEvent } from "../lib/fpixel";
+import { trackLeadEvent, updateUrlConversionStatus } from "../lib/fpixel";
 import { sendLeadWhatsAppAlert } from "../lib/whatsapp";
 
 const EASE = [0.16, 1, 0.3, 1] as [number, number, number, number];
@@ -63,12 +63,15 @@ export default function ContactFooter() {
         source: "Contact Footer Form",
       }).catch((err) => console.warn("WhatsApp alert error:", err));
 
+      // 4. Update browser URL to lead-submitted for ad conversion tracking
+      updateUrlConversionStatus("lead-submitted");
+
       setIsSubmitted(true);
       setName("");
       setHospitalName("");
       setPhone("");
 
-      // 4. Alert user confirmation
+      // 5. Alert user confirmation
       alert("Thank you! Your demo request has been submitted successfully. Our healthcare specialist will contact you shortly.");
     } catch (err: any) {
       setError(err.message || "Failed to schedule demo. Please try again.");

@@ -7,15 +7,22 @@ import {
   ExternalLink, MessageCircle, Video
 } from "lucide-react";
 import Image from "next/image";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { db } from "../lib/firebase";
 import { ref, push, update } from "firebase/database";
 import { sendBookingWhatsAppNotification, sendLeadWhatsAppAlert } from "../lib/whatsapp";
-import { trackEvent, trackCustomEvent, trackLeadEvent } from "../lib/fpixel";
+import { trackEvent, trackCustomEvent, trackLeadEvent, updateUrlConversionStatus } from "../lib/fpixel";
 
 interface BookDemoModalProps {
   isOpen: boolean;
   onClose: () => void;
+  initialData?: {
+    name?: string;
+    hospitalName?: string;
+    phone?: string;
+    step?: 1 | 2;
+    submissionId?: string;
+  };
 }
 
 interface DaySlot {
@@ -67,7 +74,7 @@ const TIME_SLOTS = [
   { group: "Evening", slots: ["05:30 PM", "06:30 PM", "07:15 PM"] },
 ];
 
-export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
+export default function BookDemoModal({ isOpen, onClose, initialData }: BookDemoModalProps) {
   // Wizard steps: 1 = Details, 2 = Pick Slot, 3 = Confirmed
   const [step, setStep] = useState<1 | 2 | 3>(1);
 
@@ -78,6 +85,17 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
   const [submissionId, setSubmissionId] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // Sync initial data if passed (e.g. from Hero section)
+  useEffect(() => {
+    if (isOpen && initialData) {
+      if (initialData.name) setName(initialData.name);
+      if (initialData.hospitalName) setHospitalName(initialData.hospitalName);
+      if (initialData.phone) setPhone(initialData.phone);
+      if (initialData.submissionId) setSubmissionId(initialData.submissionId);
+      if (initialData.step) setStep(initialData.step);
+    }
+  }, [isOpen, initialData]);
 
   // Step 2: Slot Selection
   const availableDays = useMemo(() => getAvailableDays(), []);
@@ -134,11 +152,14 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
         source: "Book Demo Modal - Step 1",
       }).catch((err) => console.warn("WhatsApp alert error:", err));
 
+      // 4. Update browser URL to lead-submitted for ad conversion tracking
+      updateUrlConversionStatus("lead-submitted");
+
       setSubmissionId(newRef.key);
       setIsSubmitting(false);
       setStep(2); // Proceed to slot picker
 
-      // 4. Alert user confirmation
+      // 5. Alert user confirmation
       alert("Thank you! Your details have been submitted. Please select a date and time slot for your personalized demo.");
     } catch (err: any) {
       console.error("Firebase lead save error:", err);
@@ -205,15 +226,19 @@ export default function BookDemoModal({ isOpen, onClose }: BookDemoModalProps) {
         meetingTime: selectedTime,
       });
 
+      // 5. Update browser URL to meeting-booked for ad conversion tracking
+      updateUrlConversionStatus("meeting-booked");
+
       setWhatsappSent(waRes.success);
       setIsBookingSlot(false);
       setStep(3); // Success confirmation
 
-      // Alert user meeting booked
+      // 6. Alert user meeting booked
       alert("Demo meeting scheduled successfully! A confirmation message has been sent to your WhatsApp.");
     } catch (err: any) {
       console.error("Meeting booking error:", err);
       // Still show confirmation even if network fails
+      updateUrlConversionStatus("meeting-booked");
       setIsBookingSlot(false);
       setStep(3);
       alert("Demo meeting scheduled successfully!");

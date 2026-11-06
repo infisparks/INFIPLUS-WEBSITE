@@ -126,3 +126,35 @@ export const trackCustomEvent = (
     }
   }
 };
+
+/**
+ * Updates the browser URL query parameter (?status=lead-submitted or ?status=meeting-booked)
+ * so that advertising platforms (Meta Ads, Google Ads) can track conversion URLs.
+ * Preserves existing UTM tags, updates browser history, and triggers Meta Pixel PageView on the new URL.
+ */
+export const updateUrlConversionStatus = (
+  status: "lead-submitted" | "meeting-booked"
+) => {
+  if (typeof window === "undefined") return;
+  try {
+    const url = new URL(window.location.href);
+    url.searchParams.set("status", status);
+
+    if (status === "lead-submitted") {
+      url.searchParams.set("lead", "submitted");
+      url.searchParams.delete("meeting");
+    } else if (status === "meeting-booked") {
+      url.searchParams.set("meeting", "booked");
+      url.searchParams.delete("lead");
+    }
+
+    window.history.pushState({ status }, "", url.toString());
+    window.dispatchEvent(new Event("popstate"));
+
+    // Track PageView with the updated conversion URL in Meta Pixel
+    pageview();
+    console.log(`[Conversion URL] Address bar updated for ad tracking: ${url.toString()}`);
+  } catch (e) {
+    console.warn("Could not update URL conversion status:", e);
+  }
+};

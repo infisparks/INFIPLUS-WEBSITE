@@ -10,11 +10,17 @@ import {
 import { useState, useEffect } from "react";
 import { db } from "../lib/firebase";
 import { ref, push } from "firebase/database";
-import { trackLeadEvent } from "../lib/fpixel";
+import { trackLeadEvent, updateUrlConversionStatus } from "../lib/fpixel";
 import { sendLeadWhatsAppAlert } from "../lib/whatsapp";
 
 interface HeroSectionProps {
-  onBookDemo: () => void;
+  onBookDemo: (data?: {
+    name?: string;
+    hospitalName?: string;
+    phone?: string;
+    step?: 1 | 2;
+    submissionId?: string;
+  }) => void;
 }
 
 export default function HeroSection({ onBookDemo }: HeroSectionProps) {
@@ -24,6 +30,7 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
   const [name, setName] = useState("");
   const [hospitalName, setHospitalName] = useState("");
   const [phone, setPhone] = useState("");
+  const [submittedLeadId, setSubmittedLeadId] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -81,7 +88,7 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
     setIsSubmitting(true);
 
     try {
-      // 1. Immediately track Meta Pixel Lead & Contact events
+      // 1. Immediately track Meta Pixel Lead event
       trackLeadEvent({
         name: name.trim(),
         hospitalName: hospitalName.trim(),
@@ -90,7 +97,7 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
       });
 
       // 2. Save lead details to Firebase Realtime Database
-      await push(ref(db, "submissions"), {
+      const newRef = await push(ref(db, "submissions"), {
         name: name.trim(),
         hospitalName: hospitalName.trim(),
         phone: phone.trim(),
@@ -99,6 +106,8 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
         timestamp: Date.now(),
         dateString: new Date().toLocaleString()
       });
+      const leadKey = newRef.key;
+      setSubmittedLeadId(leadKey);
 
       // 3. Dispatch automated WhatsApp lead alert
       sendLeadWhatsAppAlert({
@@ -107,11 +116,14 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
         phone: phone.trim(),
         source: "Hero Section Form",
       }).catch((err) => console.warn("WhatsApp alert error:", err));
+
+      // 4. Update browser URL to lead-submitted for ad conversion tracking
+      updateUrlConversionStatus("lead-submitted");
       
       setIsSubmitting(false);
       setIsSubmitted(true);
 
-      // 4. Alert user confirmation
+      // 5. Alert user confirmation
       alert("Thank you! Your demo request has been submitted successfully. Our healthcare specialist will contact you shortly.");
     } catch (err: any) {
       setError(err.message || "Failed to submit. Please try again.");
@@ -296,7 +308,7 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
                   }}
                 >
                    {isSubmitted ? (
-                     <div style={{ textAlign: "center", padding: "40px 10px" }}>
+                     <div style={{ textAlign: "center", padding: "36px 10px" }}>
                        <div style={{
                          width: "56px",
                          height: "56px",
@@ -313,9 +325,48 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
                        <h3 style={{ fontSize: "20px", fontWeight: 800, color: "#111827", marginBottom: "10px" }}>
                          Demo Request Received!
                        </h3>
-                       <p style={{ fontSize: "14px", color: "#4B5563", lineHeight: 1.5 }}>
-                         Thank you, <strong>{name}</strong>! Your demo request has been submitted. Our healthcare specialist will contact you soon to schedule your personalized live demo.
+                       <p style={{ fontSize: "14px", color: "#4B5563", lineHeight: 1.5, marginBottom: "20px" }}>
+                         Thank you, <strong>{name}</strong>! Your demo request has been submitted. Our healthcare specialist will contact you soon.
                        </p>
+
+                       <button
+                         type="button"
+                         onClick={() => onBookDemo({
+                           name,
+                           hospitalName,
+                           phone,
+                           step: 2,
+                           submissionId: submittedLeadId || undefined,
+                         })}
+                         style={{
+                           display: "inline-flex",
+                           alignItems: "center",
+                           justifyContent: "center",
+                           gap: "8px",
+                           background: "linear-gradient(135deg, #4F46E5, #6366F1)",
+                           color: "#FFFFFF",
+                           borderRadius: "10px",
+                           padding: "12px 20px",
+                           fontWeight: 600,
+                           fontSize: "14px",
+                           border: "none",
+                           cursor: "pointer",
+                           width: "100%",
+                           boxShadow: "0 4px 12px rgba(79, 70, 229, 0.25)",
+                           transition: "transform 0.15s, box-shadow 0.15s",
+                         }}
+                         onMouseEnter={(e) => {
+                           e.currentTarget.style.transform = "translateY(-1px)";
+                           e.currentTarget.style.boxShadow = "0 6px 16px rgba(79, 70, 229, 0.35)";
+                         }}
+                         onMouseLeave={(e) => {
+                           e.currentTarget.style.transform = "translateY(0)";
+                           e.currentTarget.style.boxShadow = "0 4px 12px rgba(79, 70, 229, 0.25)";
+                         }}
+                       >
+                         <Calendar size={16} />
+                         <span>📅 Pick Demo Date & Time Now</span>
+                       </button>
                      </div>
                    ) : (
                     <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
@@ -621,7 +672,7 @@ export default function HeroSection({ onBookDemo }: HeroSectionProps) {
             }}
           >
             <motion.button
-              onClick={onBookDemo}
+              onClick={() => onBookDemo()}
               className="animated-demo-btn"
               whileTap={{ scale: 0.97 }}
               style={{

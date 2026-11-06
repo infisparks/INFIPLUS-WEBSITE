@@ -13,12 +13,30 @@ import GoToTop from "./components/GoToTop";
 
 export default function Home() {
   const [demoOpen, setDemoOpen] = useState(false);
+  const [demoData, setDemoData] = useState<{
+    name?: string;
+    hospitalName?: string;
+    phone?: string;
+    step?: 1 | 2;
+    submissionId?: string;
+  } | undefined>(undefined);
+
+  const handleOpenDemo = (data?: {
+    name?: string;
+    hospitalName?: string;
+    phone?: string;
+    step?: 1 | 2;
+    submissionId?: string;
+  }) => {
+    setDemoData(data);
+    setDemoOpen(true);
+  };
 
   return (
     <>
-      <Navbar onBookDemo={() => setDemoOpen(true)} />
+      <Navbar onBookDemo={() => handleOpenDemo()} />
       <main>
-        <HeroSection onBookDemo={() => setDemoOpen(true)} />
+        <HeroSection onBookDemo={handleOpenDemo} />
         <Clients />
         <Features />
         <WhyInfiplus />
@@ -37,7 +55,14 @@ export default function Home() {
           </ul>
         </section>
       </main>
-      <BookDemoModal isOpen={demoOpen} onClose={() => setDemoOpen(false)} />
+      <BookDemoModal
+        isOpen={demoOpen}
+        onClose={() => {
+          setDemoOpen(false);
+          setDemoData(undefined);
+        }}
+        initialData={demoData}
+      />
       <GoToTop />
     </>
   );
