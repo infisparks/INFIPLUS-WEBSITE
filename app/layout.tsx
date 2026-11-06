@@ -101,19 +101,19 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${outfit.variable} antialiased`}>
       <head>
-        {/* Google Tag Manager */}
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=AW-18220446152"
-          strategy="afterInteractive"
+        {/* Google tag (gtag.js) */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18220446152" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+
+              gtag('config', 'AW-18220446152');
+            `,
+          }}
         />
-        <Script id="google-tag-manager" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'AW-18220446152');
-          `}
-        </Script>
 
         {/* Meta Pixel Code */}
         <Script id="fb-pixel" strategy="afterInteractive">

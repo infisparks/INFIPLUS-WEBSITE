@@ -5,6 +5,8 @@ declare global {
   interface Window {
     fbq?: any;
     _fbq?: any;
+    dataLayer?: any[];
+    gtag?: any;
   }
 }
 
@@ -127,10 +129,40 @@ export const trackCustomEvent = (
   }
 };
 
+export const GOOGLE_CONVERSION_ID = "AW-18220446152";
+export const GOOGLE_LEAD_CONVERSION_LABEL = "TdgVC0rMh7MdEMjjI_BD";
+export const GOOGLE_LEAD_SEND_TO = `${GOOGLE_CONVERSION_ID}/${GOOGLE_LEAD_CONVERSION_LABEL}`;
+
+/**
+ * Fires the official Google Ads conversion event for Submit lead form
+ */
+export const trackGoogleLeadConversion = () => {
+  if (typeof window !== "undefined") {
+    if (typeof window.gtag === "function") {
+      window.gtag("event", "conversion", {
+        send_to: GOOGLE_LEAD_SEND_TO,
+      });
+      window.gtag("event", "generate_lead", {
+        event_category: "Hospital Demo",
+        event_label: "Lead Form Submitted",
+      });
+      console.log(`[Google Ads] Conversion event fired: ${GOOGLE_LEAD_SEND_TO}`);
+    } else {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push([
+        "event",
+        "conversion",
+        { send_to: GOOGLE_LEAD_SEND_TO },
+      ]);
+      console.log(`[Google Ads] Queued conversion event: ${GOOGLE_LEAD_SEND_TO}`);
+    }
+  }
+};
+
 /**
  * Updates the browser URL query parameter (?status=lead-submitted or ?status=meeting-booked)
  * so that advertising platforms (Meta Ads, Google Ads) can track conversion URLs.
- * Preserves existing UTM tags, updates browser history, and triggers Meta Pixel PageView on the new URL.
+ * Preserves existing UTM tags, updates browser history, and triggers Meta Pixel and Google Tag conversion events.
  */
 export const updateUrlConversionStatus = (
   status: "lead-submitted" | "meeting-booked"
@@ -153,6 +185,20 @@ export const updateUrlConversionStatus = (
 
     // Track PageView with the updated conversion URL in Meta Pixel
     pageview();
+
+    // Trigger Google Tag conversion event
+    if (status === "lead-submitted") {
+      trackGoogleLeadConversion();
+    }
+
+    // Notify Google Tag of the updated page_view
+    if (typeof window.gtag === "function") {
+      window.gtag("event", "page_view", {
+        page_location: url.toString(),
+        page_path: url.pathname + url.search,
+      });
+    }
+
     console.log(`[Conversion URL] Address bar updated for ad tracking: ${url.toString()}`);
   } catch (e) {
     console.warn("Could not update URL conversion status:", e);
