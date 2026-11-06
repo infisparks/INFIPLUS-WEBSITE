@@ -130,11 +130,11 @@ export const trackCustomEvent = (
 };
 
 export const GOOGLE_CONVERSION_ID = "AW-18220446152";
-export const GOOGLE_LEAD_CONVERSION_LABEL = "TdgVC0rMh7MdEMjjI_BD";
+export const GOOGLE_LEAD_CONVERSION_LABEL = "Wvi3CPaRibMdEMjjl_BD";
 export const GOOGLE_LEAD_SEND_TO = `${GOOGLE_CONVERSION_ID}/${GOOGLE_LEAD_CONVERSION_LABEL}`;
 
 /**
- * Fires the official Google Ads conversion event for Submit lead form
+ * Fires the official Google Ads conversion event for Infiplus Firebase Lead
  */
 export const trackGoogleLeadConversion = () => {
   if (typeof window !== "undefined") {
@@ -157,6 +157,33 @@ export const trackGoogleLeadConversion = () => {
       console.log(`[Google Ads] Queued conversion event: ${GOOGLE_LEAD_SEND_TO}`);
     }
   }
+};
+
+/**
+ * Official Google Ads conversion reporter function with callback support
+ */
+export const gtag_report_conversion = (url?: string) => {
+  if (typeof window === "undefined") return false;
+  const callback = () => {
+    if (typeof url !== "undefined" && url) {
+      window.location.href = url;
+    }
+  };
+  if (typeof window.gtag === "function") {
+    window.gtag("event", "conversion", {
+      send_to: GOOGLE_LEAD_SEND_TO,
+      event_callback: callback,
+    });
+    console.log(`[Google Ads] Conversion fired via gtag_report_conversion: ${GOOGLE_LEAD_SEND_TO}`);
+  } else {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push([
+      "event",
+      "conversion",
+      { send_to: GOOGLE_LEAD_SEND_TO, event_callback: callback },
+    ]);
+  }
+  return false;
 };
 
 /**

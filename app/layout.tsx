@@ -111,6 +111,20 @@ export default function RootLayout({
               gtag('js', new Date());
 
               gtag('config', 'AW-18220446152');
+
+              function gtag_report_conversion(url) {
+                var callback = function () {
+                  if (typeof(url) != 'undefined') {
+                    window.location = url;
+                  }
+                };
+                gtag('event', 'conversion', {
+                    'send_to': 'AW-18220446152/Wvi3CPaRibMdEMjjl_BD',
+                    'event_callback': callback
+                });
+                return false;
+              }
+              window.gtag_report_conversion = gtag_report_conversion;
             `,
           }}
         />
