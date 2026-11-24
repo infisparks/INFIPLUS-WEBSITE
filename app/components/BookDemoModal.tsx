@@ -33,13 +33,67 @@ interface DaySlot {
   label: string;
 }
 
-// Generate the next 6 available demo dates starting from tomorrow (or today if morning)
+// Format Date object to local YYYY-MM-DD string
+function formatLocalDate(d: Date): string {
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+// Parse 12-hour slot string ("10:30 AM", "03:30 PM") into minutes from midnight
+function parseSlotTimeToMinutes(slotStr: string): number {
+  const match = slotStr.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
+  if (!match) return 0;
+  let hours = parseInt(match[1], 10);
+  const minutes = parseInt(match[2], 10);
+  const period = match[3].toUpperCase();
+  if (period === "PM" && hours < 12) hours += 12;
+  if (period === "AM" && hours === 12) hours = 0;
+  return hours * 60 + minutes;
+}
+
+const TIME_SLOTS = [
+  { group: "Morning", slots: ["10:30 AM", "11:30 AM"] },
+  { group: "Afternoon", slots: ["02:00 PM", "03:30 PM", "04:45 PM"] },
+  { group: "Evening", slots: ["05:30 PM", "06:30 PM", "07:15 PM"] },
+];
+
+const ALL_FLAT_SLOTS = TIME_SLOTS.flatMap((g) => g.slots);
+
+// Check if a time slot has already passed for a given date (local timezone)
+function isSlotPassed(dateStr: string, slotStr: string): boolean {
+  const now = new Date();
+  const todayStr = formatLocalDate(now);
+
+  if (dateStr < todayStr) return true;
+  if (dateStr > todayStr) return false;
+
+  // It's today: check if current time is past the slot time (with 5 min grace window)
+  const currentMinutes = now.getHours() * 60 + now.getMinutes();
+  const slotMinutes = parseSlotTimeToMinutes(slotStr);
+  return slotMinutes <= currentMinutes + 5;
+}
+
+// Get the first available (non-passed) slot for a date
+function getFirstAvailableSlot(dateStr: string): string {
+  for (const slot of ALL_FLAT_SLOTS) {
+    if (!isSlotPassed(dateStr, slot)) {
+      return slot;
+    }
+  }
+  return ALL_FLAT_SLOTS[0];
+}
+
+// Generate the next 6 available demo dates starting from tomorrow (if all today's slots passed) or today
 function getAvailableDays(): DaySlot[] {
   const days: DaySlot[] = [];
   const base = new Date();
   
-  // If it's already late evening, start from tomorrow
-  const startOffset = base.getHours() >= 18 ? 1 : 0;
+  // If all today's slots have passed (last slot is 07:15 PM = 1155 mins), start from tomorrow
+  const currentMinutes = base.getHours() * 60 + base.getMinutes();
+  const lastSlotMinutes = parseSlotTimeToMinutes("07:15 PM");
+  const startOffset = currentMinutes >= lastSlotMinutes ? 1 : 0;
 
   for (let i = startOffset; days.length < 6; i++) {
     const d = new Date(base);
@@ -54,7 +108,7 @@ function getAvailableDays(): DaySlot[] {
       : d.toLocaleDateString("en-US", { weekday: "short" });
     const monthName = d.toLocaleDateString("en-US", { month: "short" });
     const dateNum = d.getDate();
-    const dateStr = d.toISOString().split("T")[0];
+    const dateStr = formatLocalDate(d);
     const label = `${dayName}, ${dateNum} ${monthName}`;
 
     days.push({
@@ -67,12 +121,6 @@ function getAvailableDays(): DaySlot[] {
   }
   return days;
 }
-
-const TIME_SLOTS = [
-  { group: "Morning", slots: ["10:30 AM", "11:30 AM"] },
-  { group: "Afternoon", slots: ["02:00 PM", "03:30 PM", "04:45 PM"] },
-  { group: "Evening", slots: ["05:30 PM", "06:30 PM", "07:15 PM"] },
-];
 
 export default function BookDemoModal({ isOpen, onClose, initialData }: BookDemoModalProps) {
   // Wizard steps: 1 = Details, 2 = Pick Slot, 3 = Confirmed
@@ -100,9 +148,28 @@ export default function BookDemoModal({ isOpen, onClose, initialData }: BookDemo
   // Step 2: Slot Selection
   const availableDays = useMemo(() => getAvailableDays(), []);
   const [selectedDay, setSelectedDay] = useState<DaySlot>(availableDays[0]);
-  const [selectedTime, setSelectedTime] = useState<string>("02:00 PM");
+  const [selectedTime, setSelectedTime] = useState<string>(() => {
+    return availableDays[0] ? getFirstAvailableSlot(availableDays[0].dateStr) : "10:30 AM";
+  });
   const [isBookingSlot, setIsBookingSlot] = useState(false);
   const [whatsappSent, setWhatsappSent] = useState<boolean | null>(null);
+
+  // Switch day and automatically select the first upcoming available slot if needed
+  const handleDaySelect = (day: DaySlot) => {
+    setSelectedDay(day);
+    if (isSlotPassed(day.dateStr, selectedTime)) {
+      setSelectedTime(getFirstAvailableSlot(day.dateStr));
+    }
+  };
+
+  // Re-verify slot availability whenever modal opens or day changes
+  useEffect(() => {
+    if (isOpen && selectedDay) {
+      if (isSlotPassed(selectedDay.dateStr, selectedTime)) {
+        setSelectedTime(getFirstAvailableSlot(selectedDay.dateStr));
+      }
+    }
+  }, [isOpen, selectedDay, selectedTime]);
 
   // Reset modal when closed
   const handleModalClose = () => {
@@ -172,6 +239,11 @@ export default function BookDemoModal({ isOpen, onClose, initialData }: BookDemo
   const handleConfirmMeeting = async () => {
     if (!selectedDay || !selectedTime) {
       setError("Please select both a date and time slot.");
+      return;
+    }
+    if (isSlotPassed(selectedDay.dateStr, selectedTime)) {
+      setError("This time slot has already passed. Please select an upcoming slot.");
+      setSelectedTime(getFirstAvailableSlot(selectedDay.dateStr));
       return;
     }
     setError(null);
@@ -821,7 +893,7 @@ export default function BookDemoModal({ isOpen, onClose, initialData }: BookDemo
                           <button
                             key={d.dateStr}
                             type="button"
-                            onClick={() => setSelectedDay(d)}
+                            onClick={() => handleDaySelect(d)}
                             style={{
                               display: "flex",
                               flexDirection: "column",
@@ -867,11 +939,16 @@ export default function BookDemoModal({ isOpen, onClose, initialData }: BookDemo
                           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(88px, 1fr))", gap: "6px" }}>
                             {group.slots.map((slot) => {
                               const isSelected = selectedTime === slot;
+                              const isPassed = isSlotPassed(selectedDay.dateStr, slot);
                               return (
                                 <button
                                   key={slot}
                                   type="button"
-                                  onClick={() => setSelectedTime(slot)}
+                                  disabled={isPassed}
+                                  onClick={() => {
+                                    if (!isPassed) setSelectedTime(slot);
+                                  }}
+                                  title={isPassed ? "This time slot has passed" : `Select ${slot}`}
                                   style={{
                                     display: "inline-flex",
                                     alignItems: "center",
@@ -879,18 +956,32 @@ export default function BookDemoModal({ isOpen, onClose, initialData }: BookDemo
                                     gap: "5px",
                                     padding: "8px 8px",
                                     borderRadius: "8px",
-                                    border: isSelected ? "1.5px solid #4F46E5" : "1.5px solid #E2E8F0",
-                                    background: isSelected ? "#4F46E5" : "#F8FAFC",
-                                    color: isSelected ? "#FFFFFF" : "#334155",
+                                    border: isSelected
+                                      ? "1.5px solid #4F46E5"
+                                      : isPassed
+                                      ? "1px dashed #CBD5E1"
+                                      : "1.5px solid #E2E8F0",
+                                    background: isSelected
+                                      ? "#4F46E5"
+                                      : isPassed
+                                      ? "#F1F5F9"
+                                      : "#F8FAFC",
+                                    color: isSelected
+                                      ? "#FFFFFF"
+                                      : isPassed
+                                      ? "#94A3B8"
+                                      : "#334155",
                                     fontSize: "12px",
-                                    fontWeight: 600,
-                                    cursor: "pointer",
+                                    fontWeight: isPassed ? 500 : 600,
+                                    cursor: isPassed ? "not-allowed" : "pointer",
+                                    opacity: isPassed ? 0.6 : 1,
+                                    textDecoration: isPassed ? "line-through" : "none",
                                     boxShadow: isSelected ? "0 2px 8px rgba(79, 70, 229, 0.25)" : "none",
                                     transition: "all 0.2s ease",
                                   }}
-                                  className={`time-chip ${isSelected ? "selected" : ""}`}
+                                  className={`time-chip ${isSelected ? "selected" : ""} ${isPassed ? "disabled" : ""}`}
                                 >
-                                  <Clock size={11} color={isSelected ? "#FFFFFF" : "#64748B"} />
+                                  <Clock size={11} color={isSelected ? "#FFFFFF" : isPassed ? "#94A3B8" : "#64748B"} />
                                   <span>{slot}</span>
                                 </button>
                               );
