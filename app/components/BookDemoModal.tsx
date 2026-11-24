@@ -11,7 +11,7 @@ import { useState, useMemo, useEffect } from "react";
 import { db } from "../lib/firebase";
 import { ref, push, update } from "firebase/database";
 import { sendBookingWhatsAppNotification, sendLeadWhatsAppAlert } from "../lib/whatsapp";
-import { trackEvent, trackCustomEvent, trackLeadEvent, updateUrlConversionStatus } from "../lib/fpixel";
+import { trackEvent, trackCustomEvent, trackLeadEvent, updateUrlConversionStatus, sendMetaConversionApiEvent } from "../lib/fpixel";
 
 interface BookDemoModalProps {
   isOpen: boolean;
@@ -208,13 +208,31 @@ export default function BookDemoModal({ isOpen, onClose, initialData }: BookDemo
         dateString: new Date().toLocaleString(),
       }).catch((err) => console.warn("Push meeting warning:", err));
 
-      // 3. Track Meta Pixel standard 'Schedule' event
+      // 3. Track Meta Pixel standard 'Schedule' event with CAPI & deduplication
+      const scheduleEventId = `sched_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
       trackEvent("Schedule", {
         content_name: "Book Demo Meeting Scheduled",
         meeting_date: selectedDay.label,
         meeting_time: selectedTime,
         hospital_name: hospitalName.trim(),
         status: "Meeting Scheduled",
+      }, { eventID: scheduleEventId });
+
+      sendMetaConversionApiEvent({
+        eventName: "Schedule",
+        eventId: scheduleEventId,
+        eventSourceUrl: typeof window !== "undefined" ? window.location.href : "https://infiplus.in/",
+        userData: {
+          name: name.trim(),
+          phone: phone.trim(),
+        },
+        customData: {
+          content_name: "Book Demo Meeting Scheduled",
+          meeting_date: selectedDay.label,
+          meeting_time: selectedTime,
+          hospital_name: hospitalName.trim(),
+          status: "Meeting Scheduled",
+        },
       });
 
       // 4. Send automated WhatsApp confirmation directly from client

@@ -58,11 +58,39 @@ export const pageview = () => {
 };
 
 /**
+ * Helper to retrieve cookies on client
+ */
+export const getCookie = (name: string): string | undefined => {
+  if (typeof document === "undefined") return undefined;
+  const match = document.cookie.match(new RegExp(`(^|;\\s*)(${name})=([^;]*)`));
+  return match ? decodeURIComponent(match[3]) : undefined;
+};
+
+/**
+ * Helper to retrieve fbclid from URL or format as _fbc
+ */
+export const getFbc = (): string | undefined => {
+  if (typeof window === "undefined") return undefined;
+  const cookieFbc = getCookie("_fbc");
+  if (cookieFbc) return cookieFbc;
+
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const fbclid = params.get("fbclid");
+    if (fbclid) {
+      return `fb.1.${Date.now()}.${fbclid}`;
+    }
+  } catch (e) {}
+  return undefined;
+};
+
+/**
  * Log standard Meta Pixel events (e.g. Lead, Schedule, Contact)
  */
 export const trackEvent = (
   eventName: string,
-  parameters: Record<string, unknown> = {}
+  parameters: Record<string, unknown> = {},
+  options?: { eventID?: string }
 ) => {
   if (typeof window !== "undefined") {
     // Unrestrict Lead and Schedule before dispatching
@@ -71,8 +99,15 @@ export const trackEvent = (
     }
 
     if (typeof window.fbq === "function") {
-      window.fbq("track", eventName, parameters);
-      console.log(`[Meta Pixel] Tracked standard event: ${eventName}`, parameters);
+      if (options?.eventID) {
+        window.fbq("track", eventName, parameters, { eventID: options.eventID });
+      } else {
+        window.fbq("track", eventName, parameters);
+      }
+      console.log(`%c🎯 [Meta Pixel] Tracked standard event: ${eventName}`, "color: #1877F2; font-weight: bold;", {
+        parameters,
+        options,
+      });
     } else {
       // Initialize fbq queue if script is still downloading
       const fbqQueue = (window.fbq =
@@ -80,29 +115,138 @@ export const trackEvent = (
         function (...args: unknown[]) {
           ((window.fbq as any).queue = (window.fbq as any).queue || []).push(args);
         });
-      fbqQueue("track", eventName, parameters);
-      console.log(`[Meta Pixel] Queued event: ${eventName}`, parameters);
+      if (options?.eventID) {
+        fbqQueue("track", eventName, parameters, { eventID: options.eventID });
+      } else {
+        fbqQueue("track", eventName, parameters);
+      }
+      console.log(`%c🎯 [Meta Pixel] Queued event: ${eventName}`, "color: #1877F2; font-weight: bold;", {
+        parameters,
+        options,
+      });
     }
   }
 };
 
 /**
- * Fires the official standard "Lead" event to Meta Pixel
+ * Dispatches server-side event to Meta Conversions API (CAPI)
+ * via Cloudflare Worker (if configured) or Next.js internal /api/meta-conversions route.
+ */
+export const sendMetaConversionApiEvent = async (params: {
+  eventName: string;
+  eventId: string;
+  eventSourceUrl?: string;
+  userData: {
+    name?: string;
+    phone?: string;
+    email?: string;
+  };
+  customData?: Record<string, any>;
+}) => {
+  if (typeof window === "undefined") return;
+
+  const cfUrl =
+    process.env.NEXT_PUBLIC_CLOUDFLARE_CAPI_URL ||
+    "https://infiplusconversionevent.infisparks.workers.dev";
+  const endpoint =
+    cfUrl && cfUrl.trim().length > 0 ? cfUrl.trim() : "/api/meta-conversions";
+
+  const payload = {
+    eventName: params.eventName,
+    eventId: params.eventId,
+    eventSourceUrl: params.eventSourceUrl || window.location.href,
+    userData: params.userData,
+    customData: params.customData,
+    fbp: getCookie("_fbp"),
+    fbc: getFbc(),
+  };
+
+  console.log(
+    `%c🚀 [Meta Conversions API] Dispatching server-side event to: ${endpoint}`,
+    "color: #8B5CF6; font-weight: bold;",
+    {
+      eventName: params.eventName,
+      eventId: params.eventId,
+      phone: params.userData?.phone,
+      name: params.userData?.name,
+    }
+  );
+
+  try {
+    const res = await fetch(endpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    const data = await res.json();
+
+    if (res.ok && (data.events_received >= 1 || data.success)) {
+      console.log(
+        `%c✅ [Meta Conversions API] SUCCESS! Meta received ${data.events_received || 1} event(s)!\n` +
+          `   • Event: ${params.eventName}\n` +
+          `   • Event ID: ${params.eventId}\n` +
+          `   • FB Trace ID: ${data.fbtrace_id}\n` +
+          `   • Status: 200 OK`,
+        "color: #059669; font-weight: bold; font-size: 13px; background: #ECFDF5; padding: 6px 10px; border-radius: 6px; border: 1px solid #A7F3D0;",
+        data
+      );
+    } else {
+      console.warn(
+        `%c⚠️ [Meta Conversions API] Response from Meta API:`,
+        "color: #D97706; font-weight: bold;",
+        data
+      );
+    }
+    return data;
+  } catch (err) {
+    console.error("%c❌ [Meta Conversions API] Failed to send to Meta:", "color: #DC2626; font-weight: bold;", err);
+  }
+};
+
+/**
+ * Fires standard "Lead" event to BOTH Meta Browser Pixel & Meta Conversions API (CAPI)
+ * with deduplication via eventID.
  */
 export const trackLeadEvent = (parameters: {
   name?: string;
   hospitalName?: string;
   source: string;
   phone?: string;
+  email?: string;
 }) => {
   unrestrictLeadAndSchedule();
 
   const contentName = `${parameters.source} - ${parameters.hospitalName || "Hospital Demo Request"}`;
+  const eventId = `lead_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
 
-  // Fire standard Lead only
-  trackEvent("Lead", {
-    content_name: contentName,
-    content_category: "Hospital Management Software",
+  // 1. Fire Browser Pixel with eventID for deduplication
+  trackEvent(
+    "Lead",
+    {
+      content_name: contentName,
+      content_category: "Hospital Management Software",
+      hospital_name: parameters.hospitalName || "",
+    },
+    { eventID: eventId }
+  );
+
+  // 2. Fire Server-side Conversions API (CAPI) with matching eventId
+  sendMetaConversionApiEvent({
+    eventName: "Lead",
+    eventId,
+    eventSourceUrl: typeof window !== "undefined" ? window.location.href : "https://infiplus.in/",
+    userData: {
+      name: parameters.name,
+      phone: parameters.phone,
+      email: parameters.email,
+    },
+    customData: {
+      content_name: contentName,
+      content_category: "Hospital Management Software",
+      hospital_name: parameters.hospitalName || "",
+      source: parameters.source,
+    },
   });
 };
 
